@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/lisindmitriy.me",
   siteMetadata: {
     // edit below
     title: `Блог Дмитрия Лисина`,
