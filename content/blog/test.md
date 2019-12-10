@@ -6,74 +6,21 @@ description: test
 ---
 ```
 struct ContentView : View {
-```
 
-```
-
-```
-
-```
 @EnvironmentObject var session: SessionStore
-```
 
-```
-
-```
-
-```
-func getUser() {
-```
-
-```
-session.listen()
-```
-
-```
+  func getUser() {
+    session.listen()
+  }
+  var body: some View {
+    Group {
+      if (session.session != nil) {
+        Tabbed()
+      } else {
+        AuthenticationScreen()
+      }
+    }.onAppear(perform: getUser)
+  }
 }
 ```
-
-```
-
-```
-
-```
-var body: some View {
-```
-
-```
-Group {
-```
-
-```
-if (session.session != nil) {
-```
-
-```
-Tabbed()
-```
-
-```
-} else {
-```
-
-```
-AuthenticationScreen()
-```
-
-```
-}
-```
-
-```
-}.onAppear(perform: getUser)
-```
-
-```
-}
-```
-
-```
-}
-```
-
 twtst teadfss
