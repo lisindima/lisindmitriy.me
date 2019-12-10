@@ -4,40 +4,76 @@ date: 2019-12-10T08:47:44.307Z
 title: Test
 description: test
 ---
-`struct ContentView : View {`
+```
+struct ContentView : View {
+```
 
-`    `
+```
 
-`    @EnvironmentObject var session: SessionStore`
+```
 
-`    `
+```
+@EnvironmentObject var session: SessionStore
+```
 
-`    func getUser() {`
+```
 
-`        session.listen()`
+```
 
-`    }`
+```
+func getUser() {
+```
 
-`    `
+```
+session.listen()
+```
 
-`    var body: some View {`
+```
+}
+```
 
-`        Group {`
+```
 
-`            if (session.session != nil) {`
+```
 
-`                Tabbed()`
+```
+var body: some View {
+```
 
-`            } else {`
+```
+Group {
+```
 
-`                AuthenticationScreen()`
+```
+if (session.session != nil) {
+```
 
-`            }`
+```
+Tabbed()
+```
 
-`        }.onAppear(perform: getUser)`
+```
+} else {
+```
 
-`    }`
+```
+AuthenticationScreen()
+```
 
-`}`
+```
+}
+```
+
+```
+}.onAppear(perform: getUser)
+```
+
+```
+}
+```
+
+```
+}
+```
 
 twtst teadfss
