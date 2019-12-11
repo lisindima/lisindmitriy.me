@@ -1,10 +1,3 @@
-/**
- * Bio component that queries for data
- * with Gatsby's StaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/static-query/
- */
-
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
@@ -25,8 +18,9 @@ function Bio() {
               alt={author}
               style={{
                 marginRight: rhythm(1 / 2),
+                marginLeft: 7,
                 marginBottom: 0,
-                minWidth: 50,
+                minWidth: 85,
                 borderRadius: `100%`,
               }}
               imgStyle={{
@@ -34,11 +28,11 @@ function Bio() {
               }}
             />
             <p>
-              Written by <strong>{author}</strong> who lives and works in San
-              Francisco building useful things.
+		            This blog was created by <strong>{author}</strong> to publish articles about building apps on Swift. 
+                I live in Russia and work as a Junior iOS Developer.
               {` `}
               <a href={`https://twitter.com/${social.twitter}`}>
-                You should follow him on Twitter
+               	You can follow me on Twitter.
               </a>
             </p>
           </Container>
@@ -52,7 +46,7 @@ const bioQuery = graphql`
   query BioQuery {
     avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
       childImageSharp {
-        fixed(width: 50, height: 50) {
+        fixed(width: 85, height: 85) {
           ...GatsbyImageSharpFixed
         }
       }

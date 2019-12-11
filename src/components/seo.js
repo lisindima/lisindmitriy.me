@@ -82,10 +82,11 @@ function SEO({ description, lang, meta, keywords, title }) {
 }
 
 SEO.defaultProps = {
-  lang: `en`,
+  lang: `ru`,
   meta: [],
-  keywords: [],
-  description: ``,
+  keywords: [`blog`, `gatsby`, `swift`, `swiftui`],
+  description: `This blog was created by Lisin Dmitriy to publish articles about building apps on Swift. 
+  I live in Russia and work as a Junior iOS Developer.`,
 }
 
 SEO.propTypes = {

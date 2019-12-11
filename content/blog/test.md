@@ -1,10 +1,10 @@
 ---
 path: test
 date: 2019-12-10T08:47:44.307Z
-title: Test
-description: test
+title: Swift example code
+description: Description
 ---
-```
+```js
 struct ContentView : View {
 
 @EnvironmentObject var session: SessionStore
@@ -12,6 +12,7 @@ struct ContentView : View {
   func getUser() {
     session.listen()
   }
+
   var body: some View {
     Group {
       if (session.session != nil) {
@@ -23,4 +24,4 @@ struct ContentView : View {
   }
 }
 ```
-twtst teadfss
+Content.swift
