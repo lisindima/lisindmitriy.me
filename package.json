@@ -43,8 +43,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "prettier": "^1.19.1",
-    "react-social-icons": "^4.1.0"
+    "prettier": "^1.19.1"
   },
   "homepage": "https://github.com/lisindima/lisindmitriy.me",
   "keywords": [
