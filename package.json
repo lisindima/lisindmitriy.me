@@ -1,7 +1,7 @@
 {
   "name": "lisindmitriy.me",
   "private": true,
-  "description": "A personal blog starter for a blog powered by Netlify CMS, based on the default blog starter",
+  "description": "lisindmitriy.me",
   "version": "1.0.0",
   "author": "Dmitriy Lisin <lisindima1996@gmail.com>",
   "bugs": {
@@ -13,6 +13,7 @@
     "babel-plugin-styled-components": "^1.10.6",
     "gatsby": "^2.18.10",
     "gatsby-image": "^2.2.36",
+    "gatsby-plugin-dark-mode": "^1.1.0",
     "gatsby-plugin-feed-mdx": "^1.0.0",
     "gatsby-plugin-google-analytics": "^2.1.31",
     "gatsby-plugin-manifest": "^2.2.33",

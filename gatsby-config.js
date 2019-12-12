@@ -11,6 +11,7 @@ module.exports = {
     },
   },
   plugins: [
+    'gatsby-plugin-dark-mode',
     `gatsby-plugin-netlify-cms`,
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
@@ -64,8 +65,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        // edit below
-        // trackingId: `UA-154334693-1`,
+        trackingId: `UA-154334693-1`,
       },
     },
     {
@@ -77,7 +77,6 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        // edit below
         icon: `content/assets/gatsby-icon.png`,
       },
     },
