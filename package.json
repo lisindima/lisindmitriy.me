@@ -29,7 +29,7 @@
     "gatsby-remark-responsive-iframe": "^2.2.30",
     "gatsby-remark-smartypants": "^2.1.19",
     "gatsby-remark-vscode": "^1.4.0",
-    "gatsby-source-filesystem": "^2.1.42",
+    "gatsby-source-filesystem": "^2.1.43",
     "gatsby-transformer-sharp": "^2.3.9",
     "netlify-cms-app": "^2.10.1",
     "react": "^16.12.0",
