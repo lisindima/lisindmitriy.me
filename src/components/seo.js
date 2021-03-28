@@ -1,16 +1,11 @@
-/**
- * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ description, lang, meta, keywords, title }) {
+import { lightTheme } from "../styles/theme"
+
+const SEO = ({ description, lang, meta, title }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -33,7 +28,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s`}
       meta={[
         {
           name: `description`,
@@ -41,6 +36,10 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           property: `og:title`,
+          content: title,
+        },
+        {
+          property: `og:site_name`,
           content: title,
         },
         {
@@ -67,34 +66,30 @@ function SEO({ description, lang, meta, keywords, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
-      ]
-        .concat(
-          keywords.length > 0
-            ? {
-                name: `keywords`,
-                content: keywords.join(`, `),
-              }
-            : []
-        )
-        .concat(meta)}
+        {
+          name: `msapplication-TileColor`,
+          content: lightTheme.colors.primary,
+        },
+        {
+          name: `theme-color`,
+          content: lightTheme.colors.primary,
+        },
+      ].concat(meta)}
     />
   )
 }
 
-SEO.defaultProps = {
-  lang: `ru`,
-  meta: [],
-  keywords: [`blog`, `gatsby`, `swift`, `swiftui`],
-  description: `This blog was created by Lisin Dmitriy to publish articles about building apps on Swift. 
-  I live in Russia and work as a Junior iOS Developer.`,
+SEO.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  meta: PropTypes.array,
+  lang: PropTypes.string,
 }
 
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  keywords: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string.isRequired,
+SEO.defaultProps = {
+  lang: `en`,
+  meta: [],
+  description: ``,
 }
 
 export default SEO
