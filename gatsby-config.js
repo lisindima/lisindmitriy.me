@@ -1,89 +1,86 @@
+const {
+  author,
+  siteTitle,
+  siteShortTitle,
+  siteDescription,
+  siteIcon,
+  siteUrl,
+  googleAnalyticsTrackingId,
+  colors,
+} = require(`./config`)
+
 module.exports = {
-  pathPrefix: "/lisindmitriy.me",
   siteMetadata: {
-    // edit below
-    title: `Lisin Dmitriy blog`,
-    author: `Lisin Dmitriy`,
-    description: `A starter personal blog with styled components, dark mode, and Netlify CMS.`,
-    siteUrl: `https://lisindmitriy.me/`,
-    social: {
-      twitter: `lisindima`,
-    },
+    author: author,
+    title: siteTitle,
+    description: siteDescription,
+    siteUrl: siteUrl,
   },
   plugins: [
-    'gatsby-plugin-dark-mode',
-    `gatsby-plugin-netlify-cms`,
-    `gatsby-plugin-styled-components`,
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-feed-mdx`,
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-robots-txt`,
+    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-offline`,
+    `gatsby-plugin-netlify`,
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `gatsby-plugin-gdpr-cookies`,
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/assets`,
-        name: `assets`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-mdx`,
-      options: {
-        extensions: [".mdx", ".md"],
-        gatsbyRemarkPlugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 590,
-            },
-          },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
-          },
-          {
-            resolve: `gatsby-remark-vscode`,
-          },
-          {
-            resolve: `gatsby-remark-copy-linked-files`,
-          },
-          {
-            resolve: `gatsby-remark-smartypants`,
-          },
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `UA-154334693-1`,
+        googleAnalytics: {
+          trackingId: googleAnalyticsTrackingId,
+          cookieName: "gatsby-gdpr-google-analytics",
+          anonymize: true,
+          allowAdFeatures: false,
+        },
+        environments: ["production"], // defines the environments where the tracking should be available
       },
     },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Lisin Dmitriy blog`,
-        short_name: `Lisin Dmitriy`,
+        name: siteTitle,
+        short_name: siteShortTitle,
         start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
+        background_color: colors.lightTheme.background,
+        theme_color: colors.lightTheme.primary,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: siteIcon, // This path is relative to the root of the site.
       },
     },
     {
-      resolve: `gatsby-plugin-typography`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1000,
+              quality: 80,
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content`,
+        name: `content`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-eslint`,
+      options: {
+        test: /\.js$|\.jsx$/,
+        exclude: /(node_modules|.cache|public)/,
+        stages: [`develop`],
+        options: {
+          emitWarning: true,
+          failOnError: false,
+        },
       },
     },
   ],

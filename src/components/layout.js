@@ -1,111 +1,51 @@
 import React from "react"
-import { Link } from "gatsby"
-import styled from "styled-components"
-import { rhythm, scale } from "../utils/typography"
+import PropTypes from "prop-types"
+import styled, { ThemeProvider } from "styled-components"
+import "fontsource-roboto/400.css"
+import "fontsource-roboto/700.css"
 
-class Layout extends React.Component {
-  render() {
-    const { location, title, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    const blogPath = `${__PATH_PREFIX__}/blog/`
-    let header
+import { lightTheme, darkTheme } from "../styles/theme"
+import { useDarkMode } from "../hooks"
+import GlobalStyle from "../styles/globalStyle"
+import Header from "./header"
+import Footer from "./footer"
+import CookieBar from "../components/cookieBar"
+import { useCookieBar } from "../../config"
 
-    if (location.pathname === rootPath || location.pathname === blogPath) {
-      header = (
-        <h1
-          style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={location.pathname === blogPath ? `/blog/` : `/`}
-          >
-            {title}
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          style={{
-            fontFamily: `Montserrat, sans-serif`,
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/blog/`}
-          >
-            {title}
-          </Link>
-        </h3>
-      )
-    }
-    return (
-      <Wrapper>
-        <div
-          style={{
-            marginLeft: `auto`,
-            marginRight: `auto`,
-            maxWidth: rhythm(24),
-            padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-          }}
-        >
-          <header>{header}</header>
-          <main>{children}</main>
-        </div>
-        <Footer>
-        <footer
-        style={{
-          marginTop: rhythm(2.5),
-          paddingTop: rhythm(1),
-        }}
-      >
-        <div style={{ float: 'right' }}>
-          <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
-            RSS
-          </a>
-        </div>
-        <a
-          href="https://twitter.com/lisindima"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Twitter
-        </a>{' '}
-        &bull;{' '}
-        <a
-          href="https://github.com/lisindima"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
-      </footer>
-        </Footer>
-      </Wrapper>
-    )
-  }
+// https://medium.com/@chrisfitkin/how-to-smooth-scroll-links-in-gatsby-3dc445299558
+if (typeof window !== "undefined") {
+  require("smooth-scroll")('a[href*="#"]')
 }
 
-const Wrapper = styled.div`
+const StyledLayoutWrapper = styled.div`
+  width: 100%;
   min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
 `
 
-const Footer = styled.footer`
-  text-align: center;
-  margin: 24px;
-`
+const Layout = ({ children }) => {
+  // Enables dark mode if the user's OS has an active dark theme
+  const darkModeEnabled = useDarkMode()
+  const theme = darkModeEnabled ? darkTheme : lightTheme
+
+  return (
+    <StyledLayoutWrapper id="layout-wrapper" data-useCookieBar={useCookieBar}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Header />
+        <main id="main-content">{children}</main>
+        <Footer />
+        {useCookieBar && <CookieBar />}
+      </ThemeProvider>
+    </StyledLayoutWrapper>
+  )
+}
+
+Layout.propTypes = {
+  children: PropTypes.any,
+}
 
 export default Layout
