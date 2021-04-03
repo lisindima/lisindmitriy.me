@@ -26,7 +26,7 @@
     "gatsby-transformer-sharp": "^2.8.0",
     "intersection-observer": "^0.11.0",
     "prop-types": "^15.7.2",
-    "react": "^16.14.0",
+    "react": "^17.0.2",
     "react-cookie-consent": "^6.2.3",
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
