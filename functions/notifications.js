@@ -1,16 +1,11 @@
 exports.handler = function (event, context, callback) {
 
     const device_id = event.queryStringParameters.device_id
-    const name_site = event.queryStringParameters.name_site
-    const type = event.queryStringParameters.type
-    const fs = require('fs')
     var apn = require('@parse/node-apn');
-
-    const key_path = fs.readFileSync("AuthKey_L3F379QHSL.p8");
 
     var options = {
         token: {
-          key: key_path,
+          key: "/var/task/src/functions/AuthKey_L3F379QHSL.p8",
           keyId: "L3F379QHSL",
           teamId: "48HFZR3X8K"
         },
