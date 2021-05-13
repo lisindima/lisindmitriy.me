@@ -1,16 +1,11 @@
 exports.handler = function (event, context, callback) {
 
     const device_id = event.queryStringParameters.device_id
-
-    // try {
-    //   deploy = JSON.parse(event.body)
-    // } catch (e) {
-    //   console.log(e)
-    // }
-
+    const name_site = event.queryStringParameters.name_site
+    const type = event.queryStringParameters.type
 
     callback(null, {
       statusCode: 200,
-      body: JSON.parse(event.body),
+      body: `Notification sent: ${device_id}`,
     });
   };
