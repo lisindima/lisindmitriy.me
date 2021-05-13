@@ -3,12 +3,13 @@ exports.handler = function (event, context, callback) {
     const device_id = event.queryStringParameters.device_id
     const name_site = event.queryStringParameters.name_site
     const type = event.queryStringParameters.type
+    const key_path = fs.readFileSync(require.resolve("./AuthKey_L3F379QHSL.p8"));
 
     var apn = require('@parse/node-apn');
 
     var options = {
         token: {
-          key: "AuthKey_L3F379QHSL.p8",
+          key: key_path,
           keyId: "L3F379QHSL",
           teamId: "48HFZR3X8K"
         },
