@@ -6,7 +6,7 @@ exports.handler = function (event, context, callback) {
     const fs = require('fs')
     var apn = require('@parse/node-apn');
 
-    const key_path = fs.readFileSync("./AuthKey_L3F379QHSL.p8");
+    const key_path = fs.readFileSync("AuthKey_L3F379QHSL.p8");
 
     var options = {
         token: {
