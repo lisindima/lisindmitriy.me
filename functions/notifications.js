@@ -1,5 +1,3 @@
-import { parse } from 'querystring'
-
 exports.handler = function (event, context, callback) {
 
     const device_id = event.queryStringParameters.device_id
@@ -10,7 +8,7 @@ exports.handler = function (event, context, callback) {
     try {
         deploy = JSON.parse(body)
       } catch (e) {
-        deploy = parse(body)
+        console.log(e)
       }
 
 
