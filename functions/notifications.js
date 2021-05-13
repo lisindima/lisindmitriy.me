@@ -4,9 +4,9 @@ exports.handler = function (event, context, callback) {
     const name_site = event.queryStringParameters.name_site
     const type = event.queryStringParameters.type
     const fs = require('fs')
-    const key_path = fs.readFileSync(require.resolve("./AuthKey_L3F379QHSL.p8"));
-
     var apn = require('@parse/node-apn');
+
+    const key_path = fs.readFileSync("./AuthKey_L3F379QHSL.p8");
 
     var options = {
         token: {
