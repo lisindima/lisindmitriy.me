@@ -8,7 +8,7 @@ exports.handler = function (event, context, callback) {
 
     var options = {
         token: {
-          key: "./AuthKey_L3F379QHSL.p8",
+          key: "AuthKey_L3F379QHSL.p8",
           keyId: "L3F379QHSL",
           teamId: "48HFZR3X8K"
         },
