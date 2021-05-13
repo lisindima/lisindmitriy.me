@@ -1,10 +1,10 @@
 exports.handler = function (event, context, callback) {
 
-    const apn = require("apn");
-
     const device_id = event.queryStringParameters.device_id
     const name_site = event.queryStringParameters.name_site
     const type = event.queryStringParameters.type
+
+    var apn = require('@parse/node-apn');
 
     var options = {
         token: {
