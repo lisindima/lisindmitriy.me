@@ -1,4 +1,4 @@
-exports.handler = function (event, context, callback) {
+exports.handler = async (event, context) => {
 
     const device_id = event.queryStringParameters.device_id
     const { APNS } = require('apns2')
@@ -22,8 +22,8 @@ exports.handler = function (event, context, callback) {
       console.error(err.reason)
     }
 
-    callback(null, {
+    return {
       statusCode: 200,
-      body: `Notification sent: 51c1238490bddaf8aa1812b33e7b53825af1a9046aec00b7acf4cb5b29b6cb68`,
-    });
+      body: "Notification sent: 51c1238490bddaf8aa1812b33e7b53825af1a9046aec00b7acf4cb5b29b6cb68"
+    };
   };
