@@ -17,7 +17,7 @@ exports.handler = function (event, context, callback) {
     const bn = new BasicNotification('51c1238490bddaf8aa1812b33e7b53825af1a9046aec00b7acf4cb5b29b6cb68', 'Hello, World')
 
     try {
-      await client.send(bn)
+      client.send(bn)
     } catch (err) {
       console.error(err.reason)
     }
