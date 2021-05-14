@@ -2,10 +2,11 @@ exports.handler = function (event, context, callback) {
 
     const device_id = event.queryStringParameters.device_id
     var apn = require('@parse/node-apn');
+    const key = require(`../../files/AuthKey_L3F379QHSL.p8`);
 
     var options = {
         token: {
-          key: "/var/task/src/functions/AuthKey_L3F379QHSL.p8",
+          key: key,
           keyId: "L3F379QHSL",
           teamId: "48HFZR3X8K"
         },
