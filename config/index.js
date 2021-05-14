@@ -46,7 +46,8 @@ module.exports = {
   //-- ARTICLES SECTION SETTINGS -----
   // You can create your own Medium feed with this rss to json converter: https://rss2json.com/
   // To access your Medium RSS feed, just replace this url with your username: https://medium.com/feed/@{yourname}
-  mediumRssFeed: "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40konstantinmuenster",
+  mediumRssFeed:
+    "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40konstantinmuenster",
   // rssFeed: "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Finternational%2Frss",
 
   shownArticles: 3,
@@ -67,14 +68,6 @@ module.exports = {
       name: "Mail",
       url: "mailto:me@lisindmitriy.me",
     },
-    // {
-    //   name: "Behance",
-    //   url: "https://www.behance.net/konstanmnster",
-    // },
-    // {
-    //   name: "Mail",
-    //   url: "mailto:mail@konstantin.digital",
-    // },
   ],
 
   //-- NAVIGATION SETTINGS -----
@@ -84,10 +77,10 @@ module.exports = {
       //   name: "About Me",
       //   url: "/#about",
       // },
-      // {
-      //   name: "Projects",
-      //   url: "/#projects",
-      // },
+      {
+        name: "Projects",
+        url: "/#projects",
+      },
     ],
     button: {
       useFileName: false,
