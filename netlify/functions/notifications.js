@@ -31,7 +31,7 @@ exports.handler = async (event, context) => {
 
   var options = {
     token: {
-      key: "./files/AuthKey_L3F379QHSL.p8",
+      key: `../../files/AuthKey_L3F379QHSL.p8`,
       keyId: "L3F379QHSL",
       teamId: "48HFZR3X8K",
     },
