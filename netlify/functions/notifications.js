@@ -1,32 +1,77 @@
 exports.handler = async (event, context) => {
   const device_id = event.queryStringParameters.device_id
-  const { APNS } = require("apns2")
-  const key = require(`../../files/AuthKey_L3F379QHSL.p8`)
-  const fs = require("fs")
 
-  const client = new APNS({
-    team: `48HFZR3X8K`,
-    keyId: `L3F379QHSL`,
-    signingKey: fs.readFileSync(`../../files/AuthKey_L3F379QHSL.p8`),
-    defaultTopic: `com.darkfox.netliphy`,
-  })
-
-  const { BasicNotification } = require("apns2")
-
-  const bn = new BasicNotification(
-    "51c1238490bddaf8aa1812b33e7b53825af1a9046aec00b7acf4cb5b29b6cb68",
-    "Hello, World"
-  )
-
-  try {
-    await client.send(bn)
-  } catch (err) {
-    console.error(err.reason)
+  if (!device_id) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: "missing device_id",
+      }),
+    }
   }
+
+  if (!event.body) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: "missing body",
+      }),
+    }
+  }
+
+  let bodyJson = {}
+  console.log(event)
+  try {
+    bodyJson = JSON.parse(event.body)
+  } catch (e) {
+    console.log(e)
+  }
+
+  var apn = require("@parse/node-apn")
+
+  var options = {
+    token: {
+      key: "../../files/AuthKey_L3F379QHSL.p8",
+      keyId: "L3F379QHSL",
+      teamId: "48HFZR3X8K",
+    },
+    production: false,
+  }
+
+  var apnProvider = new apn.Provider(options)
+  var note = new apn.Notification()
+
+  var successBody = "Netlify has successfully deployed your site."
+  var failedBody = "Netlify couldn’t deploy your site."
+
+  note.rawPayload = {
+    from: "node-apn",
+    source: "web",
+    aps: {
+      alert: {
+        title: bodyJson.state == "ready" ? "Success deploy" : "Failed deploy",
+        subtitle: bodyJson.name,
+        body: bodyJson.state == "ready" ? successBody : failedBody,
+      },
+      sound: "ping.aiff",
+      action: `netliphy://open?deployId=${bodyJson.id}`,
+      category: "deploy",
+    },
+  }
+
+  note.topic = "com.darkfox.netliphy"
+
+  apnProvider.send(note, device_id).then(result => {
+    console.log("sent:", result.sent.length)
+    console.log("failed:", result.failed.length)
+    console.log(result.failed)
+  })
 
   return {
     statusCode: 200,
-    body:
-      "Notification sent: 51c1238490bddaf8aa1812b33e7b53825af1a9046aec00b7acf4cb5b29b6cb68",
+    body: JSON.stringify({
+      success: "Notification success sent!",
+      device_id: device_id,
+    }),
   }
 }

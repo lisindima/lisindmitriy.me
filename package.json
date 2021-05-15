@@ -43,6 +43,7 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
+    "@parse/node-apn": "4.1.1",
     "@testing-library/cypress": "^7.0.6",
     "cypress": "^6.9.1",
     "eslint": "^7.26.0",
@@ -58,8 +59,7 @@
     "lint-staged": "^10.5.4",
     "netlify-plugin-cypress": "^1.11.1",
     "prettier": "^1.19.1",
-    "start-server-and-test": "^1.12.1",
-    "apns2": "9.3.0"
+    "start-server-and-test": "^1.12.1"
   },
   "keywords": [
     "gatsby",
