@@ -33,7 +33,10 @@ exports.handler = async (event, context) => {
   /*
 Read p8 file. Assumes p8 file to be in same directory
 */
-  const key = fs.readFileSync("files/AuthKey_L3F379QHSL.p8", "utf8")
+  const key = fs.readFileSync(
+    "/var/task/src/files/AuthKey_L3F379QHSL.p8",
+    "utf8"
+  )
 
   //"iat" should not be older than 1 hr from current time or will get rejected
   const token = jwt.sign(
