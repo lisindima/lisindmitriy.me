@@ -27,11 +27,11 @@ exports.handler = async (event, context) => {
     console.log(e)
   }
 
-  var apn = require("@parse/node-apn")
+  var apn = require("node-apn")
 
   var options = {
     token: {
-      key: `/var/task/src/files/AuthKey_L3F379QHSL.p8`,
+      key: `files/AuthKey_L3F379QHSL.p8`, // `/var/task/src/files/AuthKey_L3F379QHSL.p8`
       keyId: "L3F379QHSL",
       teamId: "48HFZR3X8K",
     },
@@ -52,9 +52,9 @@ exports.handler = async (event, context) => {
         title: bodyJson.state == "ready" ? "Success deploy" : "Failed deploy",
         subtitle: bodyJson.name,
         body: bodyJson.state == "ready" ? successBody : failedBody,
+        action: `netliphy://open?deployId=${bodyJson.id}`,
       },
       sound: "ping.aiff",
-      action: `netliphy://open?deployId=${bodyJson.id}`,
       category: "deploy",
     },
   }
