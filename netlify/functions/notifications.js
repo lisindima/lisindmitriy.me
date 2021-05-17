@@ -75,4 +75,6 @@ exports.handler = (event, context, callback) => {
     console.log("sent:", result.sent.length)
     console.log("failed:", result.failed.length)
   })
+
+  apnProvider.shutdown()
 }
