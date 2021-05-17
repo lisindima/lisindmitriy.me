@@ -1,22 +1,22 @@
-exports.handler = async (event, context) => {
+exports.handler = (event, context, callback) => {
   const device_id = event.queryStringParameters.device_id
 
   if (!device_id) {
-    return {
+    return callback(null, {
       statusCode: 400,
       body: JSON.stringify({
         error: "missing device_id",
       }),
-    }
+    })
   }
 
   if (!event.body) {
-    return {
+    return callback(null, {
       statusCode: 400,
       body: JSON.stringify({
         error: "missing body",
       }),
-    }
+    })
   }
 
   let bodyJson = {}
@@ -42,7 +42,7 @@ Read p8 file. Assumes p8 file to be in same directory
   const token = jwt.sign(
     {
       iss: "48HFZR3X8K", //"team ID" of your developer account
-      iat: 1621172963, //Replace with current unix epoch time [Not in milliseconds, frustated me :D]
+      iat: 1621225916, //Replace with current unix epoch time [Not in milliseconds, frustated me :D]
     },
     key,
     {
@@ -96,6 +96,13 @@ Read p8 file. Assumes p8 file to be in same directory
   request.on("end", () => {
     console.log(`\n${data}`)
     client.close()
+    return callback(null, {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: `\n${data}`,
+        device_id: device_id,
+      }),
+    })
   })
   request.end()
 
@@ -139,11 +146,11 @@ Read p8 file. Assumes p8 file to be in same directory
   //   console.log(result.failed)
   // })
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      success: "Notification success sent!",
-      device_id: device_id,
-    }),
-  }
+  // return callback(null, {
+  //   statusCode: 200,
+  //   body: JSON.stringify({
+  //     success: "Notification success sent!",
+  //     device_id: device_id,
+  //   }),
+  // })
 }
