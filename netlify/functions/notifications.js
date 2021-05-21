@@ -64,26 +64,16 @@ exports.handler = (event, context, callback) => {
   note.topic = "com.darkfox.netliphy"
 
   apnProvider.send(note, device_id).then(result => {
-    if (result.sent.length > 0) {
-      return callback(null, {
-        statusCode: 200,
-        body: JSON.stringify({
-          success: result.sent,
-        }),
-      })
-    }
-
-    if (result.failed.length > 0) {
-      return callback(null, {
-        statusCode: 400,
-        body: JSON.stringify({
-          error: result.failed,
-        }),
-      })
-    }
     console.log("sent:", result.sent.length)
     console.log("failed:", result.failed.length)
 
     apnProvider.shutdown()
+
+    return callback(null, {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: result.sent,
+      }),
+    })
   })
 }
