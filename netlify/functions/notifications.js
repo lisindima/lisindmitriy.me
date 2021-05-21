@@ -66,14 +66,14 @@ exports.handler = (event, context, callback) => {
   apnProvider.send(note, device_id).then(result => {
     console.log("sent:", result.sent.length)
     console.log("failed:", result.failed.length)
-  })
 
-  apnProvider.shutdown()
+    apnProvider.shutdown()
 
-  return callback(null, {
-    statusCode: 200,
-    body: JSON.stringify({
-      success: "sent",
-    }),
+    return callback(null, {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: "sent",
+      }),
+    })
   })
 }
