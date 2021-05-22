@@ -57,7 +57,7 @@ exports.handler = (event, context, callback) => {
         action: `netliphy://open?deployId=${body.id}`,
       },
       sound: "ping.aiff",
-      category: "deploy",
+      badge: 1,
     },
   }
 
