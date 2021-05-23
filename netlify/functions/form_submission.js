@@ -37,7 +37,7 @@ exports.handler = (event, context, callback) => {
       keyId: "L3F379QHSL",
       teamId: "48HFZR3X8K",
     },
-    production: false,
+    production: true,
   }
 
   var apnProvider = new apn.Provider(options)
