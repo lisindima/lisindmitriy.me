@@ -46,13 +46,15 @@ exports.handler = (event, context, callback) => {
   var successBody = "Netlify has successfully deployed your site."
   var failedBody = "Netlify couldn’t deploy your site."
 
+  var context = body.context == "production" ? "Production" : "Deploy-preview"
+
   note.rawPayload = {
     from: "node-apn",
     source: "web",
     aps: {
       alert: {
         title: body.state == "ready" ? "Success deploy" : "Failed deploy",
-        subtitle: body.name,
+        subtitle: `${body.name}` + " | " + context,
         body: body.state == "ready" ? successBody : failedBody,
         action: `netliphy://open?deployId=${body.id}`,
       },
