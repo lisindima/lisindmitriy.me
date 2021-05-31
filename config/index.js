@@ -3,14 +3,13 @@ module.exports = {
   author: "@lisindima",
   siteTitle: "Lisin Dmitriy",
   siteShortTitle: "df.", // Used as logo text in header, footer, and splash screen
-  siteDescription:
-    "A modern one-page portfolio with a clean yet expressive design.",
+  siteDescription: "Personal site",
   siteUrl: "https://lisindmitriy.me/",
   siteLanguage: "en_US",
   siteIcon: "content/favicon.png", // Relative to gatsby-config file
   seoTitleSuffix: "Lisin Dmitriy", // SEO title syntax will be e.g. "Imprint - {seoTitleSuffix}"
-  useCookieBar: false, // If you use Google Analytics and want to be GDPR-compliant, set it to true
-  googleAnalyticsTrackingId: "", // e.g. UA-XXXXXX-X
+  useCookieBar: true, // If you use Google Analytics and want to be GDPR-compliant, set it to true
+  googleAnalyticsTrackingId: "UA-154334693-1", // e.g. UA-XXXXXX-X
 
   // -- THEME SETTINGS -----
   colors: {
@@ -63,6 +62,10 @@ module.exports = {
     {
       name: "Twitter",
       url: "https://twitter.com/LisinDima",
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/lisindmitriy/",
     },
     {
       name: "Mail",
