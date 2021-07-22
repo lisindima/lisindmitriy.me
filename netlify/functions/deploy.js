@@ -31,13 +31,15 @@ exports.handler = (event, context, callback) => {
 
   var apn = require("@parse/node-apn")
 
+  const key = require(`../../files/AuthKey_L3F379QHSL.p8`)
+
   var options = {
     token: {
-      key: `/var/task/src/files/AuthKey_L3F379QHSL.p8`, // `/var/task/src/files/AuthKey_L3F379QHSL.p8`
+      key: key, // `/var/task/src/files/AuthKey_L3F379QHSL.p8`
       keyId: "L3F379QHSL",
       teamId: "48HFZR3X8K",
     },
-    production: true,
+    production: false,
   }
 
   var apnProvider = new apn.Provider(options)
