@@ -1,0 +1,41 @@
+{
+  "siteMetadata": {
+    "language": "en",
+    "siteUrl": "https://lisindmitriy.me",
+    "title": "Lisin Dmitriy",
+    "titleTemplate": "%s · Portfolio Minimal",
+    "description": "Personal site",
+    "author": "Lisin Dmitriy",
+    "avatar": "../content/images/favicon.png",
+    "bio": "This biography will be used in the footer area of an article and can contain some more details about the author.",
+    "social": {
+      "behance": "https://behance.com",
+      "github": "https://github.com/lisindima",
+      "medium": "",
+      "linkedin": "https://www.linkedin.com/in/lisindmitriy/",
+      "mail": "mailto:me@lisindmitriy.me"
+    }
+  },
+  "siteConfiguration": {
+    "logo": { "text": "df." },
+    "navigation": {
+      "header": [
+        { "label": "Projects", "url": "/#projects" },
+        { "label": "Github", "url": "https://github.com/lisindima" }
+      ],
+      "ctaButton": {
+        "openNewTab": false,
+        "label": "Contact",
+        "url": "/#contact"
+      },
+      "footer": [
+        { "label": "Privacy", "url": "/privacy" }
+      ]
+    },
+    "featureToggles": {
+      "useDarkModeAsDefault": false,
+      "useDarkModeBasedOnUsersPreference": true,
+      "useCookieBar": false
+    }
+  }
+}

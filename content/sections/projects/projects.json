@@ -1,0 +1,72 @@
+{
+  "projects": [
+    {
+      "visible": true,
+      "category": "🕹️ SwiftUI",
+      "title": "Netliphy",
+      "description": "Netliphy is designed to make it easy to manage your Netlify hosted sites using your iPhone, iPad and Mac!",
+      "tags": ["Netlify", "iOS", "macOS"],
+      "image": {
+        "src": "../../images/NetliphyMac.png",
+        "alt": "Netliphy"
+      },
+      "links": [
+        {
+          "type": "github",
+          "url": "https://github.com/lisindima/Netliphy"
+        },
+        {
+          "type": "external",
+          "url": "https://netliphy.lisindmitriy.me"
+        }
+      ]
+    },
+    {
+      "visible": true,
+      "category": "🧰 SwiftUI",
+      "title": "OTPHub",
+      "description": "A lightweight one-time password generation application for secure authentication using TOTP and HOTP algorithms.",
+      "tags": ["CryptoKit", "iOS", "macOS"],
+      "image": {
+        "src": "../../images/OTPHubMac.png",
+        "alt": "OTPHub"
+      },
+      "links": [
+        {
+          "type": "github",
+          "url": "https://github.com/lisindima/OTPHub"
+        },
+        {
+          "type": "external",
+          "url": "https://otphub.lisindmitriy.me"
+        }
+      ]
+    },
+    {
+      "visible": true,
+      "category": "🚑 Medical",
+      "title": "COVID-19 Dashboard",
+      "description": "Dashboard for modeling the spread of viral infections and healthcare opportunities.",
+      "tags": ["COVID-19", "R", "Shiny"],
+      "image": {
+        "src": "../../images/covid.png",
+        "alt": "COVID-19 Dashboard"
+      },
+      "links": [
+        {
+          "type": "github",
+          "url": "https://github.com/lisindima/covidshiny"
+        },
+        {
+          "type": "external",
+          "url": "https://covid.lisindmitriy.me"
+        }
+      ]
+    }
+  ],
+  "button": {
+    "visible": true,
+    "label": "SEE MORE ON GITHUB",
+    "url": "https://github.com/lisindima"
+  }
+}
