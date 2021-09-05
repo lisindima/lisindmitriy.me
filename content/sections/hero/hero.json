@@ -1,0 +1,18 @@
+{
+  "intro": "Hello",
+  "image": {
+    "src": "../../images/waving-hand.png",
+    "alt": "Waving Hand Emoji"
+  },
+  "title": "I'm Dmitriy Lisin",
+  "subtitle": {
+    "prefix": "I make iOS apps with ",
+    "highlight": "SwiftUI",
+    "suffix": "."
+  },
+  "description": "Always down for a chat, shoot me a Twitter DM or an email and we'll make it happen!",
+  "socialProfiles": {
+    "from": ["LinkedIn", "Github", "Mail"],
+    "showIcons": false
+  }
+}

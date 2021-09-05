@@ -1,10 +1,2 @@
-[build]
-  command = "npm run build"
-  publish = "public"
-
 [functions]
   included_files = ["files/*"]
-
-[build.environment]
-  CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
-  TERM = "xterm"
