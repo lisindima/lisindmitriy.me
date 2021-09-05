@@ -9,8 +9,8 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^3.7.1",
-    "gatsby-theme-portfolio-minimal": "^2.5.0",
+    "gatsby": "^3.13.0",
+    "gatsby-theme-portfolio-minimal": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
