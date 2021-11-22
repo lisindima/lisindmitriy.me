@@ -15,7 +15,7 @@
     "gatsby-theme-portfolio-minimal": "^3.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "@parse/node-apn": "5.0.0"
+    "@parse/node-apn": "5.1.0"
   },
   "author": "Konstantin Münster <mail@konstantin.digital>",
   "license": "MIT",
