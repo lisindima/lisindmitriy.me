@@ -12,7 +12,7 @@
   },
   "description": "Always down for a chat, shoot me a Twitter DM or an email and we'll make it happen!",
   "socialProfiles": {
-    "from": ["LinkedIn", "Github", "Mail"],
+    "from": ["LinkedIn", "Github", "Mail", "Twitter"],
     "showIcons": false
   }
 }
