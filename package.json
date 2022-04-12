@@ -12,7 +12,7 @@
     "gatsby": "^4.7.1",
     "gatsby-link": "^4.7.1",
     "gatsby-react-router-scroll": "^5.7.0",
-    "gatsby-theme-portfolio-minimal": "^3.1.0",
+    "gatsby-theme-portfolio-minimal": "^3.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "@parse/node-apn": "5.1.3"
