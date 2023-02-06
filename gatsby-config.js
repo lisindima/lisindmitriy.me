@@ -3,7 +3,7 @@ module.exports = {
     {
       resolve: "gatsby-theme-portfolio-minimal",
       options: {
-        siteUrl: "https://lisindmitriy.me", // Used for sitemap generation
+        siteUrl: "https://lisindmitriy.ru", // Used for sitemap generation
         manifestSettings: {
           favicon: "./content/images/favicon.png", // Path is relative to the root
           siteName: "Lisin Dmitriy", // Used in manifest.json
