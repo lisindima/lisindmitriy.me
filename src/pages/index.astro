@@ -1,0 +1,149 @@
+---
+import "../styles/global.css";
+
+import favicon from "../assets/favicon.png";
+import wavingHand from "../assets/waving-hand.png";
+import netliphyImage from "../assets/Netliphy.png";
+import otpHubImage from "../assets/OTPHubMac.png";
+import covidImage from "../assets/covid.png";
+
+const projects = [
+  {
+    category: "🕹️ SwiftUI",
+    title: "Netliphy",
+    description: "Netliphy is designed to make it easy to manage your Netlify hosted sites using your iPhone, iPad and Mac!",
+    tags: ["Netlify", "iOS", "macOS"],
+    image: netliphyImage,
+    links: [
+      { label: "GitHub", href: "https://github.com/lisindima/Netliphy" },
+      { label: "Website", href: "https://netliphy.lisindmitriy.ru" },
+    ],
+  },
+  {
+    category: "🧰 SwiftUI",
+    title: "OTPHub",
+    description: "A lightweight one-time password generation application for secure authentication using TOTP and HOTP algorithms.",
+    tags: ["CryptoKit", "iOS", "macOS"],
+    image: otpHubImage,
+    links: [
+      { label: "GitHub", href: "https://github.com/lisindima/OTPHub" },
+      { label: "Website", href: "https://otphub.lisindmitriy.ru" },
+    ],
+  },
+  {
+    category: "🚑 Medical",
+    title: "COVID-19 Dashboard",
+    description: "Dashboard for modeling the spread of viral infections and healthcare opportunities.",
+    tags: ["COVID-19", "R", "Shiny"],
+    image: covidImage,
+    links: [
+      { label: "GitHub", href: "https://github.com/lisindima/covidshiny" },
+      { label: "Website", href: "https://covid.lisindmitriy.ru" },
+    ],
+  },
+];
+
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/lisindima" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/lisindmitriy/" },
+  { label: "X", href: "https://twitter.com/lisindima" },
+  { label: "Email", href: "mailto:me@lisindmitriy.ru" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Personal site of Dmitriy Lisin, iOS developer building apps with SwiftUI." />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="canonical" href="https://lisindmitriy.ru/" />
+    <title>Lisin Dmitriy</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="#hero" aria-label="Back to top">df.</a>
+      <nav aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="contact-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="hero section-shell">
+        <div class="hero-copy">
+          <div class="hello">
+            <img src={wavingHand.src} width="38" height="38" alt="" />
+            <span>Hello</span>
+          </div>
+          <h1>I'm Dmitriy Lisin</h1>
+          <p class="hero-subtitle">I make iOS apps with <strong>SwiftUI</strong>.</p>
+          <p class="hero-description">Always down for a chat, shoot me a DM or an email and we'll make it happen!</p>
+          <div class="social-links" aria-label="Social links">
+            {socialLinks.map((link) => (
+              <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section-shell projects-section">
+        <div class="section-heading">
+          <p>Selected work</p>
+          <h2>Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+          {projects.map((project) => (
+            <article class="project-card">
+              <div class="project-image-wrap">
+                <img class="project-image" src={project.image.src} alt={project.title} loading="lazy" decoding="async" />
+              </div>
+              <div class="project-content">
+                <p class="project-category">{project.category}</p>
+                <h3>{project.title}</h3>
+                <p class="project-description">{project.description}</p>
+                <ul class="tags" aria-label={`${project.title} technologies`}>
+                  {project.tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+                <div class="project-links">
+                  {project.links.map((link) => (
+                    <a href={link.href} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <a class="github-more" href="https://github.com/lisindima" target="_blank" rel="noreferrer">See more on GitHub <span aria-hidden="true">↗</span></a>
+      </section>
+
+      <section id="contact" class="section-shell contact-section">
+        <div class="contact-card">
+          <img src={favicon.src} width="72" height="72" alt="Lisin Dmitriy" />
+          <div>
+            <p class="contact-kicker">Issues?</p>
+            <h2>Lisin Dmitriy</h2>
+            <p>If you have problems with one of my projects, please create an issue in the project's GitHub repository.</p>
+            <div class="contact-actions">
+              <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+              <a href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
+      <span>Built with Astro.</span>
+    </footer>
+  </body>
+</html>
