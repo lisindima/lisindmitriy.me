@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Image } from "astro:assets";
 
 import favicon from "../assets/favicon.png";
 import wavingHand from "../assets/waving-hand.png";
@@ -103,7 +104,16 @@ const socialLinks = [
           {projects.map((project) => (
             <article class="project-card">
               <div class="project-image-wrap">
-                <img class="project-image" src={project.image.src} alt={project.title} loading="lazy" decoding="async" />
+                <Image
+                  class="project-image"
+                  src={project.image}
+                  alt={project.title}
+                  widths={[360, 540, 720, 1080]}
+                  sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 980px) calc((100vw - 62px) / 2), 360px"
+                  quality={82}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div class="project-content">
                 <p class="project-category">{project.category}</p>
