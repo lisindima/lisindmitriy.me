@@ -1,2 +1,25 @@
-[![Depfu](https://badges.depfu.com/badges/11fecbe6ce8779b12d47de07b71005ba/count.svg)](https://depfu.com/github/lisindima/lisindmitriy.me?project_id=10432)
 # lisindmitriy.me
+
+Personal portfolio of Dmitriy Lisin.
+
+## Stack
+
+- Astro
+- TypeScript-ready Astro components
+- Static HTML/CSS
+- Netlify
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+Production build:
+
+```bash
+npm run build
+```
+
+Netlify publishes the generated `dist` directory. The site has no server functions or push-notification integration.

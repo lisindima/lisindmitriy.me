@@ -1,0 +1,166 @@
+---
+import "../styles/global.css";
+import "../styles/redesign-overrides.css";
+import "../styles/hero-overrides.css";
+import { Image } from "astro:assets";
+
+import favicon from "../assets/favicon.png";
+import netliphyImage from "../assets/Netliphy.png";
+import otpHubImage from "../assets/OTPHubMac.png";
+import covidImage from "../assets/covid.png";
+
+const projects = [
+  {
+    eyebrow: "SwiftUI · iOS · macOS",
+    title: "Netliphy",
+    description: "Manage Netlify-hosted sites from iPhone, iPad, and Mac with a native Apple-platform experience.",
+    tags: ["SwiftUI", "Netlify", "Multiplatform"],
+    image: netliphyImage,
+    links: [
+      { label: "GitHub", href: "https://github.com/lisindima/Netliphy" },
+      { label: "Website", href: "https://netliphy.lisindmitriy.ru" },
+    ],
+  },
+  {
+    eyebrow: "Security · SwiftUI",
+    title: "OTPHub",
+    description: "A lightweight one-time password app for secure authentication using TOTP and HOTP algorithms.",
+    tags: ["CryptoKit", "TOTP", "HOTP"],
+    image: otpHubImage,
+    links: [
+      { label: "GitHub", href: "https://github.com/lisindima/OTPHub" },
+      { label: "Website", href: "https://otphub.lisindmitriy.ru" },
+    ],
+  },
+  {
+    eyebrow: "Data · Healthcare",
+    title: "COVID-19 Dashboard",
+    description: "A dashboard for modeling viral spread and visualizing healthcare capacity.",
+    tags: ["R", "Shiny", "Data"],
+    image: covidImage,
+    links: [
+      { label: "GitHub", href: "https://github.com/lisindima/covidshiny" },
+      { label: "Website", href: "https://covid.lisindmitriy.ru" },
+    ],
+  },
+];
+
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/lisindima" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/lisindmitriy/" },
+  { label: "X", href: "https://twitter.com/lisindima" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Personal site of Dmitriy Lisin, iOS developer building apps with SwiftUI." />
+    <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="canonical" href="https://lisindmitriy.ru/" />
+    <title>Dmitriy Lisin — iOS Developer</title>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="floating-header">
+      <div class="glass-nav">
+        <nav aria-label="Main navigation">
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
+          <a class="nav-github" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> iOS Developer · SwiftUI</p>
+          <h1>Dmitriy<br />Lisin.</h1>
+          <p class="hero-lead">I make iOS apps with <strong>SwiftUI</strong> — focused, fast, and made to feel at home on Apple platforms.</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#work">View selected work <span aria-hidden="true">↓</span></a>
+            <a class="secondary-action" href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+          </div>
+          <div class="hero-socials" aria-label="Social links">
+            {socialLinks.map((link) => (
+              <a href={link.href} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="work" class="work-section shell">
+        <div class="section-intro">
+          <p class="eyebrow">Selected work</p>
+          <h2>Things I’ve built.</h2>
+          <p>A small selection of products and experiments across Apple platforms, security, and data.</p>
+        </div>
+
+        <div class="projects-bento">
+          {projects.map((project, index) => (
+            <article class:list={["project-card", { featured: index === 0 }]}> 
+              <div class="project-media">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  widths={[320, 480, 640, 800, 960]}
+                  sizes={index === 0 ? "(max-width: 900px) calc(100vw - 40px), 720px" : "(max-width: 900px) calc(100vw - 40px), 480px"}
+                  format="webp"
+                  quality={70}
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority={index === 0 ? "high" : "auto"}
+                />
+              </div>
+              <div class="project-info">
+                <p class="project-eyebrow">{project.eyebrow}</p>
+                <div class="project-title-row">
+                  <h3>{project.title}</h3>
+                  <span class="project-number">0{index + 1}</span>
+                </div>
+                <p class="project-description">{project.description}</p>
+                <ul class="tags" aria-label={`${project.title} technologies`}>
+                  {project.tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+                <div class="project-links">
+                  {project.links.map((link) => (
+                    <a href={link.href} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <a class="more-work" href="https://github.com/lisindima" target="_blank" rel="noreferrer">
+          <span>More experiments live on GitHub</span>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+      </section>
+
+      <section id="contact" class="contact-section shell">
+        <div class="contact-panel">
+          <p class="eyebrow">Contact</p>
+          <h2>Have something<br />interesting in mind?</h2>
+          <p>For project questions, open an issue on GitHub. For everything else, email works best.</p>
+          <div class="contact-links">
+            <a class="primary-action" href="mailto:me@lisindmitriy.ru">Send an email <span aria-hidden="true">↗</span></a>
+            <a class="secondary-action" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
+      <span>SwiftUI by day · Astro on the web</span>
+    </footer>
+  </body>
+</html>
