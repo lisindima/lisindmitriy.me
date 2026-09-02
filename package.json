@@ -13,9 +13,9 @@
     "gatsby-link": "^5.3.1",
     "gatsby-react-router-scroll": "^6.3.0",
     "gatsby-theme-portfolio-minimal": "^4.2.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "@parse/node-apn": "6.0.1"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "@parse/node-apn": "8.1.0"
   },
   "author": "Konstantin Münster <mail@konstantin.digital>",
   "license": "MIT",
