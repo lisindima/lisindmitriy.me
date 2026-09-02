@@ -94,27 +94,20 @@ const socialLinks = [
           </div>
         </div>
 
-        <div class="hero-visual" aria-label="Featured project preview">
-          <div class="device-card">
-            <div class="device-toolbar" aria-hidden="true">
-              <span></span><span></span><span></span>
-              <p>Selected work</p>
-            </div>
-            <div class="device-screen">
-              <Image
-                src={netliphyImage}
-                alt="Netliphy application preview"
-                widths={[520, 780, 1040]}
-                sizes="(max-width: 900px) calc(100vw - 64px), 520px"
-                quality={84}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
+        <aside class="hero-stack" aria-label="Development focus">
+          <div class="stack-orb" aria-hidden="true">
+            <span></span>
           </div>
-          <div class="floating-chip chip-top">SwiftUI</div>
-          <div class="floating-chip chip-bottom">iOS · macOS</div>
-        </div>
+          <p class="stack-kicker">Native by default</p>
+          <h2>Apple platforms,<br />without the noise.</h2>
+          <p class="stack-copy">SwiftUI-first product engineering with a focus on responsive interfaces, modern concurrency and platform-native interaction.</p>
+          <div class="stack-grid" aria-label="Technology stack">
+            <div><strong>SwiftUI</strong><span>Interface</span></div>
+            <div><strong>Swift</strong><span>Core</span></div>
+            <div><strong>iOS</strong><span>Primary</span></div>
+            <div><strong>macOS</strong><span>Native</span></div>
+          </div>
+        </aside>
       </section>
 
       <section id="work" class="work-section shell">
@@ -131,11 +124,13 @@ const socialLinks = [
                 <Image
                   src={project.image}
                   alt={project.title}
-                  widths={[360, 540, 720, 1080, 1440]}
+                  widths={[320, 480, 640, 800, 960]}
                   sizes={index === 0 ? "(max-width: 900px) calc(100vw - 40px), 720px" : "(max-width: 900px) calc(100vw - 40px), 480px"}
-                  quality={82}
-                  loading="lazy"
+                  format="webp"
+                  quality={70}
+                  loading="eager"
                   decoding="async"
+                  fetchpriority={index === 0 ? "high" : "auto"}
                 />
               </div>
               <div class="project-info">
