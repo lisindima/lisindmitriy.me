@@ -3,17 +3,16 @@ import "../styles/global.css";
 import { Image } from "astro:assets";
 
 import favicon from "../assets/favicon.png";
-import wavingHand from "../assets/waving-hand.png";
 import netliphyImage from "../assets/Netliphy.png";
 import otpHubImage from "../assets/OTPHubMac.png";
 import covidImage from "../assets/covid.png";
 
 const projects = [
   {
-    category: "🕹️ SwiftUI",
+    eyebrow: "SwiftUI · iOS · macOS",
     title: "Netliphy",
-    description: "Netliphy is designed to make it easy to manage your Netlify hosted sites using your iPhone, iPad and Mac!",
-    tags: ["Netlify", "iOS", "macOS"],
+    description: "Manage Netlify-hosted sites from iPhone, iPad, and Mac with a native Apple-platform experience.",
+    tags: ["SwiftUI", "Netlify", "Multiplatform"],
     image: netliphyImage,
     links: [
       { label: "GitHub", href: "https://github.com/lisindima/Netliphy" },
@@ -21,10 +20,10 @@ const projects = [
     ],
   },
   {
-    category: "🧰 SwiftUI",
+    eyebrow: "Security · SwiftUI",
     title: "OTPHub",
-    description: "A lightweight one-time password generation application for secure authentication using TOTP and HOTP algorithms.",
-    tags: ["CryptoKit", "iOS", "macOS"],
+    description: "A lightweight one-time password app for secure authentication using TOTP and HOTP algorithms.",
+    tags: ["CryptoKit", "TOTP", "HOTP"],
     image: otpHubImage,
     links: [
       { label: "GitHub", href: "https://github.com/lisindima/OTPHub" },
@@ -32,10 +31,10 @@ const projects = [
     ],
   },
   {
-    category: "🚑 Medical",
+    eyebrow: "Data · Healthcare",
     title: "COVID-19 Dashboard",
-    description: "Dashboard for modeling the spread of viral infections and healthcare opportunities.",
-    tags: ["COVID-19", "R", "Shiny"],
+    description: "A dashboard for modeling viral spread and visualizing healthcare capacity.",
+    tags: ["R", "Shiny", "Data"],
     image: covidImage,
     links: [
       { label: "GitHub", href: "https://github.com/lisindima/covidshiny" },
@@ -48,7 +47,6 @@ const socialLinks = [
   { label: "GitHub", href: "https://github.com/lisindima" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/lisindmitriy/" },
   { label: "X", href: "https://twitter.com/lisindima" },
-  { label: "Email", href: "mailto:me@lisindmitriy.ru" },
 ];
 ---
 
@@ -56,68 +54,96 @@ const socialLinks = [
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Personal site of Dmitriy Lisin, iOS developer building apps with SwiftUI." />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="canonical" href="https://lisindmitriy.ru/" />
-    <title>Lisin Dmitriy</title>
+    <title>Dmitriy Lisin — iOS Developer</title>
   </head>
   <body>
-    <header class="site-header">
-      <a class="logo" href="#hero" aria-label="Back to top">df.</a>
-      <nav aria-label="Main navigation">
-        <a href="#projects">Projects</a>
-        <a href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="contact-link" href="#contact">Contact</a>
-      </nav>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="floating-header">
+      <div class="glass-nav">
+        <a class="brand" href="#hero" aria-label="Back to top">DL.</a>
+        <nav aria-label="Main navigation">
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
+          <a href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-      <section id="hero" class="hero section-shell">
+      <section id="hero" class="hero shell">
         <div class="hero-copy">
-          <div class="hello">
-            <img src={wavingHand.src} width="38" height="38" alt="" />
-            <span>Hello</span>
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> iOS Developer · SwiftUI</p>
+          <h1>Dmitriy<br />Lisin.</h1>
+          <p class="hero-lead">I make iOS apps with <strong>SwiftUI</strong> — focused, fast, and made to feel at home on Apple platforms.</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#work">View selected work <span aria-hidden="true">↓</span></a>
+            <a class="secondary-action" href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
           </div>
-          <h1>I'm Dmitriy Lisin</h1>
-          <p class="hero-subtitle">I make iOS apps with <strong>SwiftUI</strong>.</p>
-          <p class="hero-description">Always down for a chat, shoot me a DM or an email and we'll make it happen!</p>
-          <div class="social-links" aria-label="Social links">
+          <div class="hero-socials" aria-label="Social links">
             {socialLinks.map((link) => (
-              <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined}>
-                {link.label}
-              </a>
+              <a href={link.href} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
             ))}
           </div>
         </div>
+
+        <div class="hero-visual" aria-label="Featured project preview">
+          <div class="device-card">
+            <div class="device-toolbar" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <p>Selected work</p>
+            </div>
+            <div class="device-screen">
+              <Image
+                src={netliphyImage}
+                alt="Netliphy application preview"
+                widths={[520, 780, 1040]}
+                sizes="(max-width: 900px) calc(100vw - 64px), 520px"
+                quality={84}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <div class="floating-chip chip-top">SwiftUI</div>
+          <div class="floating-chip chip-bottom">iOS · macOS</div>
+        </div>
       </section>
 
-      <section id="projects" class="section-shell projects-section">
-        <div class="section-heading">
-          <p>Selected work</p>
-          <h2>Projects</h2>
+      <section id="work" class="work-section shell">
+        <div class="section-intro">
+          <p class="eyebrow">Selected work</p>
+          <h2>Things I’ve built.</h2>
+          <p>A small selection of products and experiments across Apple platforms, security, and data.</p>
         </div>
 
-        <div class="projects-grid">
-          {projects.map((project) => (
-            <article class="project-card">
-              <div class="project-image-wrap">
+        <div class="projects-bento">
+          {projects.map((project, index) => (
+            <article class:list={["project-card", { featured: index === 0 }]}> 
+              <div class="project-media">
                 <Image
-                  class="project-image"
                   src={project.image}
                   alt={project.title}
-                  widths={[360, 540, 720, 1080]}
-                  sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 980px) calc((100vw - 62px) / 2), 360px"
+                  widths={[360, 540, 720, 1080, 1440]}
+                  sizes={index === 0 ? "(max-width: 900px) calc(100vw - 40px), 720px" : "(max-width: 900px) calc(100vw - 40px), 480px"}
                   quality={82}
                   loading="lazy"
                   decoding="async"
                 />
               </div>
-              <div class="project-content">
-                <p class="project-category">{project.category}</p>
-                <h3>{project.title}</h3>
+              <div class="project-info">
+                <p class="project-eyebrow">{project.eyebrow}</p>
+                <div class="project-title-row">
+                  <h3>{project.title}</h3>
+                  <span class="project-number">0{index + 1}</span>
+                </div>
                 <p class="project-description">{project.description}</p>
                 <ul class="tags" aria-label={`${project.title} technologies`}>
                   {project.tags.map((tag) => <li>{tag}</li>)}
@@ -132,28 +158,28 @@ const socialLinks = [
           ))}
         </div>
 
-        <a class="github-more" href="https://github.com/lisindima" target="_blank" rel="noreferrer">See more on GitHub <span aria-hidden="true">↗</span></a>
+        <a class="more-work" href="https://github.com/lisindima" target="_blank" rel="noreferrer">
+          <span>More experiments live on GitHub</span>
+          <strong aria-hidden="true">↗</strong>
+        </a>
       </section>
 
-      <section id="contact" class="section-shell contact-section">
-        <div class="contact-card">
-          <img src={favicon.src} width="72" height="72" alt="Lisin Dmitriy" />
-          <div>
-            <p class="contact-kicker">Issues?</p>
-            <h2>Lisin Dmitriy</h2>
-            <p>If you have problems with one of my projects, please create an issue in the project's GitHub repository.</p>
-            <div class="contact-actions">
-              <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
-              <a href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-            </div>
+      <section id="contact" class="contact-section shell">
+        <div class="contact-panel">
+          <p class="eyebrow">Contact</p>
+          <h2>Have something<br />interesting in mind?</h2>
+          <p>For project questions, open an issue on GitHub. For everything else, email works best.</p>
+          <div class="contact-links">
+            <a class="primary-action" href="mailto:me@lisindmitriy.ru">Send an email <span aria-hidden="true">↗</span></a>
+            <a class="secondary-action" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer shell">
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
-      <span>Built with Astro.</span>
+      <span>SwiftUI by day · Astro on the web</span>
     </footer>
   </body>
 </html>
