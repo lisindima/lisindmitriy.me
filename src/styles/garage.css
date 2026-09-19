@@ -12,6 +12,15 @@
   --garage-green: #2f7d5d;
   --garage-shadow: 0 28px 90px rgba(68, 47, 29, 0.12);
   --garage-radius: 34px;
+
+  --site-ui-surface: color-mix(in srgb, var(--garage-bg) 72%, transparent);
+  --site-ui-border: var(--garage-border);
+  --site-ui-text: var(--garage-text);
+  --site-ui-muted: var(--garage-secondary);
+  --site-ui-accent: var(--garage-orange);
+  --site-ui-accent-soft: var(--garage-orange-soft);
+  --site-ui-shadow-color: #302419;
+  --site-ui-shadow-hover: var(--garage-shadow);
 }
 
 @media (prefers-color-scheme: dark) {

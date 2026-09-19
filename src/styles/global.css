@@ -15,6 +15,15 @@
   --accent-soft: rgba(88, 86, 214, 0.12);
   --shadow: 0 30px 80px rgba(28, 28, 40, 0.1);
   --shadow-soft: 0 14px 40px rgba(28, 28, 40, 0.07);
+
+  --site-ui-surface: var(--bg-elevated);
+  --site-ui-border: var(--glass-border);
+  --site-ui-text: var(--text);
+  --site-ui-muted: var(--secondary);
+  --site-ui-accent: var(--accent);
+  --site-ui-accent-soft: var(--accent-soft);
+  --site-ui-shadow-color: #14141e;
+  --site-ui-shadow-hover: var(--shadow);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -432,13 +441,6 @@ h1 {
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transition: transform 240ms cubic-bezier(.2,.8,.2,1), box-shadow 240ms ease, border-color 240ms ease;
-}
-
-.project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow);
-  border-color: rgba(88, 86, 214, 0.22);
 }
 
 .project-card.featured {

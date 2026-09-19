@@ -8,6 +8,7 @@ import mountainsSticker from "../assets/garage-sticker-mountains.webp";
 import suvSticker from "../assets/garage-sticker-suv.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
+import "../styles/site-ui.css";
 
 interface Props {
   locale?: "ru" | "en";
@@ -138,17 +139,17 @@ const copy = isRu
     <title>{copy.title}</title>
   </head>
   <body class="garage-site">
-    <header class="garage-header">
+    <header class="garage-header site-header-shell">
       <a class="garage-brand" href={isRu ? "/garage/" : "/garage/en/"} aria-label="Garage home">
         <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
         <span>Garage</span>
       </a>
       <nav class="garage-nav" aria-label="Garage navigation">
-        <a href="#features">{copy.navFeatures}</a>
-        <a href="#privacy">{copy.navPrivacy}</a>
-        <a href="#support">{copy.navSupport}</a>
+        <a class="site-nav-link" href="#features">{copy.navFeatures}</a>
+        <a class="site-nav-link" href="#privacy">{copy.navPrivacy}</a>
+        <a class="site-nav-link" href="#support">{copy.navSupport}</a>
       </nav>
-      <a class="language-switch" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
+      <a class="language-switch site-language-switch" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
     </header>
 
     <main>
@@ -175,7 +176,7 @@ const copy = isRu
 
       <section id="features" class="feature-grid garage-shell" aria-label={copy.navFeatures}>
         <span class="sticker-art decor-sticker sticker-features" style={`--sticker-mask: url(${orangeCarSticker.src})`} aria-hidden="true"><img src={orangeCarSticker.src} alt="" width={orangeCarSticker.width} height={orangeCarSticker.height} loading="lazy" decoding="async" /></span>
-        <article class="feature-card feature-card-large">
+        <article class="feature-card feature-card-large site-lift-card">
           <span class="feature-index">01</span>
           <h2>{copy.cardOneTitle}</h2>
           <p>{copy.cardOneText}</p>
@@ -187,12 +188,12 @@ const copy = isRu
             </div>
           </div>
         </article>
-        <article class="feature-card">
+        <article class="feature-card site-lift-card">
           <span class="feature-index">02</span>
           <h2>{copy.cardTwoTitle}</h2>
           <p>{copy.cardTwoText}</p>
         </article>
-        <article class="feature-card feature-card-accent">
+        <article class="feature-card feature-card-accent site-lift-card">
           <span class="feature-index">03</span>
           <h2>{copy.cardThreeTitle}</h2>
           <p>{copy.cardThreeText}</p>
@@ -222,7 +223,7 @@ const copy = isRu
         <div class="screens-grid">
           {[copy.shot1, copy.shot2, copy.shot3].map((label, index) => (
             <figure class:list={["screenshot-slot", { raised: index === 1 }]}>
-              <div class="device-placeholder">
+              <div class="device-placeholder site-lift-card">
                 <div class="dynamic-island" aria-hidden="true"></div>
                 <div class="placeholder-ui" aria-hidden="true">
                   <span class="ui-title"></span>
@@ -239,7 +240,7 @@ const copy = isRu
 
       <section id="privacy" class="privacy-section garage-shell">
         <span class="sticker-art decor-sticker sticker-privacy" style={`--sticker-mask: url(${mountainsSticker.src})`} aria-hidden="true"><img src={mountainsSticker.src} alt="" width={mountainsSticker.width} height={mountainsSticker.height} loading="lazy" decoding="async" /></span>
-        <div class="privacy-panel">
+        <div class="privacy-panel site-lift-card">
           <div>
             <p class="garage-eyebrow">{copy.privacyEyebrow}</p>
             <h2>{copy.privacyTitle}</h2>
