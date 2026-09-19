@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import garageIcon from "../assets/garage-icon.webp";
-import garageBox from "../assets/garage-box.webp";
+import heroScene from "../assets/garage-hero-scene.webp";
 import orangeCarSticker from "../assets/garage-sticker-orange.webp";
 import roadSticker from "../assets/garage-sticker-road.webp";
 import mountainsSticker from "../assets/garage-sticker-mountains.webp";
@@ -152,9 +152,30 @@ const copy = isRu
 
     <main>
       <section class="garage-hero garage-shell">
+        <div class="garage-hero-scene" aria-hidden="true">
+          <img src={heroScene.src} alt="" width={heroScene.width} height={heroScene.height} loading="eager" fetchpriority="high" decoding="async" />
+        </div>
+        <div class="garage-hero-scene-mask" aria-hidden="true"></div>
+
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
-          <h1><span>{copy.headlineA}</span><br />{copy.headlineB}</h1>
+          <h1 class="garage-hero-title">
+            {isRu ? (
+              <>
+                <span>Все</span><br />
+                <span>документы</span><br />
+                по<br />
+                машине.<br />
+                В одном<br />
+                месте.
+              </>
+            ) : (
+              <>
+                <span>{copy.headlineA}</span><br />
+                {copy.headlineB}
+              </>
+            )}
+          </h1>
           <p class="garage-lead">{copy.lead}</p>
           <div class="garage-hero-actions">
             <span class="app-store-placeholder" aria-disabled="true" title={isRu ? "Ссылка появится после публикации приложения" : "The link will be added after the app is published"}>
@@ -166,18 +187,13 @@ const copy = isRu
           <div class="privacy-badge"><span aria-hidden="true">✓</span>{copy.privateBadge}</div>
         </div>
 
-        <div class="garage-visual-stage" aria-label={isRu ? "Ящик Garage с документами автомобиля" : "Garage box with vehicle service documents"}>
-          <div class="garage-box-glow" aria-hidden="true"></div>
-          <div class="garage-box-scene">
-            <img class="garage-hero-box" src={garageBox.src} alt={isRu ? "Ящик Garage с заказ-нарядами" : "Garage box with service records"} width={garageBox.width} height={garageBox.height} loading="eager" fetchpriority="high" decoding="async" />
-            <div class="icon-note note-top">100%<br /><span>offline</span></div>
-            <div class="icon-note note-bottom">iPhone<br /><span>native</span></div>
-          </div>
-        </div>
+        <span class="sticker-art hero-sticker-orange" style={`--sticker-mask: url(${orangeCarSticker.src})`} aria-hidden="true">
+          <img src={orangeCarSticker.src} alt="" width={orangeCarSticker.width} height={orangeCarSticker.height} loading="eager" decoding="async" />
+        </span>
       </section>
 
       <section id="features" class="feature-grid garage-shell" aria-label={copy.navFeatures}>
-        <img class="decor-sticker sticker-features" src={orangeCarSticker.src} alt="" width={orangeCarSticker.width} height={orangeCarSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
+        <span class="sticker-art decor-sticker sticker-features" style={`--sticker-mask: url(${orangeCarSticker.src})`} aria-hidden="true"><img src={orangeCarSticker.src} alt="" width={orangeCarSticker.width} height={orangeCarSticker.height} loading="lazy" decoding="async" /></span>
         <article class="feature-card feature-card-large">
           <span class="feature-index">01</span>
           <h2>{copy.cardOneTitle}</h2>
@@ -216,7 +232,7 @@ const copy = isRu
       </section>
 
       <section id="screenshots" class="screens-section garage-shell">
-        <img class="decor-sticker sticker-screens" src={roadSticker.src} alt="" width={roadSticker.width} height={roadSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
+        <span class="sticker-art decor-sticker sticker-screens" style={`--sticker-mask: url(${roadSticker.src})`} aria-hidden="true"><img src={roadSticker.src} alt="" width={roadSticker.width} height={roadSticker.height} loading="lazy" decoding="async" /></span>
         <div class="section-heading compact">
           <p class="garage-eyebrow">{copy.screensEyebrow}</p>
           <h2>{copy.screensTitle}</h2>
@@ -241,7 +257,7 @@ const copy = isRu
       </section>
 
       <section id="privacy" class="privacy-section garage-shell">
-        <img class="decor-sticker sticker-privacy" src={mountainsSticker.src} alt="" width={mountainsSticker.width} height={mountainsSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
+        <span class="sticker-art decor-sticker sticker-privacy" style={`--sticker-mask: url(${mountainsSticker.src})`} aria-hidden="true"><img src={mountainsSticker.src} alt="" width={mountainsSticker.width} height={mountainsSticker.height} loading="lazy" decoding="async" /></span>
         <div class="privacy-panel">
           <div>
             <p class="garage-eyebrow">{copy.privacyEyebrow}</p>
@@ -256,7 +272,7 @@ const copy = isRu
       </section>
 
       <section id="support" class="support-section garage-shell">
-        <img class="decor-sticker sticker-support" src={suvSticker.src} alt="" width={suvSticker.width} height={suvSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
+        <span class="sticker-art decor-sticker sticker-support" style={`--sticker-mask: url(${suvSticker.src})`} aria-hidden="true"><img src={suvSticker.src} alt="" width={suvSticker.width} height={suvSticker.height} loading="lazy" decoding="async" /></span>
         <div>
           <p class="garage-eyebrow">{copy.supportEyebrow}</p>
           <h2>{copy.supportTitle}</h2>
