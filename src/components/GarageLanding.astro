@@ -6,6 +6,7 @@ import orangeCarSticker from "../assets/garage-sticker-orange.webp";
 import roadSticker from "../assets/garage-sticker-road.webp";
 import mountainsSticker from "../assets/garage-sticker-mountains.webp";
 import suvSticker from "../assets/garage-sticker-suv.webp";
+import "../styles/typography.css";
 import "../styles/garage.css";
 
 interface Props {
@@ -54,14 +55,14 @@ const copy = isRu
       shot1: "Главная / автомобиль",
       shot2: "Распознанный заказ‑наряд",
       shot3: "История и напоминания",
-      privacyEyebrow: "Privacy by design",
+      privacyEyebrow: "Приватность по умолчанию",
       privacyTitle: "Ваши документы не должны становиться чьими‑то данными.",
       privacyText: "Распознавание и обработка выполняются локально. Garage не требует аккаунт, не отправляет заказ‑наряды на сервер, не использует рекламные SDK и не собирает аналитику о пользователях.",
       privacyLink: "Политика конфиденциальности",
-      privacyChip1: "On-device processing",
-      privacyChip2: "No analytics",
-      privacyChip3: "No ads",
-      privacyChip4: "No account",
+      privacyChip1: "Обработка на устройстве",
+      privacyChip2: "Без аналитики",
+      privacyChip3: "Без рекламы",
+      privacyChip4: "Без аккаунта",
       supportEyebrow: "Поддержка",
       supportTitle: "Есть вопрос по Garage?",
       supportText: "Напишите напрямую разработчику. Для вопросов о данных и приватности используется тот же контакт.",
@@ -139,7 +140,7 @@ const copy = isRu
   <body class="garage-site">
     <header class="garage-header">
       <a class="garage-brand" href={isRu ? "/garage/" : "/garage/en/"} aria-label="Garage home">
-        <Image src={garageIcon} alt="" width={34} height={34} format="webp" quality={90} />
+        <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
         <span>Garage</span>
       </a>
       <nav class="garage-nav" aria-label="Garage navigation">
