@@ -44,7 +44,7 @@
   color: var(--secondary);
   font-size: 0.76rem;
   font-weight: 720;
-  letter-spacing: 0.085em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -54,7 +54,7 @@
   margin-bottom: 20px;
   font-size: clamp(2.4rem, 4.3vw, 4.4rem);
   line-height: 0.94;
-  letter-spacing: -0.06em;
+  letter-spacing: var(--tracking-heading);
 }
 
 .stack-copy {
@@ -87,7 +87,7 @@
 
 .stack-grid strong {
   font-size: 0.92rem;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-title);
 }
 
 .stack-grid span {
