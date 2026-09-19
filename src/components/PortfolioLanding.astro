@@ -1,0 +1,295 @@
+---
+import "../styles/typography.css";
+import "../styles/global.css";
+import "../styles/redesign-overrides.css";
+import "../styles/hero-overrides.css";
+import { Image } from "astro:assets";
+
+import favicon from "../assets/favicon.png";
+import netliphyImage from "../assets/Netliphy.png";
+import otpHubImage from "../assets/OTPHubMac.png";
+import covidImage from "../assets/covid.png";
+import garageImage from "../assets/garage-hero-scene.webp";
+
+interface Props {
+  locale?: "ru" | "en";
+}
+
+const { locale = "ru" } = Astro.props;
+const isRu = locale === "ru";
+const alternateHref = isRu ? "/en/" : "/";
+const canonicalHref = isRu ? "https://lisindmitriy.ru/" : "https://lisindmitriy.ru/en/";
+
+const copy = isRu
+  ? {
+      title: "Дмитрий Лисин — iOS-разработчик",
+      description: "Сайт Дмитрия Лисина — iOS-разработчика, создающего приложения на SwiftUI.",
+      language: "EN",
+      navWork: "Проекты",
+      navContact: "Контакты",
+      navAria: "Основная навигация",
+      heroEyebrow: "iOS-разработчик · SwiftUI",
+      nameFirst: "Дмитрий",
+      nameLast: "Лисин.",
+      heroLeadBefore: "Делаю iOS-приложения на",
+      heroLeadAfter: "— быстрые, сфокусированные и органичные для платформ Apple.",
+      heroAction: "Посмотреть проекты",
+      socialAria: "Социальные сети",
+      workEyebrow: "Избранные проекты",
+      workTitle: "Что я сделал.",
+      workText: "Небольшая подборка продуктов и экспериментов для платформ Apple, безопасности и данных.",
+      moreWork: "Больше экспериментов — на GitHub",
+      contactEyebrow: "Контакты",
+      contactTitleA: "Есть интересная",
+      contactTitleB: "идея?",
+      contactText: "По вопросам проектов можно написать в GitHub. Для всего остального удобнее всего почта.",
+      emailAction: "Написать письмо",
+      footerLeft: "Дмитрий Лисин",
+      footerRight: "SwiftUI в приложениях · Astro в вебе",
+      technologies: "технологии",
+      website: "Сайт",
+    }
+  : {
+      title: "Dmitriy Lisin — iOS Developer",
+      description: "Personal site of Dmitriy Lisin, iOS developer building apps with SwiftUI.",
+      language: "RU",
+      navWork: "Work",
+      navContact: "Contact",
+      navAria: "Main navigation",
+      heroEyebrow: "iOS Developer · SwiftUI",
+      nameFirst: "Dmitriy",
+      nameLast: "Lisin.",
+      heroLeadBefore: "I make iOS apps with",
+      heroLeadAfter: "— focused, fast, and made to feel at home on Apple platforms.",
+      heroAction: "View selected work",
+      socialAria: "Social links",
+      workEyebrow: "Selected work",
+      workTitle: "Things I’ve built.",
+      workText: "A small selection of products and experiments across Apple platforms, security, and data.",
+      moreWork: "More experiments live on GitHub",
+      contactEyebrow: "Contact",
+      contactTitleA: "Have something",
+      contactTitleB: "interesting in mind?",
+      contactText: "For project questions, open an issue on GitHub. For everything else, email works best.",
+      emailAction: "Send an email",
+      footerLeft: "Dmitriy Lisin",
+      footerRight: "SwiftUI by day · Astro on the web",
+      technologies: "technologies",
+      website: "Website",
+    };
+
+const projects = isRu
+  ? [
+      {
+        eyebrow: "SwiftUI · iOS · On-device AI",
+        title: "Garage",
+        description: "Превращает заказ-наряды в приватную историю обслуживания: сканирует документы, структурирует работы и запчасти, хранит оригиналы и помогает не забывать о следующем ТО — без отправки данных в облако.",
+        tags: ["SwiftUI", "Vision", "Core ML"],
+        image: garageImage,
+        links: [{ label: copy.website, href: "/garage/", external: false }],
+      },
+      {
+        eyebrow: "SwiftUI · iOS · macOS",
+        title: "Netliphy",
+        description: "Управление сайтами на Netlify с iPhone, iPad и Mac в нативном интерфейсе для платформ Apple.",
+        tags: ["SwiftUI", "Netlify", "Multiplatform"],
+        image: netliphyImage,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/Netliphy", external: true },
+          { label: copy.website, href: "https://netliphy.lisindmitriy.ru", external: true },
+        ],
+      },
+      {
+        eyebrow: "Безопасность · SwiftUI",
+        title: "OTPHub",
+        description: "Лёгкое приложение для одноразовых паролей и безопасной аутентификации по алгоритмам TOTP и HOTP.",
+        tags: ["CryptoKit", "TOTP", "HOTP"],
+        image: otpHubImage,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/OTPHub", external: true },
+          { label: copy.website, href: "https://otphub.lisindmitriy.ru", external: true },
+        ],
+      },
+      {
+        eyebrow: "Данные · Здравоохранение",
+        title: "COVID-19 Dashboard",
+        description: "Дашборд для моделирования распространения вируса и визуализации нагрузки на систему здравоохранения.",
+        tags: ["R", "Shiny", "Data"],
+        image: covidImage,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/covidshiny", external: true },
+          { label: copy.website, href: "https://covid.lisindmitriy.ru", external: true },
+        ],
+      },
+    ]
+  : [
+      {
+        eyebrow: "SwiftUI · iOS · On-device AI",
+        title: "Garage",
+        description: "Turn service orders into a private car maintenance history — scan documents, structure work and parts, keep originals, and track future service without sending data to the cloud.",
+        tags: ["SwiftUI", "Vision", "Core ML"],
+        image: garageImage,
+        links: [{ label: copy.website, href: "/garage/en/", external: false }],
+      },
+      {
+        eyebrow: "SwiftUI · iOS · macOS",
+        title: "Netliphy",
+        description: "Manage Netlify-hosted sites from iPhone, iPad, and Mac with a native Apple-platform experience.",
+        tags: ["SwiftUI", "Netlify", "Multiplatform"],
+        image: netliphyImage,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/Netliphy", external: true },
+          { label: copy.website, href: "https://netliphy.lisindmitriy.ru", external: true },
+        ],
+      },
+      {
+        eyebrow: "Security · SwiftUI",
+        title: "OTPHub",
+        description: "A lightweight one-time password app for secure authentication using TOTP and HOTP algorithms.",
+        tags: ["CryptoKit", "TOTP", "HOTP"],
+        image: otpHubImage,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/OTPHub", external: true },
+          { label: copy.website, href: "https://otphub.lisindmitriy.ru", external: true },
+        ],
+      },
+      {
+        eyebrow: "Data · Healthcare",
+        title: "COVID-19 Dashboard",
+        description: "A dashboard for modeling viral spread and visualizing healthcare capacity.",
+        tags: ["R", "Shiny", "Data"],
+        image: covidImage,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/covidshiny", external: true },
+          { label: copy.website, href: "https://covid.lisindmitriy.ru", external: true },
+        ],
+      },
+    ];
+
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/lisindima" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/lisindmitriy/" },
+  { label: "X", href: "https://twitter.com/lisindima" },
+];
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={copy.description} />
+    <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="canonical" href={canonicalHref} />
+    <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/" />
+    <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://lisindmitriy.ru/" />
+    <title>{copy.title}</title>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="floating-header">
+      <div class="glass-nav portfolio-nav">
+        <nav aria-label={copy.navAria}>
+          <a href="#work">{copy.navWork}</a>
+          <a href="#contact">{copy.navContact}</a>
+          <a class="nav-github" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+        <a class="portfolio-language-switch" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {copy.heroEyebrow}</p>
+          <h1>{copy.nameFirst}<br />{copy.nameLast}</h1>
+          <p class="hero-lead">{copy.heroLeadBefore} <strong>SwiftUI</strong> {copy.heroLeadAfter}</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#work">{copy.heroAction} <span aria-hidden="true">↓</span></a>
+            <a class="secondary-action" href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+          </div>
+          <div class="hero-socials" aria-label={copy.socialAria}>
+            {socialLinks.map((link) => (
+              <a href={link.href} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="work" class="work-section shell">
+        <div class="section-intro">
+          <p class="eyebrow">{copy.workEyebrow}</p>
+          <h2>{copy.workTitle}</h2>
+          <p>{copy.workText}</p>
+        </div>
+
+        <div class="projects-bento">
+          {projects.map((project, index) => (
+            <article class:list={["project-card", { featured: index === 0 }]}>
+              <div class="project-media">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  widths={[320, 480, 640, 800, 960]}
+                  sizes={index === 0 ? "(max-width: 900px) calc(100vw - 40px), 720px" : "(max-width: 900px) calc(100vw - 40px), 480px"}
+                  format="webp"
+                  quality={70}
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority={index === 0 ? "high" : "auto"}
+                />
+              </div>
+              <div class="project-info">
+                <p class="project-eyebrow">{project.eyebrow}</p>
+                <div class="project-title-row">
+                  <h3>{project.title}</h3>
+                  <span class="project-number">0{index + 1}</span>
+                </div>
+                <p class="project-description">{project.description}</p>
+                <ul class="tags" aria-label={`${project.title} ${copy.technologies}`}>
+                  {project.tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+                <div class="project-links">
+                  {project.links.map((link) => (
+                    <a
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noreferrer" : undefined}
+                    >{link.label} <span aria-hidden="true">↗</span></a>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <a class="more-work" href="https://github.com/lisindima" target="_blank" rel="noreferrer">
+          <span>{copy.moreWork}</span>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+      </section>
+
+      <section id="contact" class="contact-section shell">
+        <div class="contact-panel">
+          <p class="eyebrow">{copy.contactEyebrow}</p>
+          <h2>{copy.contactTitleA}<br />{copy.contactTitleB}</h2>
+          <p>{copy.contactText}</p>
+          <div class="contact-links">
+            <a class="primary-action" href="mailto:me@lisindmitriy.ru">{copy.emailAction} <span aria-hidden="true">↗</span></a>
+            <a class="secondary-action" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <span>© {new Date().getFullYear()} {copy.footerLeft}</span>
+      <span>{copy.footerRight}</span>
+    </footer>
+  </body>
+</html>
