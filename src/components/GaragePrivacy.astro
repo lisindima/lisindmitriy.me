@@ -20,6 +20,7 @@ const copy = isRu
       description: "Политика конфиденциальности приложения Garage. Garage не собирает пользовательские данные, а обработка документов выполняется локально на устройстве.",
       back: "← Garage",
       lang: "EN",
+      backToPortfolio: "На главную",
       eyebrow: "Политика конфиденциальности",
       title: "Приватность — не настройка. Это архитектура Garage.",
       updated: "Дата вступления в силу: 19 сентября 2026",
@@ -41,6 +42,7 @@ const copy = isRu
       description: "Garage Privacy Policy. Garage does not collect user data, and service-document processing happens locally on the device.",
       back: "← Garage",
       lang: "RU",
+      backToPortfolio: "Back to portfolio",
       eyebrow: "Privacy Policy",
       title: "Privacy is not a setting. It is how Garage is built.",
       updated: "Effective date: September 19, 2026",
@@ -74,11 +76,14 @@ const copy = isRu
   </head>
   <body class="garage-site privacy-page">
     <header class="garage-header privacy-header site-header-shell">
-      <a class="garage-brand" href={homeHref}>
-        <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
-        <span>Garage</span>
-      </a>
-      <a class="language-switch site-language-switch" href={alternateHref}>{copy.lang}</a>
+      <div class="site-header-start">
+        <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>←</a>
+        <a class="garage-brand" href={homeHref}>
+          <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
+          <span>Garage</span>
+        </a>
+      </div>
+      <a class="site-language-switch site-header-end" href={alternateHref}>{copy.lang}</a>
     </header>
 
     <main class="privacy-shell">
