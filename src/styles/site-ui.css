@@ -80,13 +80,6 @@
   box-shadow: none;
 }
 
-.site-header-shell .site-nav-link.nav-github {
-  border-color: transparent;
-  background: transparent;
-  color: var(--site-ui-muted);
-  box-shadow: none;
-}
-
 .site-header-shell .site-language-switch {
   display: inline-flex;
   align-items: center;
