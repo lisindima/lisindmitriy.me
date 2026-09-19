@@ -87,54 +87,71 @@ body.garage-site::before {
 
 .garage-hero {
   position: relative;
-  min-height: clamp(840px, 78vw, 990px);
-  display: flex;
+  min-height: calc(100svh - 76px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr);
   align-items: center;
-  padding-block: 72px 92px;
-  overflow: hidden;
+  gap: clamp(28px, 4vw, 72px);
+  padding-block: 86px 100px;
+  overflow: visible;
   isolation: isolate;
-  color: #f8f3ec;
-  background: #11100e;
 }
-.garage-hero-scene { position: absolute; inset: 0; z-index: -3; overflow: hidden; }
-.garage-hero-scene img { width: 100%; height: 100%; object-fit: cover; object-position: center; transform: scale(1.015); filter: saturate(.98) contrast(1.02); }
-.garage-hero-scene-mask {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(17,16,14,.18) 0%, transparent 13%, transparent 86%, #11100e 100%),
-    linear-gradient(90deg, rgba(17,16,14,.74) 0%, rgba(17,16,14,.5) 33%, rgba(17,16,14,.18) 48%, transparent 62%);
-}
-.garage-hero-copy { position: relative; z-index: 2; width: min(610px, 52%); }
-.garage-hero-copy::before {
+.garage-hero::after {
   content: "";
   position: absolute;
-  z-index: -1;
-  inset: -46px -72px -50px -64px;
-  background: linear-gradient(90deg, #11100e 0%, rgba(17,16,14,.98) 72%, rgba(17,16,14,.78) 84%, transparent 100%);
-  filter: blur(8px);
-  border-radius: 34px;
+  z-index: -2;
+  width: 58%;
+  aspect-ratio: 1.15;
+  right: -8%;
+  top: 50%;
+  transform: translateY(-48%);
+  border-radius: 46%;
+  background: radial-gradient(circle, rgba(232,111,47,.16), rgba(232,111,47,.055) 48%, transparent 73%);
+  filter: blur(34px);
+  pointer-events: none;
 }
+.garage-hero-copy { position: relative; z-index: 3; min-width: 0; }
 .garage-eyebrow { margin: 0 0 22px; color: var(--garage-secondary); font-size: .76rem; font-weight: 760; letter-spacing: .095em; text-transform: uppercase; }
-.garage-hero .garage-eyebrow { color: #aaa299; }
-.garage-hero h1 { margin: 0 0 28px; font-size: clamp(4.55rem, 8.35vw, 7.9rem); line-height: .89; letter-spacing: -.075em; font-weight: 830; }
+.garage-hero h1 { margin: 0 0 28px; font-size: clamp(4.3rem, 8.4vw, 8rem); line-height: .89; letter-spacing: -.075em; font-weight: 830; }
 .garage-hero h1 span { color: var(--garage-orange); }
 .garage-lead { max-width: 720px; margin: 0 0 30px; color: var(--garage-secondary); font-size: clamp(1.24rem, 2vw, 1.62rem); line-height: 1.32; letter-spacing: -.025em; }
-.garage-hero .garage-lead { color: #aaa299; max-width: 600px; }
 .garage-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .app-store-placeholder { min-height: 58px; padding: 8px 18px 8px 12px; display: inline-flex; align-items: center; gap: 12px; border-radius: 17px; background: var(--garage-text); color: var(--garage-bg); box-shadow: var(--garage-shadow); opacity: .88; cursor: default; }
-.garage-hero .app-store-placeholder { background: #f7f2eb; color: #11100e; opacity: 1; box-shadow: 0 18px 44px rgba(0,0,0,.22); }
 .app-store-mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 10px; font-size: .66rem; }
 .app-store-placeholder small, .app-store-placeholder strong { display: block; }
 .app-store-placeholder small { font-size: .64rem; line-height: 1; opacity: .75; }
 .app-store-placeholder strong { margin-top: 4px; font-size: .98rem; line-height: 1; }
 .garage-text-link { font-size: .92rem; font-weight: 720; color: var(--garage-secondary); padding: 16px 8px; }
-.garage-hero .garage-text-link { color: #f5f0e8; }
 .garage-text-link:hover { color: var(--garage-orange); }
 .privacy-badge { width: max-content; max-width: 100%; margin-top: 24px; padding: 10px 13px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(47, 125, 93, .18); border-radius: 999px; background: rgba(47, 125, 93, .08); color: var(--garage-green); font-size: .78rem; font-weight: 720; }
-.garage-hero .privacy-badge { border-color: rgba(49, 222, 156, .28); background: rgba(16, 85, 60, .23); color: #42d69c; }
+
+.garage-hero-visual {
+  position: relative;
+  z-index: 1;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  margin-right: -7vw;
+  pointer-events: none;
+}
+.garage-hero-visual-glow {
+  position: absolute;
+  z-index: -1;
+  width: 82%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,111,47,.22), rgba(232,111,47,.06) 48%, transparent 72%);
+  filter: blur(34px);
+}
+.garage-hero-visual img {
+  width: min(690px, 56vw);
+  max-width: none;
+  height: auto;
+  transform: rotate(-.45deg) translateY(8px);
+  filter: drop-shadow(0 34px 64px rgba(45,28,14,.22));
+  -webkit-mask-image: radial-gradient(ellipse 74% 72% at 52% 48%, #000 56%, rgba(0,0,0,.96) 68%, transparent 100%);
+  mask-image: radial-gradient(ellipse 74% 72% at 52% 48%, #000 56%, rgba(0,0,0,.96) 68%, transparent 100%);
+}
 
 .sticker-art {
   position: absolute;
@@ -145,8 +162,8 @@ body.garage-site::before {
   user-select: none;
   isolation: isolate;
   transform: rotate(var(--sticker-angle, 0deg));
-  transition: transform .24s ease, filter .24s ease;
-  filter: drop-shadow(0 18px 22px rgba(25, 17, 11, .22));
+  transition: transform .2s ease, filter .2s ease;
+  filter: drop-shadow(0 18px 22px rgba(25,17,11,.2));
 }
 .sticker-art > img { display: block; width: 100%; height: auto; }
 .sticker-art::after {
@@ -156,23 +173,27 @@ body.garage-site::before {
   z-index: 2;
   pointer-events: none;
   opacity: 0;
-  background: linear-gradient(112deg, transparent 18%, rgba(255,255,255,.08) 34%, rgba(255,255,255,.95) 49%, rgba(168,224,255,.62) 56%, transparent 72%);
-  transform: translateX(-135%);
+  background:
+    radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%),
+      rgba(255,255,255,.5) 0%,
+      rgba(190,228,255,.18) 13%,
+      rgba(255,202,152,.09) 25%,
+      transparent 48%);
   -webkit-mask: var(--sticker-mask) center / contain no-repeat;
   mask: var(--sticker-mask) center / contain no-repeat;
+  transition: opacity .14s ease;
 }
 .feature-grid, .screens-section, .privacy-section, .support-section { position: relative; overflow: visible; }
-.sticker-features { width: clamp(150px, 15vw, 220px); top: -12px; right: -62px; --sticker-angle: 8deg; }
-.sticker-screens { width: clamp(138px, 14vw, 205px); top: 34%; right: -64px; --sticker-angle: 9deg; }
-.sticker-privacy { width: clamp(126px, 12vw, 182px); top: 28px; right: 34px; --sticker-angle: -7deg; }
-.sticker-support { width: clamp(142px, 14vw, 210px); top: 8px; right: 268px; --sticker-angle: 7deg; }
+.sticker-features { width: clamp(170px, 16.5vw, 245px); top: -18px; right: -72px; --sticker-angle: 8deg; }
+.sticker-screens { width: clamp(158px, 15.5vw, 230px); top: 33%; right: -72px; --sticker-angle: 9deg; }
+.sticker-privacy { width: clamp(145px, 13.5vw, 205px); top: 18px; right: 28px; --sticker-angle: -7deg; }
+.sticker-support { width: clamp(160px, 15.5vw, 235px); top: 0; right: 250px; --sticker-angle: 7deg; }
 @media (hover: hover) and (pointer: fine) {
-  .sticker-art:hover { transform: rotate(var(--sticker-angle, 0deg)) scale(1.055); filter: drop-shadow(0 24px 28px rgba(25,17,11,.28)); }
-  .sticker-art:hover::after { opacity: 1; animation: sticker-shimmer .78s ease-out both; }
-}
-@keyframes sticker-shimmer {
-  0% { transform: translateX(-135%); }
-  100% { transform: translateX(135%); }
+  .sticker-art:hover {
+    transform: rotate(var(--sticker-angle, 0deg)) scale(1.024);
+    filter: drop-shadow(0 22px 26px rgba(25,17,11,.24)) brightness(1.015) saturate(1.025);
+  }
+  .sticker-art:hover::after { opacity: .52; }
 }
 
 .feature-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 18px; padding-block: 58px 100px; }
@@ -256,37 +277,37 @@ body.garage-site::before {
 @media (max-width: 900px) {
   .garage-header { grid-template-columns: 1fr auto; }
   .garage-nav { display: none; }
-  .garage-hero { min-height: 980px; align-items: flex-start; padding-top: 96px; }
-  .garage-hero-scene img { object-position: 64% center; }
-  .garage-hero-scene-mask { background: linear-gradient(180deg, rgba(17,16,14,.1) 0%, rgba(17,16,14,.24) 48%, #11100e 92%); }
-  .garage-hero-copy { width: min(640px, 88%); }
-  .garage-hero-copy::before { inset: -34px -44px -44px -44px; background: linear-gradient(90deg, #11100e 0%, rgba(17,16,14,.94) 82%, transparent 100%); }
-  .sticker-features { right: -10px; top: 18px; }
-  .sticker-screens { right: -10px; }
-  .sticker-support { right: 190px; }
+  .garage-hero { grid-template-columns: minmax(0,1fr) minmax(300px,.72fr); gap: 18px; padding-top: 96px; }
+  .garage-hero h1 { font-size: clamp(3.9rem, 9.5vw, 6rem); }
+  .garage-hero-visual { min-height: 430px; margin-right: -14vw; }
+  .garage-hero-visual img { width: min(570px, 66vw); }
+  .sticker-features { right: -12px; top: 12px; }
+  .sticker-screens { right: -12px; }
+  .sticker-support { right: 180px; }
   .feature-card, .feature-card-large, .feature-card-accent { grid-column: 1 / -1; }
   .privacy-panel { grid-template-columns: 1fr; gap: 34px; }
   .support-section { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .garage-hero { min-height: auto; display: block; padding-block: 96px 76px; }
+  .garage-hero::after, .garage-hero-visual { display: none; }
 }
 
 @media (max-width: 680px) {
   .garage-shell, .privacy-shell { width: min(100% - 28px, 1180px); }
   .garage-header { min-height: 56px; margin-top: 8px; top: 8px; width: calc(100% - 16px); }
   .garage-brand img { width: 31px; height: 31px; }
-  .garage-hero { min-height: 1040px; padding-block: 82px 64px; }
-  .garage-hero-scene img { object-position: 67% center; transform: scale(1.04); }
-  .garage-hero-copy { width: 100%; }
-  .garage-hero-copy::before { inset: -24px -16px -36px -20px; background: linear-gradient(180deg, #11100e 0%, rgba(17,16,14,.96) 74%, rgba(17,16,14,.62) 90%, transparent 100%); filter: blur(6px); }
-  .garage-hero h1 { font-size: clamp(3.35rem, 17vw, 5rem); }
-  .garage-lead { font-size: 1.12rem; }
+  .garage-hero { padding-block: 82px 64px; }
+  .garage-hero h1 { font-size: clamp(3.65rem, 18vw, 5.6rem); }
+  .garage-lead { font-size: 1.18rem; }
   .garage-hero-actions { align-items: stretch; flex-direction: column; }
   .app-store-placeholder { width: 100%; justify-content: center; }
   .garage-text-link { text-align: center; }
   .sticker-art { filter: drop-shadow(0 12px 14px rgba(25,17,11,.18)); }
-  .sticker-features { width: 132px; top: 4px; right: -4px; }
-  .sticker-screens { width: 116px; top: 28%; right: -6px; }
-  .sticker-privacy { width: 110px; top: -18px; right: 10px; }
-  .sticker-support { width: 122px; top: -28px; right: 12px; }
+  .sticker-features { width: 145px; top: 0; right: -8px; }
+  .sticker-screens { width: 128px; top: 28%; right: -8px; }
+  .sticker-privacy { width: 120px; top: -22px; right: 8px; }
+  .sticker-support { width: 132px; top: -30px; right: 8px; }
   .feature-grid { padding-bottom: 58px; }
   .feature-card { min-height: 300px; padding: 24px; border-radius: 28px; }
   .feature-card-large { min-height: 480px; }
