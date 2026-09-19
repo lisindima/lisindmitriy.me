@@ -273,12 +273,22 @@ const copy = isRu
       garageStickers.forEach((sticker) => {
         sticker.addEventListener("pointermove", (event) => {
           const rect = sticker.getBoundingClientRect();
-          const x = ((event.clientX - rect.left) / rect.width) * 100;
-          const y = ((event.clientY - rect.top) / rect.height) * 100;
-          sticker.style.setProperty("--shine-x", `${x.toFixed(1)}%`);
-          sticker.style.setProperty("--shine-y", `${y.toFixed(1)}%`);
+          const normalizedX = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+          const normalizedY = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+          const shineX = normalizedX * 100;
+          const shineY = normalizedY * 100;
+          const tiltX = (0.5 - normalizedY) * 5;
+          const tiltY = (normalizedX - 0.5) * 5;
+
+          sticker.style.setProperty("--shine-x", `${shineX.toFixed(1)}%`);
+          sticker.style.setProperty("--shine-y", `${shineY.toFixed(1)}%`);
+          sticker.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+          sticker.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
         });
+
         sticker.addEventListener("pointerleave", () => {
+          sticker.style.setProperty("--tilt-x", "0deg");
+          sticker.style.setProperty("--tilt-y", "0deg");
           sticker.style.removeProperty("--shine-x");
           sticker.style.removeProperty("--shine-y");
         });
