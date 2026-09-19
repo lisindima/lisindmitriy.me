@@ -112,7 +112,9 @@ a {
 
 .floating-header {
   position: fixed;
-  inset: 18px 0 auto;
+  top: max(18px, env(safe-area-inset-top));
+  right: env(safe-area-inset-right);
+  left: env(safe-area-inset-left);
   z-index: 100;
   display: flex;
   justify-content: center;
@@ -841,5 +843,16 @@ h1 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* iPhone landscape: keep portfolio content clear of the notch and rounded screen edges. */
+@supports (padding: env(safe-area-inset-left)) {
+  @media (orientation: landscape) {
+    body {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
   }
 }
