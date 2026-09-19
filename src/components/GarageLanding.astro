@@ -164,7 +164,7 @@ const copy = isRu
         <div class="garage-icon-stage" aria-label={copy.iconAlt}>
           <div class="icon-glow" aria-hidden="true"></div>
           <div class="garage-icon-group">
-            <Image class="garage-app-icon" src={garageIcon} alt={copy.iconAlt} width={300} height={300} format="webp" quality={90} loading="eager" fetchpriority="high" />
+            <img class="garage-app-icon" src={garageIcon.src} alt={copy.iconAlt} width="640" height="640" loading="eager" fetchpriority="high" decoding="async" />
             <div class="icon-note note-top">100%<br /><span>offline</span></div>
             <div class="icon-note note-bottom">iPhone<br /><span>native</span></div>
           </div>
