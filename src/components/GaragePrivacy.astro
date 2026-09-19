@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import garageIcon from "../assets/garage-icon.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
+import "../styles/site-ui.css";
 
 interface Props {
   locale?: "ru" | "en";
@@ -72,12 +73,12 @@ const copy = isRu
     <title>{copy.pageTitle}</title>
   </head>
   <body class="garage-site privacy-page">
-    <header class="garage-header privacy-header">
+    <header class="garage-header privacy-header site-header-shell">
       <a class="garage-brand" href={homeHref}>
         <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
         <span>Garage</span>
       </a>
-      <a class="language-switch" href={alternateHref}>{copy.lang}</a>
+      <a class="language-switch site-language-switch" href={alternateHref}>{copy.lang}</a>
     </header>
 
     <main class="privacy-shell">
