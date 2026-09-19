@@ -73,19 +73,10 @@ body.garage-site::before {
   position: sticky;
   top: max(14px, env(safe-area-inset-top));
   z-index: 100;
-  width: min(940px, calc(100% - 28px));
-  min-height: 62px;
   margin: 14px auto 0;
-  padding: 8px 10px 8px 12px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  border: 1px solid var(--garage-border);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--garage-bg) 72%, transparent);
-  box-shadow: 0 10px 35px rgba(48, 36, 25, .08);
-  backdrop-filter: blur(24px) saturate(170%);
-  -webkit-backdrop-filter: blur(24px) saturate(170%);
 }
 .garage-brand { display: inline-flex; align-items: center; gap: 10px; width: max-content; font-weight: 800; letter-spacing: var(--tracking-title); }
 .garage-brand img { width: 34px; height: 34px; border-radius: 9px; object-fit: cover; image-rendering: auto; backface-visibility: hidden; box-shadow: 0 4px 12px rgba(52, 35, 20, .16); }
@@ -362,9 +353,7 @@ body.garage-site::before {
   .garage-header {
     position: sticky;
     top: max(8px, env(safe-area-inset-top));
-    min-height: 56px;
     margin-top: 8px;
-    width: calc(100% - 16px);
   }
   .garage-brand img { width: 31px; height: 31px; }
   .garage-hero { padding-block: 76px 64px; }
