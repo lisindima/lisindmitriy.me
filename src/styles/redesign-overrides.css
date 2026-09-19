@@ -253,3 +253,20 @@
     padding-inline: 12px;
   }
 }
+
+.portfolio-header .nav-github {
+  border-color: rgba(255, 255, 255, 0.30);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.10)),
+    var(--accent-soft);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.36);
+}
+
+@media (prefers-color-scheme: dark) {
+  .portfolio-header .nav-github {
+    border-color: rgba(255, 255, 255, 0.10);
+    background-color: rgba(255, 255, 255, 0.065);
+  }
+}
+
