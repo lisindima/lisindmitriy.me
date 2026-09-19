@@ -100,15 +100,21 @@ body.garage-site::before {
 .garage-text-link:hover { color: var(--garage-orange); }
 .privacy-badge { width: max-content; max-width: 100%; margin-top: 24px; padding: 10px 13px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(47, 125, 93, .18); border-radius: 999px; background: rgba(47, 125, 93, .08); color: var(--garage-green); font-size: .78rem; font-weight: 720; }
 
-.garage-icon-stage { --garage-icon-size: min(300px, 64vw); position: relative; display: grid; place-items: center; min-height: 480px; isolation: isolate; }
-.icon-glow { position: absolute; z-index: -1; width: min(390px, 88%); aspect-ratio: 1; border-radius: 44%; background: radial-gradient(circle, rgba(232, 111, 47, .23), rgba(232,111,47,.075) 44%, transparent 72%); filter: blur(34px); opacity: .92; transform: scale(1.08); }
-.garage-icon-stage::before { content: none; }
-.garage-icon-group { position: relative; width: var(--garage-icon-size); height: var(--garage-icon-size); flex: 0 0 var(--garage-icon-size); }
-.garage-app-icon { width: 100%; height: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 23%; box-shadow: 0 34px 76px rgba(66, 42, 20, .24), 0 8px 26px rgba(66, 42, 20, .12); transform: rotate(-1deg); }
-.icon-note { position: absolute; min-width: 88px; padding: 12px 14px; border: 1px solid var(--garage-border); border-radius: 18px; background: color-mix(in srgb, var(--garage-bg) 82%, transparent); box-shadow: 0 12px 36px rgba(48, 36, 25, .1); backdrop-filter: blur(18px); font-size: 1rem; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; will-change: auto; }
+.garage-visual-stage { position: relative; display: grid; place-items: center; min-height: 520px; isolation: isolate; }
+.garage-box-glow { position: absolute; z-index: -2; width: min(500px, 98%); aspect-ratio: 1; border-radius: 46%; background: radial-gradient(circle, rgba(232, 111, 47, .25), rgba(232, 111, 47, .08) 46%, transparent 72%); filter: blur(42px); opacity: .9; transform: translate(6%, 5%) scale(1.08); }
+.garage-box-scene { position: relative; width: min(430px, 76vw); aspect-ratio: 1; transform: translate(5%, 3%) rotate(-1deg); }
+.garage-hero-box { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 34px 58px rgba(45, 28, 14, .22)); }
+.icon-note { position: absolute; min-width: 88px; padding: 12px 14px; border: 1px solid var(--garage-border); border-radius: 18px; background: color-mix(in srgb, var(--garage-bg) 82%, transparent); box-shadow: 0 12px 36px rgba(48, 36, 25, .1); backdrop-filter: blur(18px); font-size: 1rem; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; }
 .icon-note span { color: var(--garage-secondary); font-size: .68rem; font-weight: 680; letter-spacing: 0; text-transform: uppercase; }
-.note-top { top: -7%; right: -19%; transform: rotate(4deg); }
-.note-bottom { bottom: -8%; left: -18%; transform: rotate(-3deg); }
+.note-top { top: 9%; right: -7%; transform: rotate(4deg); }
+.note-bottom { bottom: 10%; left: -7%; transform: rotate(-3deg); }
+
+.decor-sticker { position: absolute; z-index: 5; display: block; height: auto; pointer-events: none; user-select: none; filter: drop-shadow(0 16px 18px rgba(25, 17, 11, .2)); }
+.feature-grid, .screens-section, .privacy-section, .support-section { position: relative; overflow: visible; }
+.sticker-features { width: clamp(108px, 12vw, 168px); top: 10px; right: -48px; transform: rotate(8deg); }
+.sticker-screens { width: clamp(100px, 11vw, 154px); top: 36%; right: -56px; transform: rotate(9deg); }
+.sticker-privacy { width: clamp(96px, 10vw, 142px); top: 42px; right: 44px; transform: rotate(-7deg); }
+.sticker-support { width: clamp(106px, 11vw, 158px); top: 24px; right: 282px; transform: rotate(7deg); }
 
 .feature-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 18px; padding-block: 58px 100px; }
 .feature-card { position: relative; overflow: hidden; grid-column: span 5; min-height: 330px; padding: 30px; border: 1px solid var(--garage-border); border-radius: var(--garage-radius); background: var(--garage-surface); box-shadow: 0 12px 42px rgba(66,47,30,.06); backdrop-filter: blur(18px); }
@@ -192,7 +198,11 @@ body.garage-site::before {
   .garage-header { grid-template-columns: 1fr auto; }
   .garage-nav { display: none; }
   .garage-hero { min-height: auto; grid-template-columns: 1fr; gap: 30px; padding-top: 100px; }
-  .garage-icon-stage { min-height: 400px; width: min(620px, 100%); margin: 0 auto; }
+  .garage-visual-stage { min-height: 430px; width: min(620px, 100%); margin: 0 auto; }
+  .garage-box-scene { width: min(410px, 70vw); transform: rotate(-1deg); }
+  .sticker-features { right: -12px; top: 24px; }
+  .sticker-screens { right: -12px; }
+  .sticker-support { right: 210px; }
   .feature-card, .feature-card-large, .feature-card-accent { grid-column: 1 / -1; }
   .privacy-panel { grid-template-columns: 1fr; gap: 34px; }
   .support-section { grid-template-columns: 1fr; }
@@ -208,10 +218,16 @@ body.garage-site::before {
   .garage-hero-actions { align-items: stretch; flex-direction: column; }
   .app-store-placeholder { width: 100%; justify-content: center; }
   .garage-text-link { text-align: center; }
-  .garage-icon-stage { --garage-icon-size: min(238px, 58vw); min-height: 330px; }
-  .icon-glow { width: min(300px, 82%); }
-  .note-top { right: -14%; }
-  .note-bottom { left: -13%; }
+  .garage-visual-stage { min-height: 360px; }
+  .garage-box-glow { width: min(340px, 92%); filter: blur(32px); }
+  .garage-box-scene { width: min(330px, 86vw); transform: rotate(-1deg); }
+  .note-top { top: 8%; right: -2%; }
+  .note-bottom { bottom: 7%; left: -1%; }
+  .decor-sticker { filter: drop-shadow(0 10px 12px rgba(25, 17, 11, .18)); }
+  .sticker-features { width: 108px; top: 12px; right: -4px; }
+  .sticker-screens { width: 96px; top: 28%; right: -6px; }
+  .sticker-privacy { width: 92px; top: -18px; right: 12px; }
+  .sticker-support { width: 96px; top: -24px; right: 14px; }
   .icon-note { min-width: 72px; padding: 10px 12px; font-size: .88rem; }
   .note-top { right: 0; }
   .note-bottom { left: 0; }
