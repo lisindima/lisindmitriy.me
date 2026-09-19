@@ -194,13 +194,13 @@ const socialLinks = [
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
     <header class="floating-header">
-      <div class="glass-nav portfolio-nav site-header-shell">
-        <nav aria-label={copy.navAria}>
+      <div class="glass-nav site-header-shell">
+        <nav class="site-header-start site-header-nav" aria-label={copy.navAria}>
           <a class="site-nav-link" href="#work">{copy.navWork}</a>
           <a class="site-nav-link" href="#contact">{copy.navContact}</a>
           <a class="nav-github site-nav-link" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </nav>
-        <a class="portfolio-language-switch site-language-switch" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
+        <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
       </div>
     </header>
 
