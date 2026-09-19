@@ -7,7 +7,15 @@ Personal portfolio of Dmitriy Lisin.
 - Astro
 - TypeScript-ready Astro components
 - Static HTML/CSS
-- Netlify
+- GitHub Pages
+
+## Included sites
+
+- `/` — personal portfolio
+- `/garage/` — Garage app landing page
+- `/garage/en/` — English Garage landing page
+- `/garage/privacy/` — Garage privacy policy
+- `/garage/en/privacy/` — English Garage privacy policy
 
 ## Development
 
@@ -22,4 +30,5 @@ Production build:
 npm run build
 ```
 
-Netlify publishes the generated `dist` directory. The site has no server functions or push-notification integration.
+The generated `dist` directory is deployed to GitHub Pages by the workflow in `.github/workflows/deploy-pages.yml`.
+The site is fully static and has no server functions.
