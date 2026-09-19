@@ -1,0 +1,264 @@
+---
+import { Image } from "astro:assets";
+import garageIcon from "../assets/garage-icon.webp";
+import "../styles/garage.css";
+
+interface Props {
+  locale?: "ru" | "en";
+}
+
+const { locale = "ru" } = Astro.props;
+const isRu = locale === "ru";
+const alternateHref = isRu ? "/garage/en/" : "/garage/";
+const privacyHref = isRu ? "/garage/privacy/" : "/garage/en/privacy/";
+
+const copy = isRu
+  ? {
+      title: "Garage — история обслуживания автомобиля на iPhone",
+      description: "Garage превращает заказ-наряды в понятную историю обслуживания автомобиля. Распознавание и обработка данных происходят офлайн на iPhone.",
+      navFeatures: "Возможности",
+      navPrivacy: "Приватность",
+      navSupport: "Поддержка",
+      language: "EN",
+      eyebrow: "История обслуживания · полностью на устройстве",
+      headlineA: "Все документы",
+      headlineB: "по машине — в одном месте.",
+      lead: "Сканируйте заказ‑наряды, сохраняйте оригиналы, получайте структурированный список работ и запчастей и не забывайте о следующем ТО.",
+      privateBadge: "Без аккаунта · Без облака · Без трекинга",
+      appStoreTop: "Скоро",
+      appStoreBottom: "в App Store",
+      screenshotsLink: "Посмотреть интерфейс",
+      iconAlt: "Иконка приложения Garage",
+      cardOneTitle: "Заказ‑наряд → история",
+      cardOneText: "Garage распознаёт документ и превращает его в понятную запись: работы, запчасти, материалы и суммы.",
+      cardTwoTitle: "Оригинал всегда рядом",
+      cardTwoText: "Фотография документа хранится вместе с распознанными данными — можно быстро свериться с первоисточником.",
+      cardThreeTitle: "Напоминания без рутины",
+      cardThreeText: "Следите за пробегом, плановым ТО и заменой расходников, не ведя отдельные заметки и таблицы.",
+      howEyebrow: "Просто по шагам",
+      howTitle: "Сфотографировали. Garage разобрал остальное.",
+      step1: "01 · Сканирование",
+      step1Text: "Сфотографируйте заказ‑наряд или выберите готовый снимок.",
+      step2: "02 · Разбор",
+      step2Text: "Приложение выделит работы, детали и материалы прямо на устройстве.",
+      step3: "03 · История",
+      step3Text: "Сохраните запись, оригинал документа и будущие напоминания.",
+      screensEyebrow: "Интерфейс",
+      screensTitle: "Место под реальные скриншоты приложения.",
+      screensText: "Когда будут готовы финальные экраны, эти три карточки заменятся экспортами из App Store Connect без переделки сетки.",
+      shot1: "Главная / автомобиль",
+      shot2: "Распознанный заказ‑наряд",
+      shot3: "История и напоминания",
+      privacyEyebrow: "Privacy by design",
+      privacyTitle: "Ваши документы не должны становиться чьими‑то данными.",
+      privacyText: "Распознавание и обработка выполняются локально. Garage не требует аккаунт, не отправляет заказ‑наряды на сервер, не использует рекламные SDK и не собирает аналитику о пользователях.",
+      privacyLink: "Политика конфиденциальности",
+      privacyChip1: "On-device processing",
+      privacyChip2: "No analytics",
+      privacyChip3: "No ads",
+      privacyChip4: "No account",
+      supportEyebrow: "Поддержка",
+      supportTitle: "Есть вопрос по Garage?",
+      supportText: "Напишите напрямую разработчику. Для вопросов о данных и приватности используется тот же контакт.",
+      emailLabel: "Написать письмо",
+      footer: "Garage · сделано для iPhone",
+      developer: "Dmitriy Lisin",
+    }
+  : {
+      title: "Garage — car service history on iPhone",
+      description: "Garage turns service orders into a clear car maintenance history. Recognition and data processing happen offline on your iPhone.",
+      navFeatures: "Features",
+      navPrivacy: "Privacy",
+      navSupport: "Support",
+      language: "RU",
+      eyebrow: "Car service history · entirely on device",
+      headlineA: "Every service record.",
+      headlineB: "One private place.",
+      lead: "Scan service orders, keep the originals, get a structured list of work and parts, and stay ahead of upcoming maintenance.",
+      privateBadge: "No account · No cloud · No tracking",
+      appStoreTop: "Coming soon",
+      appStoreBottom: "on the App Store",
+      screenshotsLink: "See the interface",
+      iconAlt: "Garage app icon",
+      cardOneTitle: "Service order → history",
+      cardOneText: "Garage reads a document and turns it into a clean record with work, parts, materials, and totals.",
+      cardTwoTitle: "The original stays with it",
+      cardTwoText: "The source image is stored alongside the structured data, so the original document is always easy to check.",
+      cardThreeTitle: "Maintenance without the busywork",
+      cardThreeText: "Keep track of mileage, scheduled service, and replacement reminders without separate notes or spreadsheets.",
+      howEyebrow: "Three simple steps",
+      howTitle: "Take a photo. Garage handles the rest.",
+      step1: "01 · Scan",
+      step1Text: "Photograph a service order or choose an existing image.",
+      step2: "02 · Understand",
+      step2Text: "Garage separates work, parts, and materials directly on your device.",
+      step3: "03 · Remember",
+      step3Text: "Save the record, the original document, and future maintenance reminders.",
+      screensEyebrow: "Interface",
+      screensTitle: "Reserved for real app screenshots.",
+      screensText: "Once the final screens are ready, these three placeholders can be replaced with App Store exports without changing the layout.",
+      shot1: "Vehicle overview",
+      shot2: "Parsed service order",
+      shot3: "History & reminders",
+      privacyEyebrow: "Privacy by design",
+      privacyTitle: "Your service documents should stay your data.",
+      privacyText: "Recognition and processing happen locally. Garage requires no account, sends no service documents to a developer server, uses no advertising SDKs, and collects no user analytics.",
+      privacyLink: "Privacy Policy",
+      privacyChip1: "On-device processing",
+      privacyChip2: "No analytics",
+      privacyChip3: "No ads",
+      privacyChip4: "No account",
+      supportEyebrow: "Support",
+      supportTitle: "Need help with Garage?",
+      supportText: "Contact the developer directly. The same address is used for privacy and data questions.",
+      emailLabel: "Email support",
+      footer: "Garage · made for iPhone",
+      developer: "Dmitriy Lisin",
+    };
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={copy.description} />
+    <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
+    <link rel="canonical" href={isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/"} />
+    <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/garage/" />
+    <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/garage/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://lisindmitriy.ru/garage/" />
+    <title>{copy.title}</title>
+  </head>
+  <body class="garage-site">
+    <header class="garage-header">
+      <a class="garage-brand" href={isRu ? "/garage/" : "/garage/en/"} aria-label="Garage home">
+        <Image src={garageIcon} alt="" width={34} height={34} format="webp" quality={90} />
+        <span>Garage</span>
+      </a>
+      <nav class="garage-nav" aria-label="Garage navigation">
+        <a href="#features">{copy.navFeatures}</a>
+        <a href="#privacy">{copy.navPrivacy}</a>
+        <a href="#support">{copy.navSupport}</a>
+      </nav>
+      <a class="language-switch" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
+    </header>
+
+    <main>
+      <section class="garage-hero garage-shell">
+        <div class="garage-hero-copy">
+          <p class="garage-eyebrow">{copy.eyebrow}</p>
+          <h1><span>{copy.headlineA}</span><br />{copy.headlineB}</h1>
+          <p class="garage-lead">{copy.lead}</p>
+          <div class="garage-hero-actions">
+            <span class="app-store-placeholder" aria-disabled="true" title={isRu ? "Ссылка появится после публикации приложения" : "The link will be added after the app is published"}>
+              <span class="app-store-mark" aria-hidden="true">●</span>
+              <span><small>{copy.appStoreTop}</small><strong>{copy.appStoreBottom}</strong></span>
+            </span>
+            <a class="garage-text-link" href="#screenshots">{copy.screenshotsLink} <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="privacy-badge"><span aria-hidden="true">✓</span>{copy.privateBadge}</div>
+        </div>
+
+        <div class="garage-icon-stage" aria-label={copy.iconAlt}>
+          <div class="icon-glow" aria-hidden="true"></div>
+          <Image class="garage-app-icon" src={garageIcon} alt={copy.iconAlt} width={256} height={256} format="webp" quality={90} loading="eager" fetchpriority="high" />
+          <div class="icon-note note-top">100%<br /><span>offline</span></div>
+          <div class="icon-note note-bottom">iPhone<br /><span>native</span></div>
+        </div>
+      </section>
+
+      <section id="features" class="feature-grid garage-shell" aria-label={copy.navFeatures}>
+        <article class="feature-card feature-card-large">
+          <span class="feature-index">01</span>
+          <h2>{copy.cardOneTitle}</h2>
+          <p>{copy.cardOneText}</p>
+          <div class="document-visual" aria-hidden="true">
+            <div class="paper paper-back"></div>
+            <div class="paper paper-front">
+              <span class="paper-line strong"></span><span class="paper-line"></span><span class="paper-line short"></span>
+              <div class="paper-table"><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </article>
+        <article class="feature-card">
+          <span class="feature-index">02</span>
+          <h2>{copy.cardTwoTitle}</h2>
+          <p>{copy.cardTwoText}</p>
+        </article>
+        <article class="feature-card feature-card-accent">
+          <span class="feature-index">03</span>
+          <h2>{copy.cardThreeTitle}</h2>
+          <p>{copy.cardThreeText}</p>
+          <div class="mileage-pill" aria-hidden="true"><span>12 840</span><small>km</small></div>
+        </article>
+      </section>
+
+      <section class="steps-section garage-shell">
+        <div class="section-heading">
+          <p class="garage-eyebrow">{copy.howEyebrow}</p>
+          <h2>{copy.howTitle}</h2>
+        </div>
+        <div class="steps-list">
+          <article><strong>{copy.step1}</strong><p>{copy.step1Text}</p></article>
+          <article><strong>{copy.step2}</strong><p>{copy.step2Text}</p></article>
+          <article><strong>{copy.step3}</strong><p>{copy.step3Text}</p></article>
+        </div>
+      </section>
+
+      <section id="screenshots" class="screens-section garage-shell">
+        <div class="section-heading compact">
+          <p class="garage-eyebrow">{copy.screensEyebrow}</p>
+          <h2>{copy.screensTitle}</h2>
+          <p>{copy.screensText}</p>
+        </div>
+        <div class="screens-grid">
+          {[copy.shot1, copy.shot2, copy.shot3].map((label, index) => (
+            <figure class:list={["screenshot-slot", { raised: index === 1 }]}>
+              <div class="device-placeholder">
+                <div class="dynamic-island" aria-hidden="true"></div>
+                <div class="placeholder-ui" aria-hidden="true">
+                  <span class="ui-title"></span>
+                  <span class="ui-card"></span>
+                  <span class="ui-line"></span><span class="ui-line short"></span>
+                  <span class="ui-card lower"></span>
+                </div>
+              </div>
+              <figcaption>{label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section id="privacy" class="privacy-section garage-shell">
+        <div class="privacy-panel">
+          <div>
+            <p class="garage-eyebrow">{copy.privacyEyebrow}</p>
+            <h2>{copy.privacyTitle}</h2>
+            <p class="privacy-copy">{copy.privacyText}</p>
+            <a class="privacy-link" href={privacyHref}>{copy.privacyLink} <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="privacy-chips" aria-label="Privacy features">
+            {[copy.privacyChip1, copy.privacyChip2, copy.privacyChip3, copy.privacyChip4].map((item) => <span>✓ {item}</span>)}
+          </div>
+        </div>
+      </section>
+
+      <section id="support" class="support-section garage-shell">
+        <div>
+          <p class="garage-eyebrow">{copy.supportEyebrow}</p>
+          <h2>{copy.supportTitle}</h2>
+          <p>{copy.supportText}</p>
+        </div>
+        <a class="support-email" href="mailto:me@lisindmitriy.ru">{copy.emailLabel}<span>me@lisindmitriy.ru ↗</span></a>
+      </section>
+    </main>
+
+    <footer class="garage-footer garage-shell">
+      <span>© {new Date().getFullYear()} {copy.developer}</span>
+      <span>{copy.footer}</span>
+      <a href={privacyHref}>{copy.privacyLink}</a>
+    </footer>
+  </body>
+</html>

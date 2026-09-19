@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+import garageIcon from "../assets/garage-icon.webp";
+import "../styles/garage.css";
+
+interface Props {
+  locale?: "ru" | "en";
+}
+
+const { locale = "ru" } = Astro.props;
+const isRu = locale === "ru";
+const homeHref = isRu ? "/garage/" : "/garage/en/";
+const alternateHref = isRu ? "/garage/en/privacy/" : "/garage/privacy/";
+
+const copy = isRu
+  ? {
+      pageTitle: "Политика конфиденциальности Garage",
+      description: "Политика конфиденциальности приложения Garage. Garage не собирает пользовательские данные, а обработка документов выполняется локально на устройстве.",
+      back: "← Garage",
+      lang: "EN",
+      eyebrow: "Политика конфиденциальности",
+      title: "Приватность — не настройка. Это архитектура Garage.",
+      updated: "Дата вступления в силу: 19 сентября 2026",
+      intro: "Garage создан так, чтобы документы об обслуживании автомобиля и данные, извлечённые из них, не требовали отправки на сервер разработчика.",
+      sections: [
+        ["1. Какие данные собирает Garage", "Garage не собирает, не передаёт, не продаёт и не предоставляет разработчику персональные данные, содержимое заказ‑нарядов, историю обслуживания, пробег или другую информацию, которую вы добавляете в приложение. В Garage нет аккаунтов, рекламных SDK, пользовательского трекинга и аналитики использования."],
+        ["2. Локальная обработка и хранение", "Сканирование, распознавание и структурирование сервисных документов выполняются на устройстве. Оригиналы документов, распознанные записи, пробег и напоминания хранятся локально в данных приложения и не отправляются на сервер Garage."],
+        ["3. Доступ к камере, фотографиям и уведомлениям", "Garage может запросить доступ к камере или медиатеке только для добавления сервисного документа. Уведомления могут использоваться для локальных напоминаний о техническом обслуживании. Эти разрешения контролируются iOS и могут быть изменены в настройках устройства."],
+        ["4. Резервные копии устройства", "В зависимости от ваших настроек iOS данные приложения могут входить в системную резервную копию устройства. Такие резервные копии управляются Apple и вашими настройками устройства, а не сервером Garage или разработчиком."],
+        ["5. Сторонние сервисы", "Garage не использует сторонние рекламные или аналитические SDK для сбора данных о пользователях. Если это изменится в будущей версии, эта политика и сведения App Privacy в App Store будут обновлены до вступления изменений в силу."],
+        ["6. Изменения политики", "Политика может обновляться при изменении функциональности Garage или требований законодательства. Актуальная версия всегда публикуется на этой странице."],
+        ["7. Контакты", "По вопросам о Garage, конфиденциальности или обработке данных можно связаться с разработчиком по адресу me@lisindmitriy.ru."],
+      ],
+      summaryTitle: "Коротко",
+      summary: ["Нет аккаунта", "Нет аналитики", "Нет рекламы", "Нет серверной обработки документов"],
+    }
+  : {
+      pageTitle: "Garage Privacy Policy",
+      description: "Garage Privacy Policy. Garage does not collect user data, and service-document processing happens locally on the device.",
+      back: "← Garage",
+      lang: "RU",
+      eyebrow: "Privacy Policy",
+      title: "Privacy is not a setting. It is how Garage is built.",
+      updated: "Effective date: September 19, 2026",
+      intro: "Garage is designed so your car service documents and the data extracted from them do not need to be sent to a developer-controlled server.",
+      sections: [
+        ["1. Data Garage collects", "Garage does not collect, transmit, sell, or make available to the developer personal data, service-order contents, maintenance history, mileage, or other information you add to the app. Garage has no user accounts, advertising SDKs, user tracking, or usage analytics."],
+        ["2. On-device processing and storage", "Scanning, recognition, and structuring of service documents happen on the device. Original documents, recognized records, mileage, and reminders are stored locally in the app's data and are not sent to a Garage server."],
+        ["3. Camera, photo library, and notification access", "Garage may request access to the camera or photo library only to add a service document. Notifications may be used for local maintenance reminders. These permissions are controlled by iOS and can be changed in device settings."],
+        ["4. Device backups", "Depending on your iOS settings, app data may be included in a system device backup. Those backups are managed by Apple and your device settings, not by a Garage server or the developer."],
+        ["5. Third-party services", "Garage does not use third-party advertising or analytics SDKs to collect user data. If that changes in a future release, this policy and the App Privacy information in the App Store will be updated before the change takes effect."],
+        ["6. Changes to this policy", "This policy may be updated when Garage features or applicable requirements change. The current version will always be published on this page."],
+        ["7. Contact", "For questions about Garage, privacy, or data handling, contact the developer at me@lisindmitriy.ru."],
+      ],
+      summaryTitle: "In short",
+      summary: ["No account", "No analytics", "No ads", "No server-side document processing"],
+    };
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={copy.description} />
+    <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
+    <link rel="canonical" href={isRu ? "https://lisindmitriy.ru/garage/privacy/" : "https://lisindmitriy.ru/garage/en/privacy/"} />
+    <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/garage/privacy/" />
+    <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/garage/en/privacy/" />
+    <title>{copy.pageTitle}</title>
+  </head>
+  <body class="garage-site privacy-page">
+    <header class="garage-header privacy-header">
+      <a class="garage-brand" href={homeHref}>
+        <Image src={garageIcon} alt="" width={34} height={34} format="webp" quality={90} />
+        <span>Garage</span>
+      </a>
+      <a class="language-switch" href={alternateHref}>{copy.lang}</a>
+    </header>
+
+    <main class="privacy-shell">
+      <a class="back-link" href={homeHref}>{copy.back}</a>
+      <p class="garage-eyebrow">{copy.eyebrow}</p>
+      <h1>{copy.title}</h1>
+      <p class="privacy-updated">{copy.updated}</p>
+      <p class="privacy-intro">{copy.intro}</p>
+
+      <aside class="privacy-summary">
+        <strong>{copy.summaryTitle}</strong>
+        <div>{copy.summary.map((item) => <span>✓ {item}</span>)}</div>
+      </aside>
+
+      <div class="policy-sections">
+        {copy.sections.map(([title, body]) => (
+          <section>
+            <h2>{title}</h2>
+            <p>{body}</p>
+          </section>
+        ))}
+      </div>
+    </main>
+
+    <footer class="garage-footer garage-shell">
+      <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
+      <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+    </footer>
+  </body>
+</html>
