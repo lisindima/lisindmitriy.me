@@ -180,7 +180,14 @@ body.garage-site::before {
   will-change: transform;
   filter: drop-shadow(0 18px 22px rgba(25,17,11,.2));
 }
-.sticker-art > img { display: block; width: 100%; height: auto; }
+.sticker-art > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  image-rendering: auto;
+  backface-visibility: hidden;
+}
 .sticker-art::after {
   content: "";
   position: absolute;
@@ -271,8 +278,33 @@ body.garage-site::before {
 .support-section { display: grid; grid-template-columns: 1fr auto; gap: 50px; align-items: end; padding-block: 90px 100px; border-top: 1px solid var(--garage-border); }
 .support-section h2 { margin: 0 0 16px; font-size: clamp(2.8rem, 5vw, 5rem); letter-spacing: -.06em; line-height: .95; }
 .support-section p:not(.garage-eyebrow) { max-width: 580px; margin: 0; color: var(--garage-secondary); line-height: 1.55; }
-.support-email { min-width: 260px; padding: 21px 24px; border-radius: 24px; background: var(--garage-text); color: var(--garage-bg); font-weight: 750; }
-.support-email span { display: block; margin-top: 5px; opacity: .7; font-size: .8rem; font-weight: 600; }
+.garage-site .support-email {
+  min-width: 260px;
+  padding: 21px 24px;
+  display: grid;
+  gap: 5px;
+  border-radius: 24px;
+  background: #f8f3ec;
+  color: #11100e;
+  font-weight: 750;
+  line-height: 1.1;
+  box-shadow: 0 16px 42px rgba(0,0,0,.16);
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.garage-site .support-email span {
+  display: block;
+  margin-top: 0;
+  color: rgba(17,16,14,.64);
+  opacity: 1;
+  font-size: .8rem;
+  font-weight: 600;
+}
+.garage-site .support-email:hover {
+  background: #fffaf3;
+  color: #11100e;
+  transform: translateY(-1px);
+  box-shadow: 0 20px 48px rgba(0,0,0,.2);
+}
 .garage-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 28px; padding-block: 30px 42px; border-top: 1px solid var(--garage-border); color: var(--garage-secondary); font-size: .8rem; }
 .garage-footer a:hover { color: var(--garage-orange); }
 
