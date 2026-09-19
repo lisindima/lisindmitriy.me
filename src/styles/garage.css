@@ -41,7 +41,7 @@ body.garage-site {
     radial-gradient(circle at 80% 8%, rgba(232, 111, 47, 0.13), transparent 28rem),
     radial-gradient(circle at 12% 35%, rgba(47, 125, 93, 0.08), transparent 24rem),
     var(--garage-bg);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -78,8 +78,8 @@ body.garage-site::before {
   backdrop-filter: blur(24px) saturate(170%);
   -webkit-backdrop-filter: blur(24px) saturate(170%);
 }
-.garage-brand { display: inline-flex; align-items: center; gap: 10px; width: max-content; font-weight: 800; letter-spacing: -.035em; }
-.garage-brand img { width: 34px; height: 34px; border-radius: 9px; box-shadow: 0 4px 12px rgba(52, 35, 20, .16); }
+.garage-brand { display: inline-flex; align-items: center; gap: 10px; width: max-content; font-weight: 800; letter-spacing: var(--tracking-title); }
+.garage-brand img { width: 34px; height: 34px; border-radius: 9px; object-fit: cover; image-rendering: auto; backface-visibility: hidden; box-shadow: 0 4px 12px rgba(52, 35, 20, .16); }
 .garage-nav { display: flex; gap: 5px; align-items: center; }
 .garage-nav a, .language-switch { padding: 9px 13px; border-radius: 999px; color: var(--garage-secondary); font-size: .84rem; font-weight: 680; transition: .18s ease; }
 .garage-nav a:hover, .language-switch:hover { color: var(--garage-text); background: var(--garage-orange-soft); }
@@ -114,10 +114,10 @@ body.garage-site::before {
   width: min(720px, 51%);
   min-width: 0;
 }
-.garage-eyebrow { margin: 0 0 22px; color: var(--garage-secondary); font-size: .76rem; font-weight: 760; letter-spacing: .095em; text-transform: uppercase; }
-.garage-hero h1 { margin: 0 0 28px; font-size: clamp(4.3rem, 8.4vw, 8rem); line-height: .89; letter-spacing: -.075em; font-weight: 830; }
+.garage-eyebrow { margin: 0 0 22px; color: var(--garage-secondary); font-size: .76rem; font-weight: 760; letter-spacing: var(--tracking-label); text-transform: uppercase; }
+.garage-hero h1 { margin: 0 0 28px; font-size: clamp(4.3rem, 8.4vw, 8rem); line-height: .89; letter-spacing: var(--tracking-display); font-weight: 830; }
 .garage-hero h1 span { color: var(--garage-orange); }
-.garage-lead { max-width: 720px; margin: 0 0 30px; color: var(--garage-secondary); font-size: clamp(1.24rem, 2vw, 1.62rem); line-height: 1.32; letter-spacing: -.025em; }
+.garage-lead { max-width: 720px; margin: 0 0 30px; color: var(--garage-secondary); font-size: clamp(1.24rem, 2vw, 1.62rem); line-height: 1.32; letter-spacing: var(--tracking-body); }
 .garage-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .app-store-placeholder { min-height: 58px; padding: 8px 18px 8px 12px; display: inline-flex; align-items: center; gap: 12px; border-radius: 17px; background: var(--garage-text); color: var(--garage-bg); box-shadow: var(--garage-shadow); opacity: .88; cursor: default; }
 .app-store-mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 10px; font-size: .66rem; }
@@ -227,8 +227,8 @@ body.garage-site::before {
 .feature-card { position: relative; overflow: hidden; grid-column: span 5; min-height: 330px; padding: 30px; border: 1px solid var(--garage-border); border-radius: var(--garage-radius); background: var(--garage-surface); box-shadow: 0 12px 42px rgba(66,47,30,.06); backdrop-filter: blur(18px); }
 .feature-card-large { grid-column: span 7; min-height: 430px; }
 .feature-card-accent { grid-column: span 7; background: linear-gradient(145deg, var(--garage-orange-soft), var(--garage-surface) 58%); }
-.feature-index { color: var(--garage-secondary); font-size: .72rem; font-weight: 760; letter-spacing: .08em; }
-.feature-card h2 { max-width: 480px; margin: 46px 0 14px; font-size: clamp(2rem, 3.3vw, 3.4rem); line-height: .98; letter-spacing: -.055em; }
+.feature-index { color: var(--garage-secondary); font-size: .72rem; font-weight: 760; letter-spacing: var(--tracking-label); }
+.feature-card h2 { max-width: 480px; margin: 46px 0 14px; font-size: clamp(2rem, 3.3vw, 3.4rem); line-height: .98; letter-spacing: var(--tracking-title); }
 .feature-card p { max-width: 540px; margin: 0; color: var(--garage-secondary); font-size: 1rem; line-height: 1.55; }
 .document-visual { position: absolute; right: 4%; bottom: -10%; width: min(330px, 52%); aspect-ratio: .78; }
 .paper { position: absolute; inset: 0; border-radius: 18px; background: var(--garage-surface-solid); border: 1px solid var(--garage-border); box-shadow: 0 18px 44px rgba(50,35,22,.12); }
@@ -240,12 +240,12 @@ body.garage-site::before {
 .paper-table { display: grid; grid-template-columns: 1.4fr .6fr; gap: 5px; margin-top: 28px; }
 .paper-table i { height: 34px; border-radius: 7px; background: var(--garage-bg-2); }
 .mileage-pill { position: absolute; right: 28px; bottom: 28px; display: flex; align-items: baseline; gap: 8px; padding: 17px 20px; border-radius: 20px; background: var(--garage-text); color: var(--garage-bg); transform: rotate(-3deg); box-shadow: var(--garage-shadow); }
-.mileage-pill span { font-size: 2rem; font-weight: 820; letter-spacing: -.055em; }
+.mileage-pill span { font-size: 2rem; font-weight: 820; letter-spacing: var(--tracking-title); }
 .mileage-pill small { opacity: .65; font-weight: 700; text-transform: uppercase; }
 
 .steps-section { padding-block: 100px 120px; }
 .section-heading { max-width: 900px; margin-bottom: 50px; }
-.section-heading h2 { margin: 0; font-size: clamp(3.3rem, 6.5vw, 6.5rem); line-height: .93; letter-spacing: -.065em; }
+.section-heading h2 { margin: 0; font-size: clamp(3.3rem, 6.5vw, 6.5rem); line-height: .93; letter-spacing: var(--tracking-heading); }
 .section-heading.compact { max-width: 780px; }
 .section-heading.compact > p:last-child { max-width: 620px; margin-top: 22px; color: var(--garage-secondary); line-height: 1.55; }
 .steps-list { border-top: 1px solid var(--garage-border); }
@@ -269,14 +269,14 @@ body.garage-site::before {
 
 .privacy-section { padding-block: 80px 120px; }
 .privacy-panel { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(280px,.75fr); gap: 60px; align-items: end; padding: clamp(34px, 6vw, 76px); border: 1px solid rgba(47,125,93,.2); border-radius: 42px; background: linear-gradient(145deg, rgba(47,125,93,.11), var(--garage-surface) 55%); box-shadow: var(--garage-shadow); }
-.privacy-panel h2 { max-width: 780px; margin: 0 0 22px; font-size: clamp(3rem, 5.5vw, 5.8rem); line-height: .95; letter-spacing: -.06em; }
+.privacy-panel h2 { max-width: 780px; margin: 0 0 22px; font-size: clamp(3rem, 5.5vw, 5.8rem); line-height: .95; letter-spacing: var(--tracking-heading); }
 .privacy-copy { max-width: 760px; color: var(--garage-secondary); font-size: 1.05rem; line-height: 1.58; }
 .privacy-link { display: inline-block; margin-top: 10px; color: var(--garage-green); font-weight: 760; }
 .privacy-chips { display: flex; flex-wrap: wrap; gap: 9px; align-content: end; }
 .privacy-chips span { padding: 10px 12px; border: 1px solid rgba(47,125,93,.17); border-radius: 999px; background: rgba(47,125,93,.08); color: var(--garage-green); font-size: .8rem; font-weight: 700; }
 
 .support-section { display: grid; grid-template-columns: 1fr auto; gap: 50px; align-items: end; padding-block: 90px 100px; border-top: 1px solid var(--garage-border); }
-.support-section h2 { margin: 0 0 16px; font-size: clamp(2.8rem, 5vw, 5rem); letter-spacing: -.06em; line-height: .95; }
+.support-section h2 { margin: 0 0 16px; font-size: clamp(2.8rem, 5vw, 5rem); letter-spacing: var(--tracking-heading); line-height: .95; }
 .support-section p:not(.garage-eyebrow) { max-width: 580px; margin: 0; color: var(--garage-secondary); line-height: 1.55; }
 .garage-site .support-email {
   min-width: 260px;
@@ -313,7 +313,7 @@ body.garage-site::before {
 .privacy-shell { width: min(860px, calc(100% - 48px)); margin: 0 auto; padding: 90px 0 120px; }
 .back-link { display: inline-block; margin-bottom: 70px; color: var(--garage-secondary); font-weight: 700; }
 .back-link:hover { color: var(--garage-orange); }
-.privacy-shell h1 { margin: 0 0 22px; font-size: clamp(3.4rem, 7vw, 6.5rem); line-height: .92; letter-spacing: -.066em; }
+.privacy-shell h1 { margin: 0 0 22px; font-size: clamp(3.4rem, 7vw, 6.5rem); line-height: .92; letter-spacing: var(--tracking-display); }
 .privacy-updated { margin: 0 0 30px; color: var(--garage-secondary); font-size: .9rem; }
 .privacy-intro { max-width: 760px; margin: 0 0 44px; font-size: 1.2rem; line-height: 1.58; color: var(--garage-secondary); }
 .privacy-summary { padding: 24px; margin-bottom: 60px; border: 1px solid rgba(47,125,93,.18); border-radius: 26px; background: rgba(47,125,93,.08); }
@@ -323,7 +323,7 @@ body.garage-site::before {
 .policy-sections { display: grid; gap: 0; }
 .policy-sections section { padding: 34px 0; border-top: 1px solid var(--garage-border); }
 .policy-sections section:last-child { border-bottom: 1px solid var(--garage-border); }
-.policy-sections h2 { margin: 0 0 14px; font-size: 1.35rem; letter-spacing: -.025em; }
+.policy-sections h2 { margin: 0 0 14px; font-size: 1.35rem; letter-spacing: var(--tracking-title); }
 .policy-sections p { margin: 0; color: var(--garage-secondary); line-height: 1.7; }
 
 @media (max-width: 900px) {
@@ -348,8 +348,15 @@ body.garage-site::before {
 }
 
 @media (max-width: 680px) {
+  html { scroll-padding-top: 18px; }
   .garage-shell, .privacy-shell { width: min(100% - 28px, 1180px); }
-  .garage-header { min-height: 56px; margin-top: 8px; top: 8px; width: calc(100% - 16px); }
+  .garage-header {
+    position: relative;
+    top: auto;
+    min-height: 56px;
+    margin-top: 8px;
+    width: calc(100% - 16px);
+  }
   .garage-brand img { width: 31px; height: 31px; }
   .garage-hero { padding-block: 82px 64px; }
   .garage-hero h1 { font-size: clamp(3.65rem, 18vw, 5.6rem); }
@@ -369,7 +376,18 @@ body.garage-site::before {
   .document-visual { width: 64%; right: 6%; }
   .mileage-pill { right: 22px; bottom: 22px; }
   .steps-section, .screens-section { padding-block: 72px; }
-  .section-heading h2, .privacy-panel h2 { font-size: clamp(3rem, 14vw, 4.6rem); }
+  .section-heading { max-width: 100%; }
+  .section-heading h2, .privacy-panel h2 {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 12vw, 4.2rem);
+    line-height: .95;
+  }
+  .steps-section .section-heading h2 {
+    font-size: clamp(2.2rem, 10.2vw, 3.45rem);
+    line-height: .96;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
   .steps-list article { grid-template-columns: 1fr; gap: 10px; }
   .screens-grid { grid-template-columns: 1fr; width: min(340px, 88%); margin: 0 auto; gap: 42px; }
   .screenshot-slot.raised { margin-top: 0; }
@@ -384,3 +402,10 @@ body.garage-site::before {
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+
+@media (max-width: 360px) {
+  .steps-section .section-heading h2 {
+    font-size: clamp(2rem, 9.6vw, 2.4rem);
+  }
+}
