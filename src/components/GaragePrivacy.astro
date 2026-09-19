@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import garageIcon from "../assets/garage-icon.webp";
+import "../styles/typography.css";
 import "../styles/garage.css";
 
 interface Props {
@@ -73,7 +74,7 @@ const copy = isRu
   <body class="garage-site privacy-page">
     <header class="garage-header privacy-header">
       <a class="garage-brand" href={homeHref}>
-        <Image src={garageIcon} alt="" width={34} height={34} format="webp" quality={90} />
+        <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
         <span>Garage</span>
       </a>
       <a class="language-switch" href={alternateHref}>{copy.lang}</a>
