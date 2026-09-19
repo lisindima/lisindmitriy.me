@@ -1,6 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import garageIcon from "../assets/garage-icon.webp";
+import garageBox from "../assets/garage-box.webp";
+import orangeCarSticker from "../assets/garage-sticker-orange.webp";
+import roadSticker from "../assets/garage-sticker-road.webp";
+import mountainsSticker from "../assets/garage-sticker-mountains.webp";
+import suvSticker from "../assets/garage-sticker-suv.webp";
 import "../styles/garage.css";
 
 interface Props {
@@ -161,10 +166,10 @@ const copy = isRu
           <div class="privacy-badge"><span aria-hidden="true">✓</span>{copy.privateBadge}</div>
         </div>
 
-        <div class="garage-icon-stage" aria-label={copy.iconAlt}>
-          <div class="icon-glow" aria-hidden="true"></div>
-          <div class="garage-icon-group">
-            <img class="garage-app-icon" src={garageIcon.src} alt={copy.iconAlt} width="640" height="640" loading="eager" fetchpriority="high" decoding="async" />
+        <div class="garage-visual-stage" aria-label={isRu ? "Ящик Garage с документами автомобиля" : "Garage box with vehicle service documents"}>
+          <div class="garage-box-glow" aria-hidden="true"></div>
+          <div class="garage-box-scene">
+            <img class="garage-hero-box" src={garageBox.src} alt={isRu ? "Ящик Garage с заказ-нарядами" : "Garage box with service records"} width={garageBox.width} height={garageBox.height} loading="eager" fetchpriority="high" decoding="async" />
             <div class="icon-note note-top">100%<br /><span>offline</span></div>
             <div class="icon-note note-bottom">iPhone<br /><span>native</span></div>
           </div>
@@ -172,6 +177,7 @@ const copy = isRu
       </section>
 
       <section id="features" class="feature-grid garage-shell" aria-label={copy.navFeatures}>
+        <img class="decor-sticker sticker-features" src={orangeCarSticker.src} alt="" width={orangeCarSticker.width} height={orangeCarSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
         <article class="feature-card feature-card-large">
           <span class="feature-index">01</span>
           <h2>{copy.cardOneTitle}</h2>
@@ -210,6 +216,7 @@ const copy = isRu
       </section>
 
       <section id="screenshots" class="screens-section garage-shell">
+        <img class="decor-sticker sticker-screens" src={roadSticker.src} alt="" width={roadSticker.width} height={roadSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
         <div class="section-heading compact">
           <p class="garage-eyebrow">{copy.screensEyebrow}</p>
           <h2>{copy.screensTitle}</h2>
@@ -234,6 +241,7 @@ const copy = isRu
       </section>
 
       <section id="privacy" class="privacy-section garage-shell">
+        <img class="decor-sticker sticker-privacy" src={mountainsSticker.src} alt="" width={mountainsSticker.width} height={mountainsSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
         <div class="privacy-panel">
           <div>
             <p class="garage-eyebrow">{copy.privacyEyebrow}</p>
@@ -248,6 +256,7 @@ const copy = isRu
       </section>
 
       <section id="support" class="support-section garage-shell">
+        <img class="decor-sticker sticker-support" src={suvSticker.src} alt="" width={suvSticker.width} height={suvSticker.height} loading="lazy" decoding="async" aria-hidden="true" />
         <div>
           <p class="garage-eyebrow">{copy.supportEyebrow}</p>
           <h2>{copy.supportTitle}</h2>
