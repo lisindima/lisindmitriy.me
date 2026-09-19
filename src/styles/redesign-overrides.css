@@ -257,10 +257,7 @@
 
 /* Portfolio header uses the same wide three-slot layout as Garage. */
 .portfolio-nav {
-  width: min(940px, calc(100% - 28px));
   max-width: none;
-  min-height: 62px;
-  padding: 8px 10px 8px 12px;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -278,9 +275,6 @@
 
 @media (max-width: 680px) {
   .portfolio-nav {
-    width: calc(100% - 16px);
     max-width: none;
-    min-height: 56px;
-    padding: 6px 8px;
   }
 }

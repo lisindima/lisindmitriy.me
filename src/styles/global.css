@@ -695,10 +695,6 @@ h1 {
     font-size: 0.8rem;
   }
 
-  .glass-nav nav a:nth-child(2) {
-    display: none;
-  }
-
   .hero {
     gap: 50px;
     padding-top: 124px;
