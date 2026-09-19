@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import garageIcon from "../assets/garage-icon.webp";
-import heroScene from "../assets/garage-hero-scene.webp";
+import boxScene from "../assets/garage-box-scene-approved.webp";
 import orangeCarSticker from "../assets/garage-sticker-orange.webp";
 import roadSticker from "../assets/garage-sticker-road.webp";
 import mountainsSticker from "../assets/garage-sticker-mountains.webp";
@@ -152,30 +152,9 @@ const copy = isRu
 
     <main>
       <section class="garage-hero garage-shell">
-        <div class="garage-hero-scene" aria-hidden="true">
-          <img src={heroScene.src} alt="" width={heroScene.width} height={heroScene.height} loading="eager" fetchpriority="high" decoding="async" />
-        </div>
-        <div class="garage-hero-scene-mask" aria-hidden="true"></div>
-
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
-          <h1 class="garage-hero-title">
-            {isRu ? (
-              <>
-                <span>Все</span><br />
-                <span>документы</span><br />
-                по<br />
-                машине.<br />
-                В одном<br />
-                месте.
-              </>
-            ) : (
-              <>
-                <span>{copy.headlineA}</span><br />
-                {copy.headlineB}
-              </>
-            )}
-          </h1>
+          <h1 class="garage-hero-title"><span>{copy.headlineA}</span><br />{copy.headlineB}</h1>
           <p class="garage-lead">{copy.lead}</p>
           <div class="garage-hero-actions">
             <span class="app-store-placeholder" aria-disabled="true" title={isRu ? "Ссылка появится после публикации приложения" : "The link will be added after the app is published"}>
@@ -187,6 +166,10 @@ const copy = isRu
           <div class="privacy-badge"><span aria-hidden="true">✓</span>{copy.privateBadge}</div>
         </div>
 
+        <div class="garage-hero-visual" aria-hidden="true">
+          <div class="garage-hero-visual-glow"></div>
+          <img src={boxScene.src} alt="" width={boxScene.width} height={boxScene.height} loading="eager" fetchpriority="high" decoding="async" />
+        </div>
       </section>
 
       <section id="features" class="feature-grid garage-shell" aria-label={copy.navFeatures}>
@@ -284,5 +267,22 @@ const copy = isRu
       <span>{copy.footer}</span>
       <a href={privacyHref}>{copy.privacyLink}</a>
     </footer>
+
+    <script is:inline>
+      const garageStickers = document.querySelectorAll(".sticker-art");
+      garageStickers.forEach((sticker) => {
+        sticker.addEventListener("pointermove", (event) => {
+          const rect = sticker.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 100;
+          const y = ((event.clientY - rect.top) / rect.height) * 100;
+          sticker.style.setProperty("--shine-x", `${x.toFixed(1)}%`);
+          sticker.style.setProperty("--shine-y", `${y.toFixed(1)}%`);
+        });
+        sticker.addEventListener("pointerleave", () => {
+          sticker.style.removeProperty("--shine-x");
+          sticker.style.removeProperty("--shine-y");
+        });
+      });
+    </script>
   </body>
 </html>
