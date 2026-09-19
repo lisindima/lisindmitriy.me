@@ -348,19 +348,23 @@ body.garage-site::before {
 }
 
 @media (max-width: 680px) {
-  html { scroll-padding-top: 18px; }
+  html { scroll-padding-top: 88px; }
   .garage-shell, .privacy-shell { width: min(100% - 28px, 1180px); }
   .garage-header {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: 8px;
     min-height: 56px;
     margin-top: 8px;
     width: calc(100% - 16px);
   }
   .garage-brand img { width: 31px; height: 31px; }
-  .garage-hero { padding-block: 82px 64px; }
-  .garage-hero h1 { font-size: clamp(3.65rem, 18vw, 5.6rem); }
-  .garage-lead { font-size: 1.18rem; }
+  .garage-hero { padding-block: 76px 64px; }
+  .garage-hero h1 {
+    max-width: 100%;
+    font-size: clamp(3.05rem, 13.6vw, 4.35rem);
+    line-height: .92;
+  }
+  .garage-lead { font-size: 1.12rem; }
   .garage-hero-actions { align-items: stretch; flex-direction: column; }
   .app-store-placeholder { width: 100%; justify-content: center; }
   .garage-text-link { text-align: center; }
@@ -370,21 +374,60 @@ body.garage-site::before {
   .sticker-privacy { width: 120px; top: -22px; right: 8px; }
   .sticker-support { width: 132px; top: -30px; right: 8px; }
   .feature-grid { padding-bottom: 58px; }
-  .feature-card { min-height: 300px; padding: 24px; border-radius: 28px; }
-  .feature-card-large { min-height: 480px; }
-  .feature-card h2 { margin-top: 38px; font-size: 2.35rem; }
-  .document-visual { width: 64%; right: 6%; }
-  .mileage-pill { right: 22px; bottom: 22px; }
+  .feature-card {
+    min-height: 300px;
+    padding: 24px;
+    border-radius: 28px;
+  }
+  .feature-card h2 {
+    max-width: 100%;
+    margin-top: 34px;
+    font-size: clamp(2rem, 10vw, 2.7rem);
+    line-height: 1;
+  }
+  .feature-card p {
+    max-width: 100%;
+    font-size: .98rem;
+    line-height: 1.52;
+  }
+
+  .feature-card-large {
+    min-height: 590px;
+    padding-bottom: 300px;
+  }
+  .feature-card-large > p {
+    position: relative;
+    z-index: 2;
+  }
+  .document-visual {
+    width: 58%;
+    right: 7%;
+    bottom: -2%;
+  }
+
+  .feature-card-accent {
+    min-height: 410px;
+    padding-bottom: 132px;
+  }
+  .feature-card-accent > p {
+    position: relative;
+    z-index: 2;
+  }
+  .mileage-pill {
+    right: 22px;
+    bottom: 24px;
+  }
   .steps-section, .screens-section { padding-block: 72px; }
   .section-heading { max-width: 100%; }
   .section-heading h2, .privacy-panel h2 {
     max-width: 100%;
-    font-size: clamp(2.8rem, 12vw, 4.2rem);
-    line-height: .95;
+    font-size: clamp(2.45rem, 10.8vw, 3.8rem);
+    line-height: .96;
   }
   .steps-section .section-heading h2 {
-    font-size: clamp(2.2rem, 10.2vw, 3.45rem);
-    line-height: .96;
+    max-width: 100%;
+    font-size: clamp(2.05rem, 9.1vw, 3.1rem);
+    line-height: .98;
     overflow-wrap: normal;
     word-break: normal;
   }
@@ -405,7 +448,15 @@ body.garage-site::before {
 
 
 @media (max-width: 360px) {
+  .garage-hero h1 {
+    font-size: clamp(2.8rem, 12.8vw, 3.5rem);
+  }
+
+  .feature-card h2 {
+    font-size: clamp(1.9rem, 9.4vw, 2.35rem);
+  }
+
   .steps-section .section-heading h2 {
-    font-size: clamp(2rem, 9.6vw, 2.4rem);
+    font-size: clamp(1.9rem, 8.8vw, 2.25rem);
   }
 }
