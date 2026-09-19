@@ -27,6 +27,7 @@ const copy = isRu
       navPrivacy: "Приватность",
       navSupport: "Поддержка",
       language: "EN",
+      backToPortfolio: "На главную",
       eyebrow: "История обслуживания · полностью на устройстве",
       headlineA: "Все документы",
       headlineB: "по машине.\u00A0В одном месте.",
@@ -78,6 +79,7 @@ const copy = isRu
       navPrivacy: "Privacy",
       navSupport: "Support",
       language: "RU",
+      backToPortfolio: "Back to portfolio",
       eyebrow: "Car service history · entirely on device",
       headlineA: "Every service record.",
       headlineB: "One private place.",
@@ -140,16 +142,19 @@ const copy = isRu
   </head>
   <body class="garage-site">
     <header class="garage-header site-header-shell">
-      <a class="garage-brand" href={isRu ? "/garage/" : "/garage/en/"} aria-label="Garage home">
-        <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
-        <span>Garage</span>
-      </a>
-      <nav class="garage-nav" aria-label="Garage navigation">
-        <a class="site-nav-link" href="#features">{copy.navFeatures}</a>
-        <a class="site-nav-link" href="#privacy">{copy.navPrivacy}</a>
-        <a class="site-nav-link" href="#support">{copy.navSupport}</a>
-      </nav>
-      <a class="language-switch site-language-switch" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
+      <div class="site-header-start">
+        <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>←</a>
+        <a class="garage-brand" href={isRu ? "/garage/" : "/garage/en/"} aria-label="Garage home">
+          <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
+          <span>Garage</span>
+        </a>
+        <nav class="garage-nav site-header-nav" aria-label="Garage navigation">
+          <a class="site-nav-link" href="#features">{copy.navFeatures}</a>
+          <a class="site-nav-link" href="#privacy">{copy.navPrivacy}</a>
+          <a class="site-nav-link" href="#support">{copy.navSupport}</a>
+        </nav>
+      </div>
+      <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
     </header>
 
     <main>
