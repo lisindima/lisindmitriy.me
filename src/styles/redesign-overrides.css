@@ -253,28 +253,3 @@
     padding-inline: 12px;
   }
 }
-
-
-/* Portfolio header uses the same wide three-slot layout as Garage. */
-.portfolio-nav {
-  max-width: none;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-}
-
-.portfolio-nav nav {
-  grid-column: 1;
-  justify-self: start;
-}
-
-.portfolio-nav .portfolio-language-switch {
-  grid-column: 2;
-  justify-self: end;
-}
-
-@media (max-width: 680px) {
-  .portfolio-nav {
-    max-width: none;
-  }
-}
