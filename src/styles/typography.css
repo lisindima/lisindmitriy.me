@@ -1,0 +1,35 @@
+:root {
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --tracking-display: -0.032em;
+  --tracking-heading: -0.024em;
+  --tracking-title: -0.018em;
+  --tracking-body: -0.006em;
+  --tracking-label: 0.075em;
+}
+
+html {
+  font-family: var(--font-ui);
+  font-kerning: normal;
+}
+
+body {
+  font-family: var(--font-ui);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-ui);
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
+  text-wrap: balance;
+}
+
+@media (max-width: 680px) {
+  :root {
+    --tracking-display: -0.022em;
+    --tracking-heading: -0.016em;
+    --tracking-title: -0.012em;
+    --tracking-body: 0;
+  }
+}
