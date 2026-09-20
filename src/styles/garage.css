@@ -435,7 +435,7 @@ body.garage-site::before {
   .privacy-panel { grid-template-columns: 1fr; gap: 34px; }
   .support-section { grid-template-columns: 1fr; }
 }
-@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+@media (max-width: 1100px) and (orientation: landscape) and (max-height: 520px) {
   .garage-hero {
     min-height: auto;
     display: block;
@@ -454,6 +454,18 @@ body.garage-site::before {
   .garage-hero::after,
   .garage-hero-visual {
     display: none;
+  }
+
+  .screens-section {
+    padding-top: 82px;
+  }
+
+  .sticker-screens {
+    position: absolute;
+    width: clamp(150px, 19vw, 190px);
+    top: -150px;
+    right: max(24px, env(safe-area-inset-right));
+    margin: 0;
   }
 }
 
