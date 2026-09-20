@@ -8,22 +8,23 @@ export default defineConfig({
   reporter: process.env.CI
     ? [["list"], ["html", { open: "never" }]]
     : "list",
-  snapshotPathTemplate: "{testDir}/__screenshots__/{testFilePath}/{arg}{ext}",
   use: {
     baseURL: "http://127.0.0.1:4321",
-    browserName: "chromium",
     colorScheme: "light",
     locale: "ru-RU",
     reducedMotion: "reduce",
     deviceScaleFactor: 1,
   },
-  expect: {
-    toHaveScreenshot: {
-      animations: "disabled",
-      caret: "hide",
-      maxDiffPixelRatio: 0.01,
+  projects: [
+    {
+      name: "chromium",
+      use: { browserName: "chromium" },
     },
-  },
+    {
+      name: "webkit",
+      use: { browserName: "webkit" },
+    },
+  ],
   webServer: {
     command: "npm run preview -- --host 127.0.0.1",
     url: "http://127.0.0.1:4321",
