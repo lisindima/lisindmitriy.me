@@ -163,6 +163,7 @@ body.garage-site::before {
   z-index: 5;
   display: block;
   height: auto;
+  max-width: calc(100% - 32px);
   pointer-events: auto;
   user-select: none;
   isolation: isolate;
@@ -204,15 +205,29 @@ body.garage-site::before {
 }
 .feature-grid, .screens-section, .privacy-section, .support-section { position: relative; overflow: visible; }
 .sticker-features {
-  width: clamp(150px, 15vw, 220px);
-  max-width: calc(100% - 16px);
-  top: -18px;
-  right: clamp(8px, 2vw, 24px);
+  width: clamp(150px, 14vw, 205px);
+  top: -14px;
+  right: clamp(20px, 2.5vw, 32px);
   --sticker-angle: 8deg;
 }
-.sticker-screens { width: clamp(158px, 15.5vw, 230px); top: 33%; right: -72px; --sticker-angle: 9deg; }
-.sticker-privacy { width: clamp(145px, 13.5vw, 205px); top: 18px; right: 28px; --sticker-angle: -7deg; }
-.sticker-support { width: clamp(160px, 15.5vw, 235px); top: 0; right: 250px; --sticker-angle: 7deg; }
+.sticker-screens {
+  width: clamp(145px, 13.5vw, 195px);
+  top: 31%;
+  right: clamp(20px, 2.5vw, 32px);
+  --sticker-angle: 9deg;
+}
+.sticker-privacy {
+  width: clamp(138px, 12.5vw, 180px);
+  top: 14px;
+  right: clamp(20px, 2.5vw, 32px);
+  --sticker-angle: -7deg;
+}
+.sticker-support {
+  width: clamp(145px, 13.5vw, 195px);
+  top: -4px;
+  right: clamp(20px, 2.5vw, 32px);
+  --sticker-angle: 7deg;
+}
 @media (hover: hover) and (pointer: fine) {
   .sticker-art:hover {
     transform:
@@ -346,6 +361,13 @@ body.garage-site::before {
 .policy-sections h2 { margin: 0 0 14px; font-size: 1.35rem; letter-spacing: var(--tracking-title); }
 .policy-sections p { margin: 0; color: var(--garage-secondary); line-height: 1.7; }
 
+@media (max-width: 1100px) {
+  .sticker-features { width: 176px; right: 18px; }
+  .sticker-screens { width: 164px; right: 18px; }
+  .sticker-privacy { width: 148px; right: 18px; }
+  .sticker-support { width: 160px; right: 18px; }
+}
+
 @media (max-width: 900px) {
   .garage-nav { display: none; }
   .feature-card-large {
@@ -362,9 +384,25 @@ body.garage-site::before {
   .garage-hero h1 { font-size: clamp(3.9rem, 9.5vw, 6rem); }
   .garage-hero-visual { right: -24px; width: min(455px, 35vw); opacity: .96; transform: translateY(-42%); }
   .garage-hero-visual img { width: 100%; }
-  .sticker-features { right: 8px; top: 12px; }
-  .sticker-screens { right: -12px; }
-  .sticker-support { right: 180px; }
+  .sticker-features {
+    width: 160px;
+    right: 16px;
+    top: 10px;
+  }
+  .sticker-screens {
+    width: 150px;
+    right: 16px;
+    top: 28%;
+  }
+  .sticker-privacy {
+    width: 138px;
+    right: 16px;
+  }
+  .sticker-support {
+    width: 148px;
+    right: 16px;
+    top: -8px;
+  }
   .feature-card, .feature-card-large, .feature-card-accent { grid-column: 1 / -1; }
   .privacy-panel { grid-template-columns: 1fr; gap: 34px; }
   .support-section { grid-template-columns: 1fr; }
@@ -395,10 +433,10 @@ body.garage-site::before {
   .app-store-placeholder { width: 100%; justify-content: center; }
   .garage-text-link { text-align: center; }
   .sticker-art { filter: drop-shadow(0 12px 14px rgba(25,17,11,.18)); }
-  .sticker-features { width: 145px; top: 0; right: 4px; }
-  .sticker-screens { width: 128px; top: 28%; right: -8px; }
-  .sticker-privacy { width: 120px; top: -22px; right: 8px; }
-  .sticker-support { width: 132px; top: -30px; right: 8px; }
+  .sticker-features { width: 140px; top: 0; right: 14px; }
+  .sticker-screens { width: 124px; top: 28%; right: 14px; }
+  .sticker-privacy { width: 116px; top: -20px; right: 14px; }
+  .sticker-support { width: 126px; top: -26px; right: 14px; }
   .feature-grid { padding-bottom: 58px; }
   .feature-card {
     min-height: 300px;
