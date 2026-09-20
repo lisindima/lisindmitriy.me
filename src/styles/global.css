@@ -615,7 +615,7 @@ h1 {
 
   h1 {
     margin-bottom: 26px;
-    font-size: clamp(4.25rem, 22vw, 6.5rem);
+    font-size: clamp(4.25rem, calc(12vw + 2rem), 6.5rem);
     line-height: 0.9;
   }
 
@@ -640,7 +640,7 @@ h1 {
 
   .section-intro h2,
   .contact-panel h2 {
-    font-size: clamp(3.35rem, 15vw, 5rem);
+    font-size: clamp(3.35rem, calc(10vw + 1rem), 5rem);
   }
 
   .projects-bento {
