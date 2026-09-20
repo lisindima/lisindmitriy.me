@@ -83,7 +83,7 @@ test.describe("metadata and routing", () => {
 test.describe("responsive visual regression", () => {
   for (const route of representativePages) {
     for (const viewport of viewports) {
-      test(`${route.name} · ${viewport.name}`, async ({ page }) => {
+      test(`${route.name} · ${viewport.name}`, async ({ page }, testInfo) => {
         await page.setViewportSize({ width: viewport.width, height: viewport.height });
         await page.goto(route.path, { waitUntil: "networkidle" });
         await settle(page);
@@ -116,7 +116,7 @@ test.describe("responsive visual regression", () => {
         ).toBeLessThanOrEqual(1);
 
         await page.screenshot({
-          path: `test-results/screenshots/${route.name}-${viewport.name}.png`,
+          path: `test-results/screenshots/${testInfo.project.name}-${route.name}-${viewport.name}.png`,
           fullPage: false,
         });
       });
@@ -126,7 +126,7 @@ test.describe("responsive visual regression", () => {
 
 test.describe("known layout regressions", () => {
   for (const width of [1024, 390]) {
-    test(`Garage mileage pill does not overlap copy at ${width}px`, async ({ page }) => {
+    test(`Garage mileage pill does not overlap copy at ${width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 768 });
       await page.goto("/garage/", { waitUntil: "networkidle" });
       const card = page.locator(".feature-card-accent");
@@ -140,13 +140,13 @@ test.describe("known layout regressions", () => {
       expect((copy?.y ?? 0) + (copy?.height ?? 0)).toBeLessThanOrEqual((pill?.y ?? 0) - 8);
 
       await card.screenshot({
-        path: `test-results/screenshots/garage-mileage-${width}.png`,
+        path: `test-results/screenshots/${testInfo.project.name}-garage-mileage-${width}.png`,
       });
     });
   }
 
   for (const width of [1440, 390]) {
-    test(`archive closing card keeps its card treatment at ${width}px`, async ({ page }) => {
+    test(`archive closing card keeps its card treatment at ${width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 900 });
       await page.goto("/otphub/", { waitUntil: "networkidle" });
       const card = page.locator(".archive-closing-card");
@@ -159,13 +159,13 @@ test.describe("known layout regressions", () => {
       expect(radius).toBeGreaterThan(0);
 
       await card.screenshot({
-        path: `test-results/screenshots/archive-closing-${width}.png`,
+        path: `test-results/screenshots/${testInfo.project.name}-archive-closing-${width}.png`,
       });
     });
   }
 
   for (const width of [320, 360, 390, 430, 480, 540]) {
-    test(`portfolio display text stays inside narrow viewport at ${width}px`, async ({ page }) => {
+    test(`portfolio display text stays inside narrow viewport at ${width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/", { waitUntil: "networkidle" });
       await settle(page);
@@ -183,11 +183,64 @@ test.describe("known layout regressions", () => {
       }
 
       await page.screenshot({
-        path: `test-results/screenshots/portfolio-narrow-${width}.png`,
+        path: `test-results/screenshots/${testInfo.project.name}-portfolio-narrow-${width}.png`,
         fullPage: false,
       });
     });
   }
+
+  test("mobile header and hidden skip link stay stable during tiny scrolls", async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/", { waitUntil: "networkidle" });
+    await settle(page);
+
+    const header = page.locator(".floating-header");
+    const skipLink = page.locator(".skip-link");
+
+    const initialHeaderTop = await header.evaluate(
+      (element) => element.getBoundingClientRect().top,
+    );
+
+    expect(initialHeaderTop).toBeGreaterThanOrEqual(0);
+
+    for (const y of [0, 1, 2, 8, 32, 96, 0]) {
+      await page.evaluate((scrollY) => window.scrollTo(0, scrollY), y);
+      await page.evaluate(
+        () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
+      );
+
+      const state = await page.evaluate(() => {
+        const headerElement = document.querySelector<HTMLElement>(".floating-header");
+        const skipElement = document.querySelector<HTMLElement>(".skip-link");
+        if (!headerElement || !skipElement) throw new Error("Header or skip link missing");
+
+        const headerRect = headerElement.getBoundingClientRect();
+        const skipRect = skipElement.getBoundingClientRect();
+        const skipStyle = getComputedStyle(skipElement);
+
+        return {
+          headerTop: headerRect.top,
+          skipWidth: skipRect.width,
+          skipHeight: skipRect.height,
+          skipClipPath: skipStyle.clipPath,
+          skipOverflow: skipStyle.overflow,
+          active: document.activeElement === skipElement,
+        };
+      });
+
+      expect(Math.abs(state.headerTop - initialHeaderTop)).toBeLessThanOrEqual(1);
+      expect(state.skipWidth).toBeLessThanOrEqual(1);
+      expect(state.skipHeight).toBeLessThanOrEqual(1);
+      expect(state.skipClipPath).not.toBe("none");
+      expect(state.skipOverflow).toBe("hidden");
+      expect(state.active).toBeFalsy();
+    }
+
+    await page.screenshot({
+      path: `test-results/screenshots/${testInfo.project.name}-tiny-scroll.png`,
+      fullPage: false,
+    });
+  });
 
   test("320px portfolio header keeps controls inside the pill", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 700 });
