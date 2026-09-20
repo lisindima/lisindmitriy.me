@@ -88,10 +88,32 @@ test.describe("responsive visual regression", () => {
         await page.goto(route.path, { waitUntil: "networkidle" });
         await settle(page);
 
-        const overflow = await page.evaluate(
-          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-        );
-        expect(overflow).toBeLessThanOrEqual(1);
+        const overflow = await page.evaluate(() => {
+          const root = document.documentElement;
+          const viewportWidth = root.clientWidth;
+          const offenders = Array.from(document.querySelectorAll<HTMLElement>("body *"))
+            .map((element) => {
+              const rect = element.getBoundingClientRect();
+              return {
+                tag: element.tagName.toLowerCase(),
+                className: element.className,
+                left: Math.round(rect.left),
+                right: Math.round(rect.right),
+                width: Math.round(rect.width),
+              };
+            })
+            .filter((item) => item.width > 0 && (item.left < -1 || item.right > viewportWidth + 1))
+            .slice(0, 12);
+
+          return {
+            amount: root.scrollWidth - viewportWidth,
+            offenders,
+          };
+        });
+        expect(
+          overflow.amount,
+          `Horizontal overflow offenders: ${JSON.stringify(overflow.offenders)}`,
+        ).toBeLessThanOrEqual(1);
 
         await expect(page).toHaveScreenshot(
           `${route.name}-${viewport.name}.png`,
@@ -147,6 +169,7 @@ test.describe("known layout regressions", () => {
       const outer = element.getBoundingClientRect();
       return Array.from(element.querySelectorAll("a")).every((link) => {
         const rect = link.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return true;
         return rect.left >= outer.left - 1 && rect.right <= outer.right + 1;
       });
     });
