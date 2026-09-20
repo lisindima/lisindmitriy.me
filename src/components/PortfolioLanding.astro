@@ -5,6 +5,7 @@ import "../styles/redesign-overrides.css";
 import "../styles/hero-overrides.css";
 import "../styles/site-ui.css";
 import { Image } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 
 import favicon from "../assets/favicon.png";
 import netliphyImage from "../assets/Netliphy.png";
@@ -188,13 +189,14 @@ const socialLinks = [
     <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/en/" />
     <link rel="alternate" hreflang="x-default" href="https://lisindmitriy.ru/" />
     <title>{copy.title}</title>
+    <ClientRouter fallback="animate" />
   </head>
   <body>
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
     <header class="floating-header">
-      <div class="site-header-shell portfolio-header">
+      <div class="site-header-shell portfolio-header" transition:name="site-header">
         <nav class="site-header-start site-header-nav" aria-label={copy.navAria}>
           <a class="site-nav-link" href="#work">{copy.navWork}</a>
           <a class="site-nav-link" href="#contact">{copy.navContact}</a>
@@ -204,7 +206,7 @@ const socialLinks = [
       </div>
     </header>
 
-    <main>
+    <main transition:name="site-main" transition:animate="slide">
       <section id="hero" class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {copy.heroEyebrow}</p>

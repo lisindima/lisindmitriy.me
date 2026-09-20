@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import garageIcon from "../assets/garage-icon.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
@@ -73,9 +74,10 @@ const copy = isRu
     <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/garage/privacy/" />
     <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/garage/en/privacy/" />
     <title>{copy.pageTitle}</title>
+    <ClientRouter fallback="animate" />
   </head>
   <body class="garage-site privacy-page">
-    <header class="garage-header privacy-header site-header-shell">
+    <header class="garage-header privacy-header site-header-shell" transition:name="site-header">
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -90,7 +92,7 @@ const copy = isRu
       <a class="site-language-switch site-header-end" href={alternateHref}>{copy.lang}</a>
     </header>
 
-    <main class="privacy-shell">
+    <main class="privacy-shell" transition:name="site-main" transition:animate="slide">
       <a class="back-link" href={homeHref}>{copy.back}</a>
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>

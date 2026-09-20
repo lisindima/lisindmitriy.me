@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import garageIcon from "../assets/garage-icon.webp";
 import garageBoxCutout from "../assets/garage-box-cutout.webp";
 import orangeCarSticker from "../assets/garage-sticker-orange.webp";
@@ -139,9 +140,10 @@ const copy = isRu
     <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/garage/en/" />
     <link rel="alternate" hreflang="x-default" href="https://lisindmitriy.ru/garage/" />
     <title>{copy.title}</title>
+    <ClientRouter fallback="animate" />
   </head>
   <body class="garage-site">
-    <header class="garage-header site-header-shell">
+    <header class="garage-header site-header-shell" transition:name="site-header">
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -161,7 +163,7 @@ const copy = isRu
       <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
     </header>
 
-    <main>
+    <main transition:name="site-main" transition:animate="slide">
       <section class="garage-hero garage-shell">
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
@@ -280,30 +282,37 @@ const copy = isRu
     </footer>
 
     <script is:inline>
-      const garageStickers = document.querySelectorAll(".sticker-art");
-      garageStickers.forEach((sticker) => {
-        sticker.addEventListener("pointermove", (event) => {
-          const rect = sticker.getBoundingClientRect();
-          const normalizedX = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-          const normalizedY = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
-          const shineX = normalizedX * 100;
-          const shineY = normalizedY * 100;
-          const tiltX = (0.5 - normalizedY) * 5;
-          const tiltY = (normalizedX - 0.5) * 5;
+      const initGarageStickers = () => {
+        document.querySelectorAll(".sticker-art").forEach((sticker) => {
+          if (sticker.dataset.tiltReady === "true") return;
+          sticker.dataset.tiltReady = "true";
 
-          sticker.style.setProperty("--shine-x", `${shineX.toFixed(1)}%`);
-          sticker.style.setProperty("--shine-y", `${shineY.toFixed(1)}%`);
-          sticker.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
-          sticker.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
-        });
+          sticker.addEventListener("pointermove", (event) => {
+            const rect = sticker.getBoundingClientRect();
+            const normalizedX = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+            const normalizedY = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
+            const shineX = normalizedX * 100;
+            const shineY = normalizedY * 100;
+            const tiltX = (0.5 - normalizedY) * 5;
+            const tiltY = (normalizedX - 0.5) * 5;
 
-        sticker.addEventListener("pointerleave", () => {
-          sticker.style.setProperty("--tilt-x", "0deg");
-          sticker.style.setProperty("--tilt-y", "0deg");
-          sticker.style.removeProperty("--shine-x");
-          sticker.style.removeProperty("--shine-y");
+            sticker.style.setProperty("--shine-x", `${shineX.toFixed(1)}%`);
+            sticker.style.setProperty("--shine-y", `${shineY.toFixed(1)}%`);
+            sticker.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+            sticker.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+          });
+
+          sticker.addEventListener("pointerleave", () => {
+            sticker.style.setProperty("--tilt-x", "0deg");
+            sticker.style.setProperty("--tilt-y", "0deg");
+            sticker.style.removeProperty("--shine-x");
+            sticker.style.removeProperty("--shine-y");
+          });
         });
-      });
+      };
+
+      initGarageStickers();
+      document.addEventListener("astro:page-load", initGarageStickers);
     </script>
   </body>
 </html>
