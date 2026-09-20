@@ -250,8 +250,8 @@ const projects = {
 
 const item = projects[project];
 const copy = item[locale];
-const basePath = `/projects/${item.slug}/`;
-const localizedPath = `/en/projects/${item.slug}/`;
+const basePath = `/${item.slug}/`;
+const localizedPath = `/en/${item.slug}/`;
 const canonicalPath = isRu ? basePath : localizedPath;
 const alternateHref = isRu ? localizedPath : basePath;
 const portfolioHref = isRu ? "/#work" : "/en/#work";
