@@ -281,7 +281,7 @@ const copy = isRu
       <a href={privacyHref}>{copy.privacyLink}</a>
     </footer>
 
-    <script is:inline>
+    <script>
       const initGarageStickers = () => {
         document.querySelectorAll(".sticker-art").forEach((sticker) => {
           if (sticker.dataset.tiltReady === "true") return;
