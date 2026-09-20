@@ -121,7 +121,7 @@ a {
 
 .floating-header {
   position: fixed;
-  top: max(18px, env(safe-area-inset-top));
+  top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
   right: env(safe-area-inset-right);
   left: env(safe-area-inset-left);
   z-index: 100;
@@ -678,10 +678,6 @@ h1 {
 @media (max-width: 680px) {
   .shell {
     width: min(100% - 28px, 1180px);
-  }
-
-  .floating-header {
-    top: 10px;
   }
 
   .glass-nav {
