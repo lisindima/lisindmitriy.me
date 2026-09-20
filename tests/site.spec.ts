@@ -189,6 +189,33 @@ test.describe("known layout regressions", () => {
     });
   }
 
+  test("featured Garage artwork is not cropped on desktop", async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/en/", { waitUntil: "networkidle" });
+    await settle(page);
+
+    const media = page.locator(".project-card.featured .project-media");
+    const image = media.locator("img");
+    await media.scrollIntoViewIfNeeded();
+
+    const ratios = await media.evaluate((mediaElement) => {
+      const imageElement = mediaElement.querySelector("img");
+      if (!imageElement) throw new Error("Featured project image missing");
+
+      const rect = mediaElement.getBoundingClientRect();
+      return {
+        mediaRatio: rect.width / rect.height,
+        naturalRatio: imageElement.naturalWidth / imageElement.naturalHeight,
+      };
+    });
+
+    expect(Math.abs(ratios.mediaRatio - ratios.naturalRatio)).toBeLessThanOrEqual(0.01);
+
+    await media.screenshot({
+      path: `test-results/screenshots/${testInfo.project.name}-garage-featured-desktop.png`,
+    });
+  });
+
   test("project images keep centered cover crops on mobile", async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/en/", { waitUntil: "networkidle" });
@@ -225,6 +252,8 @@ test.describe("known layout regressions", () => {
             width: imageRect.width,
             height: imageRect.height,
           },
+          naturalWidth: imageElement.naturalWidth,
+          naturalHeight: imageElement.naturalHeight,
           objectFit: style.objectFit,
           objectPosition: style.objectPosition,
           position: style.position,
@@ -238,6 +267,15 @@ test.describe("known layout regressions", () => {
       expect(geometry.objectFit).toBe("cover");
       expect(["50% 50%", "center"]).toContain(geometry.objectPosition);
       expect(geometry.position).toBe("absolute");
+
+      if (index === 0) {
+        expect(geometry.naturalWidth).toBeGreaterThan(0);
+        expect(geometry.naturalHeight).toBeGreaterThan(0);
+
+        const mediaRatio = geometry.media.width / geometry.media.height;
+        const naturalRatio = geometry.naturalWidth / geometry.naturalHeight;
+        expect(Math.abs(mediaRatio - naturalRatio)).toBeLessThanOrEqual(0.01);
+      }
     }
 
     await page.screenshot({
