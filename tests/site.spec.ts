@@ -126,55 +126,47 @@ test.describe("responsive visual regression", () => {
 
 test.describe("known layout regressions", () => {
   for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 430, height: 932 },
+    { width: 1024, height: 768 },
+    { width: 1440, height: 900 },
     { width: 844, height: 390 },
     { width: 932, height: 430 },
     { width: 956, height: 440 },
   ]) {
-    test(`Garage screenshots sticker clears heading at ${viewport.width}×${viewport.height}`, async ({ page }, testInfo) => {
+    test(`Garage road sticker stays in the reserved area at ${viewport.width}×${viewport.height}`, async ({ page }, testInfo) => {
       await page.setViewportSize(viewport);
       await page.goto("/garage/", { waitUntil: "networkidle" });
       await settle(page);
 
       const section = page.locator("#screenshots");
-      const heading = section.locator(".section-heading");
-      const sticker = section.locator(".sticker-screens");
       await section.scrollIntoViewIfNeeded();
 
-      const boxes = await section.evaluate((sectionElement) => {
-        const headingElement = sectionElement.querySelector<HTMLElement>(".section-heading");
-        const stickerElement = sectionElement.querySelector<HTMLElement>(".sticker-screens");
-        if (!headingElement || !stickerElement) throw new Error("Screens heading or sticker missing");
+      const boxes = await page.evaluate(() => {
+        const steps = document.querySelector<HTMLElement>(".steps-list");
+        const heading = document.querySelector<HTMLElement>("#screenshots .section-heading");
+        const sticker = document.querySelector<HTMLElement>("#screenshots .sticker-screens");
+        if (!steps || !heading || !sticker) {
+          throw new Error("Steps list, Screens heading or road sticker missing");
+        }
 
-        const headingRect = headingElement.getBoundingClientRect();
-        const stickerRect = stickerElement.getBoundingClientRect();
+        const stepsRect = steps.getBoundingClientRect();
+        const headingRect = heading.getBoundingClientRect();
+        const stickerRect = sticker.getBoundingClientRect();
 
         return {
-          heading: {
-            left: headingRect.left,
-            top: headingRect.top,
-            right: headingRect.right,
-            bottom: headingRect.bottom,
-          },
-          sticker: {
-            left: stickerRect.left,
-            top: stickerRect.top,
-            right: stickerRect.right,
-            bottom: stickerRect.bottom,
-          },
+          stepsBottom: stepsRect.bottom,
+          headingTop: headingRect.top,
+          stickerTop: stickerRect.top,
+          stickerBottom: stickerRect.bottom,
         };
       });
 
-      const overlaps =
-        boxes.sticker.left < boxes.heading.right &&
-        boxes.sticker.right > boxes.heading.left &&
-        boxes.sticker.top < boxes.heading.bottom &&
-        boxes.sticker.bottom > boxes.heading.top;
-
-      expect(overlaps).toBeFalsy();
-      expect(boxes.sticker.bottom).toBeLessThanOrEqual(boxes.heading.top - 12);
+      expect(boxes.stickerTop).toBeGreaterThanOrEqual(boxes.stepsBottom + 12);
+      expect(boxes.stickerBottom).toBeLessThanOrEqual(boxes.headingTop - 12);
 
       await page.screenshot({
-        path: `test-results/screenshots/${testInfo.project.name}-garage-screens-landscape-${viewport.width}x${viewport.height}.png`,
+        path: `test-results/screenshots/${testInfo.project.name}-garage-road-sticker-${viewport.width}x${viewport.height}.png`,
         fullPage: false,
       });
     });
