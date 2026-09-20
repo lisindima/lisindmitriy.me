@@ -43,7 +43,7 @@ jobs:
         run: npm run test:site -- --update-snapshots
 
       - name: Upload generated lockfile
-        if: github.event_name == 'pull_request'
+        if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: package-lock
@@ -51,7 +51,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload visual baselines
-        if: github.event_name == 'pull_request'
+        if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: visual-baselines
