@@ -252,7 +252,7 @@ body.garage-site::before {
   z-index: 2;
   max-width: 100%;
 }
-.feature-card-accent { grid-column: span 7; background: linear-gradient(145deg, var(--garage-orange-soft), var(--garage-surface) 58%); }
+.feature-card-accent { grid-column: span 7; padding-bottom: 124px; background: linear-gradient(145deg, var(--garage-orange-soft), var(--garage-surface) 58%); }
 .feature-index { color: var(--garage-secondary); font-size: .72rem; font-weight: 760; letter-spacing: var(--tracking-label); }
 .feature-card h2 { max-width: 480px; margin: 46px 0 14px; font-size: clamp(2rem, 3.3vw, 3.4rem); line-height: .98; letter-spacing: var(--tracking-title); }
 .feature-card p { max-width: 540px; margin: 0; color: var(--garage-secondary); font-size: 1rem; line-height: 1.55; }
