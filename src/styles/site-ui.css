@@ -1,5 +1,6 @@
 :root {
   --site-ui-radius-pill: 999px;
+  --site-ui-header-offset: 14px;
   --site-ui-transition-fast: 180ms ease;
   --site-ui-transition-card: 240ms cubic-bezier(.2,.8,.2,1);
   --site-ui-card-lift: -5px;
@@ -166,6 +167,10 @@
 }
 
 @media (max-width: 680px) {
+  :root {
+    --site-ui-header-offset: 8px;
+  }
+
   .site-header-shell {
     width: calc(100% - 16px);
     min-height: 56px;
