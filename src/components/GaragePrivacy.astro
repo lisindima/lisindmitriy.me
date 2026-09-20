@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { ClientRouter } from "astro:transitions";
+import { ClientRouter, fade } from "astro:transitions";
 import garageIcon from "../assets/garage-icon.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
@@ -63,7 +63,7 @@ const copy = isRu
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} transition:name="site-root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -77,7 +77,7 @@ const copy = isRu
     <ClientRouter fallback="animate" />
   </head>
   <body class="garage-site privacy-page">
-    <header class="garage-header privacy-header site-header-shell" transition:name="site-header">
+    <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -92,7 +92,7 @@ const copy = isRu
       <a class="site-language-switch site-header-end" href={alternateHref}>{copy.lang}</a>
     </header>
 
-    <main class="privacy-shell" transition:name="site-main" transition:animate="slide">
+    <main class="privacy-shell" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <a class="back-link" href={homeHref}>{copy.back}</a>
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>
