@@ -75,6 +75,12 @@ const socialImage = await getImage({
   quality: 82,
 });
 
+const faviconImage = await getImage({
+  src: garageIcon,
+  width: 64,
+  format: "png",
+});
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -109,7 +115,7 @@ const schema = {
     />
     <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/webp" href={garageIcon.src} />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
     <title>{copy.pageTitle}</title>
     <ClientRouter fallback="animate" />
   </head>
