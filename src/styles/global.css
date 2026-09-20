@@ -568,7 +568,12 @@ h1 {
   }
 
   .section-intro {
-    grid-template-columns: 1fr;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .section-intro > * {
+    min-width: 0;
   }
 
   .section-intro .eyebrow {
