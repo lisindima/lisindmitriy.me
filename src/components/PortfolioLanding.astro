@@ -6,6 +6,7 @@ import "../styles/hero-overrides.css";
 import "../styles/site-ui.css";
 import { Image } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
+import SiteHeader from "./SiteHeader.astro";
 
 import favicon from "../assets/favicon.png";
 import netliphyImage from "../assets/Netliphy.png";
@@ -50,6 +51,8 @@ const copy = isRu
       footerRight: "SwiftUI в приложениях · Astro в вебе",
       technologies: "технологии",
       website: "Сайт",
+      details: "Подробнее",
+      archived: "Архив",
     }
   : {
       title: "Dmitriy Lisin — iOS Developer",
@@ -78,6 +81,8 @@ const copy = isRu
       footerRight: "SwiftUI by day · Astro on the web",
       technologies: "technologies",
       website: "Website",
+      details: "Details",
+      archived: "Archived",
     };
 
 const projects = isRu
@@ -94,22 +99,24 @@ const projects = isRu
         eyebrow: "SwiftUI · iOS · macOS",
         title: "Netliphy",
         description: "Управление сайтами на Netlify с iPhone, iPad и Mac в нативном интерфейсе для платформ Apple.",
-        tags: ["SwiftUI", "Netlify", "Multiplatform"],
+        tags: ["SwiftUI", "Netlify", "WidgetKit"],
         image: netliphyImage,
+        status: copy.archived,
         links: [
+          { label: copy.details, href: "/projects/netliphy/", external: false },
           { label: "GitHub", href: "https://github.com/lisindima/Netliphy", external: true },
-          { label: copy.website, href: "https://netliphy.lisindmitriy.ru", external: true },
         ],
       },
       {
         eyebrow: "Безопасность · SwiftUI",
         title: "OTPHub",
         description: "Лёгкое приложение для одноразовых паролей и безопасной аутентификации по алгоритмам TOTP и HOTP.",
-        tags: ["CryptoKit", "TOTP", "HOTP"],
+        tags: ["SwiftUI", "TOTP", "HOTP"],
         image: otpHubImage,
+        status: copy.archived,
         links: [
+          { label: copy.details, href: "/projects/otphub/", external: false },
           { label: "GitHub", href: "https://github.com/lisindima/OTPHub", external: true },
-          { label: copy.website, href: "https://otphub.lisindmitriy.ru", external: true },
         ],
       },
       {
@@ -118,9 +125,9 @@ const projects = isRu
         description: "Дашборд для моделирования распространения вируса и визуализации нагрузки на систему здравоохранения.",
         tags: ["R", "Shiny", "Data"],
         image: covidImage,
+        status: copy.archived,
         links: [
-          { label: "GitHub", href: "https://github.com/lisindima/covidshiny", external: true },
-          { label: copy.website, href: "https://covid.lisindmitriy.ru", external: true },
+          { label: copy.details, href: "/projects/covid-dashboard/", external: false },
         ],
       },
     ]
@@ -137,22 +144,24 @@ const projects = isRu
         eyebrow: "SwiftUI · iOS · macOS",
         title: "Netliphy",
         description: "Manage Netlify-hosted sites from iPhone, iPad, and Mac with a native Apple-platform experience.",
-        tags: ["SwiftUI", "Netlify", "Multiplatform"],
+        tags: ["SwiftUI", "Netlify", "WidgetKit"],
         image: netliphyImage,
+        status: copy.archived,
         links: [
+          { label: copy.details, href: "/en/projects/netliphy/", external: false },
           { label: "GitHub", href: "https://github.com/lisindima/Netliphy", external: true },
-          { label: copy.website, href: "https://netliphy.lisindmitriy.ru", external: true },
         ],
       },
       {
         eyebrow: "Security · SwiftUI",
         title: "OTPHub",
         description: "A lightweight one-time password app for secure authentication using TOTP and HOTP algorithms.",
-        tags: ["CryptoKit", "TOTP", "HOTP"],
+        tags: ["SwiftUI", "TOTP", "HOTP"],
         image: otpHubImage,
+        status: copy.archived,
         links: [
+          { label: copy.details, href: "/en/projects/otphub/", external: false },
           { label: "GitHub", href: "https://github.com/lisindima/OTPHub", external: true },
-          { label: copy.website, href: "https://otphub.lisindmitriy.ru", external: true },
         ],
       },
       {
@@ -161,9 +170,9 @@ const projects = isRu
         description: "A dashboard for modeling viral spread and visualizing healthcare capacity.",
         tags: ["R", "Shiny", "Data"],
         image: covidImage,
+        status: copy.archived,
         links: [
-          { label: "GitHub", href: "https://github.com/lisindima/covidshiny", external: true },
-          { label: copy.website, href: "https://covid.lisindmitriy.ru", external: true },
+          { label: copy.details, href: "/en/projects/covid-dashboard/", external: false },
         ],
       },
     ];
@@ -195,16 +204,17 @@ const socialLinks = [
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
-    <header class="floating-header">
-      <div class="site-header-shell portfolio-header" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
-        <nav class="site-header-start site-header-nav" aria-label={copy.navAria}>
-          <a class="site-nav-link" href="#work">{copy.navWork}</a>
-          <a class="site-nav-link" href="#contact">{copy.navContact}</a>
-          <a class="nav-github site-nav-link" href="https://github.com/lisindima" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-        </nav>
-        <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
-      </div>
-    </header>
+    <SiteHeader
+      locale={locale}
+      alternateHref={alternateHref}
+      languageLabel={copy.language}
+      navAria={copy.navAria}
+      navItems={[
+        { label: copy.navWork, href: "#work" },
+        { label: copy.navContact, href: "#contact" },
+        { label: "GitHub", href: "https://github.com/lisindima", external: true, className: "nav-github" },
+      ]}
+    />
 
     <main transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <section id="hero" class="hero shell">
@@ -248,7 +258,10 @@ const socialLinks = [
                 />
               </div>
               <div class="project-info">
-                <p class="project-eyebrow">{project.eyebrow}</p>
+                <div class="project-kicker-row">
+                  <p class="project-eyebrow">{project.eyebrow}</p>
+                  {project.status && <span class="project-status">{project.status}</span>}
+                </div>
                 <div class="project-title-row">
                   <h3>{project.title}</h3>
                   <span class="project-number">0{index + 1}</span>
