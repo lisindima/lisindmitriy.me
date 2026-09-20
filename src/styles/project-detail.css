@@ -403,6 +403,17 @@
 }
 
 @media (max-width: 680px) {
+  .archive-section-intro {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .archive-section-intro h2 {
+    min-width: 0;
+    max-width: 100%;
+    font-size: clamp(2.65rem, 11vw, 4rem);
+  }
+
   .archive-hero {
     min-height: auto;
     padding-block: 118px 58px;
