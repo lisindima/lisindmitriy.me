@@ -284,6 +284,11 @@ const copy = isRu
       </section>
 
       <section id="screenshots" class="screens-section garage-shell">
+        <div class="section-heading compact">
+          <p class="garage-eyebrow">{copy.screensEyebrow}</p>
+          <h2>{copy.screensTitle}</h2>
+          <p>{copy.screensText}</p>
+        </div>
         <span class="sticker-art decor-sticker sticker-screens" data-sticker-mask={roadMask.src} aria-hidden="true">
           <Image
             src={roadSticker}
@@ -296,11 +301,6 @@ const copy = isRu
             decoding="async"
           />
         </span>
-        <div class="section-heading compact">
-          <p class="garage-eyebrow">{copy.screensEyebrow}</p>
-          <h2>{copy.screensTitle}</h2>
-          <p>{copy.screensText}</p>
-        </div>
         <div class="screens-grid">
           {[copy.shot1, copy.shot2, copy.shot3].map((label, index) => (
             <figure class:list={["screenshot-slot", { raised: index === 1 }]}>
