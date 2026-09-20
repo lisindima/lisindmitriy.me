@@ -12,11 +12,11 @@
 }
 
 .archive-project.project-otphub {
-  --accent: #1d63ea;
-  --accent-2: #62a0ff;
-  --accent-soft: rgba(29, 99, 234, .12);
-  --site-ui-accent: #1d63ea;
-  --site-ui-accent-soft: rgba(29, 99, 234, .12);
+  --accent: #7a5cff;
+  --accent-2: #b49cff;
+  --accent-soft: rgba(122, 92, 255, .14);
+  --site-ui-accent: #7a5cff;
+  --site-ui-accent-soft: rgba(122, 92, 255, .14);
 }
 
 .archive-project.project-covid {
