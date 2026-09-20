@@ -6,12 +6,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "preview:background": "astro preview --background"
+    "test:site": "playwright test"
   },
   "dependencies": {
-    "astro": "^7.3.3"
+    "astro": "7.3.3"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
   }
 }
