@@ -337,6 +337,17 @@ h1 {
   aspect-ratio: 16 / 10;
 }
 
+.project-card-geely .project-media {
+  background:
+    radial-gradient(circle at 50% 12%, rgba(90, 119, 158, 0.24), transparent 52%),
+    #111419;
+}
+
+.project-card-geely .project-media img {
+  object-fit: contain;
+  padding: clamp(18px, 2.6vw, 34px);
+}
+
 .project-media img {
   position: absolute;
   inset: 0;

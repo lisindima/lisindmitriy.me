@@ -12,6 +12,7 @@ import netliphyImage from "../assets/Netliphy.png";
 import otpHubImage from "../assets/OTPHubMac.png";
 import covidImage from "../assets/covid.png";
 import garageImage from "../assets/garage-hero-scene.webp";
+import geelyDiagnosticsImage from "../assets/geely-diagnostics.png";
 
 interface Props {
   locale?: "ru" | "en";
@@ -40,7 +41,7 @@ const copy = isRu
       socialAria: "Социальные сети",
       workEyebrow: "Избранные проекты",
       workTitle: "Что я сделал.",
-      workText: "Небольшая подборка продуктов и экспериментов для платформ Apple, безопасности и данных.",
+      workText: "Небольшая подборка продуктов и экспериментов для платформ Apple, автомобилей, безопасности и данных.",
       moreWork: "Больше экспериментов — на GitHub",
       contactEyebrow: "Контакты",
       contactTitleA: "Есть интересная",
@@ -71,7 +72,7 @@ const copy = isRu
       socialAria: "Social links",
       workEyebrow: "Selected work",
       workTitle: "Things I’ve built.",
-      workText: "A small selection of products and experiments across Apple platforms, security, and data.",
+      workText: "A small selection of products and experiments across Apple platforms, automotive, security, and data.",
       moreWork: "More experiments live on GitHub",
       contactEyebrow: "Contact",
       contactTitleA: "Have something",
@@ -96,6 +97,17 @@ const projects = isRu
         image: garageImage,
         status: null,
         links: [{ label: copy.website, href: "/garage/", external: false }],
+      },
+      {
+        eyebrow: "Android Automotive · Geely",
+        title: "Geely Diagnostics",
+        description: "Исследовательское read-only приложение для штатных ГУ Geely: диагностика ECU/OBD2 и live-данные через ECARX AdaptAPI и Android Automotive VHAL.",
+        tags: ["Kotlin", "Compose", "VHAL"],
+        image: geelyDiagnosticsImage,
+        status: null,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/GeelyDiagnostics", external: true },
+        ],
       },
       {
         eyebrow: "SwiftUI · iOS · macOS",
@@ -143,6 +155,17 @@ const projects = isRu
         image: garageImage,
         status: null,
         links: [{ label: copy.website, href: "/garage/en/", external: false }],
+      },
+      {
+        eyebrow: "Android Automotive · Geely",
+        title: "Geely Diagnostics",
+        description: "A read-only research app for Geely head units: ECU/OBD2 diagnostics and live vehicle data through ECARX AdaptAPI and Android Automotive VHAL.",
+        tags: ["Kotlin", "Compose", "VHAL"],
+        image: geelyDiagnosticsImage,
+        status: null,
+        links: [
+          { label: "GitHub", href: "https://github.com/lisindima/GeelyDiagnostics", external: true },
+        ],
       },
       {
         eyebrow: "SwiftUI · iOS · macOS",
@@ -280,7 +303,16 @@ const schema = {
 
         <div class="projects-bento">
           {projects.map((project, index) => (
-            <article class:list={["project-card", "site-lift-card", { featured: index === 0 }]}>
+            <article
+              class:list={[
+                "project-card",
+                "site-lift-card",
+                {
+                  featured: index === 0,
+                  "project-card-geely": project.title === "Geely Diagnostics",
+                },
+              ]}
+            >
               <div class="project-media">
                 <Image
                   src={project.image}

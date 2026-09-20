@@ -189,6 +189,16 @@ test.describe("known layout regressions", () => {
     });
   }
 
+  test("Geely Diagnostics is the first standard project after Garage", async ({ page }) => {
+    await page.goto("/en/", { waitUntil: "networkidle" });
+    const titles = await page.locator(".project-card .project-title-row h3").allTextContents();
+
+    expect(titles.slice(0, 2)).toEqual(["Garage", "Geely Diagnostics"]);
+    await expect(
+      page.locator('.project-card').nth(1).locator('a[href="https://github.com/lisindima/GeelyDiagnostics"]'),
+    ).toHaveCount(1);
+  });
+
   test("featured Garage artwork is not cropped on desktop", async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/en/", { waitUntil: "networkidle" });
@@ -222,9 +232,9 @@ test.describe("known layout regressions", () => {
     await settle(page);
 
     const cards = page.locator(".project-card");
-    await expect(cards).toHaveCount(4);
+    await expect(cards).toHaveCount(5);
 
-    for (let index = 0; index < 4; index += 1) {
+    for (let index = 0; index < 5; index += 1) {
       const card = cards.nth(index);
       const media = card.locator(".project-media");
       const image = media.locator("img");
@@ -264,7 +274,7 @@ test.describe("known layout regressions", () => {
       expect(Math.abs(geometry.image.top - geometry.media.top)).toBeLessThanOrEqual(1);
       expect(Math.abs(geometry.image.width - geometry.media.width)).toBeLessThanOrEqual(1);
       expect(Math.abs(geometry.image.height - geometry.media.height)).toBeLessThanOrEqual(1);
-      expect(geometry.objectFit).toBe("cover");
+      expect(geometry.objectFit).toBe(index === 1 ? "contain" : "cover");
       expect(["50% 50%", "center"]).toContain(geometry.objectPosition);
       expect(geometry.position).toBe("absolute");
 
