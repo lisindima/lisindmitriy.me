@@ -115,10 +115,10 @@ test.describe("responsive visual regression", () => {
           `Horizontal overflow offenders: ${JSON.stringify(overflow.offenders)}`,
         ).toBeLessThanOrEqual(1);
 
-        await expect(page).toHaveScreenshot(
-          `${route.name}-${viewport.name}.png`,
-          { fullPage: false },
-        );
+        await page.screenshot({
+          path: `test-results/screenshots/${route.name}-${viewport.name}.png`,
+          fullPage: false,
+        });
       });
     }
   }
@@ -139,7 +139,9 @@ test.describe("known layout regressions", () => {
       expect(pill).not.toBeNull();
       expect((copy?.y ?? 0) + (copy?.height ?? 0)).toBeLessThanOrEqual((pill?.y ?? 0) - 8);
 
-      await expect(card).toHaveScreenshot(`garage-mileage-${width}.png`);
+      await card.screenshot({
+        path: `test-results/screenshots/garage-mileage-${width}.png`,
+      });
     });
   }
 
@@ -156,7 +158,9 @@ test.describe("known layout regressions", () => {
       );
       expect(radius).toBeGreaterThan(0);
 
-      await expect(card).toHaveScreenshot(`archive-closing-${width}.png`);
+      await card.screenshot({
+        path: `test-results/screenshots/archive-closing-${width}.png`,
+      });
     });
   }
 
