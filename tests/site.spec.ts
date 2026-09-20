@@ -189,6 +189,63 @@ test.describe("known layout regressions", () => {
     });
   }
 
+  test("project images keep centered cover crops on mobile", async ({ page }, testInfo) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/en/", { waitUntil: "networkidle" });
+    await settle(page);
+
+    const cards = page.locator(".project-card");
+    await expect(cards).toHaveCount(4);
+
+    for (let index = 0; index < 4; index += 1) {
+      const card = cards.nth(index);
+      const media = card.locator(".project-media");
+      const image = media.locator("img");
+
+      await media.scrollIntoViewIfNeeded();
+
+      const geometry = await media.evaluate((mediaElement) => {
+        const imageElement = mediaElement.querySelector("img");
+        if (!imageElement) throw new Error("Project image missing");
+
+        const mediaRect = mediaElement.getBoundingClientRect();
+        const imageRect = imageElement.getBoundingClientRect();
+        const style = getComputedStyle(imageElement);
+
+        return {
+          media: {
+            left: mediaRect.left,
+            top: mediaRect.top,
+            width: mediaRect.width,
+            height: mediaRect.height,
+          },
+          image: {
+            left: imageRect.left,
+            top: imageRect.top,
+            width: imageRect.width,
+            height: imageRect.height,
+          },
+          objectFit: style.objectFit,
+          objectPosition: style.objectPosition,
+          position: style.position,
+        };
+      });
+
+      expect(Math.abs(geometry.image.left - geometry.media.left)).toBeLessThanOrEqual(1);
+      expect(Math.abs(geometry.image.top - geometry.media.top)).toBeLessThanOrEqual(1);
+      expect(Math.abs(geometry.image.width - geometry.media.width)).toBeLessThanOrEqual(1);
+      expect(Math.abs(geometry.image.height - geometry.media.height)).toBeLessThanOrEqual(1);
+      expect(geometry.objectFit).toBe("cover");
+      expect(["50% 50%", "center"]).toContain(geometry.objectPosition);
+      expect(geometry.position).toBe("absolute");
+    }
+
+    await page.screenshot({
+      path: `test-results/screenshots/${testInfo.project.name}-project-crops-mobile.png`,
+      fullPage: true,
+    });
+  });
+
   test("mobile header and hidden skip link stay stable during tiny scrolls", async ({ page }, testInfo) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/", { waitUntil: "networkidle" });
