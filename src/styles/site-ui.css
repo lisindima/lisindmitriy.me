@@ -6,6 +6,33 @@
   --site-ui-card-lift: -5px;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: max(8px, env(safe-area-inset-top));
+  left: max(8px, env(safe-area-inset-left));
+  padding: 11px 15px;
+  border: 1px solid var(--site-ui-border);
+  border-radius: var(--site-ui-radius-pill);
+  background: var(--site-ui-surface);
+  color: var(--site-ui-text);
+  font-size: .86rem;
+  font-weight: 750;
+  line-height: 1;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--site-ui-shadow-color) 22%, transparent);
+  transform: translateY(calc(-100% - 24px));
+  transition: transform var(--site-ui-transition-fast);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--site-ui-accent);
+  outline-offset: 3px;
+}
+
 .site-header-shell {
   position: relative;
   pointer-events: auto;
