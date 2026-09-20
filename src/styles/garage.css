@@ -208,9 +208,9 @@ body.garage-site::before {
   --sticker-angle: 8deg;
 }
 .sticker-screens {
-  width: clamp(145px, 13.5vw, 195px);
-  top: 31%;
-  right: clamp(20px, 2.5vw, 32px);
+  width: clamp(210px, 17vw, 250px);
+  top: 40px;
+  right: clamp(56px, 7vw, 88px);
   --sticker-angle: 9deg;
 }
 .sticker-privacy {
@@ -360,7 +360,7 @@ body.garage-site::before {
 
 @media (max-width: 1100px) {
   .sticker-features { width: 176px; right: 18px; }
-  .sticker-screens { width: 164px; right: 18px; }
+  .sticker-screens { width: 220px; top: 72px; right: 36px; }
   .sticker-privacy { width: 148px; right: 18px; }
   .sticker-support { width: 160px; right: 18px; }
 
@@ -410,9 +410,9 @@ body.garage-site::before {
     top: 10px;
   }
   .sticker-screens {
-    width: 150px;
-    right: 16px;
-    top: 28%;
+    width: 190px;
+    right: 22px;
+    top: 238px;
   }
   .sticker-privacy {
     width: 138px;
@@ -475,7 +475,7 @@ body.garage-site::before {
   .garage-text-link { text-align: center; }
   .sticker-art { filter: drop-shadow(0 12px 14px rgba(25,17,11,.18)); }
   .sticker-features { width: 140px; top: 0; right: 14px; }
-  .sticker-screens { width: 124px; top: 28%; right: 14px; }
+  .sticker-screens { width: 152px; top: 440px; right: 10px; }
   .sticker-privacy { width: 116px; top: -20px; right: 14px; }
   .sticker-support { width: 126px; top: -26px; right: 14px; }
   .feature-grid { padding-bottom: 58px; }
