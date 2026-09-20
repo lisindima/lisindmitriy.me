@@ -29,16 +29,6 @@ const socialImage = await getImage({
   quality: 82,
 });
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Garage",
-  applicationCategory: "UtilitiesApplication",
-  operatingSystem: "iOS",
-  description: copy.description,
-  url: isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/",
-};
-
 const [orangeMask, roadMask, mountainsMask, suvMask] = await Promise.all([
   getImage({ src: orangeCarSticker, width: 256, format: "webp", quality: 20 }),
   getImage({ src: roadSticker, width: 256, format: "webp", quality: 20 }),
@@ -153,6 +143,16 @@ const copy = isRu
       footer: "Garage · made for iPhone",
       developer: "Dmitriy Lisin",
     };
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Garage",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "iOS",
+  description: copy.description,
+  url: isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/",
+};
 ---
 
 <!doctype html>
