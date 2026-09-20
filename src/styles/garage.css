@@ -360,6 +360,7 @@ body.garage-site::before {
 .policy-sections p { margin: 0; color: var(--garage-secondary); line-height: 1.7; }
 
 @media (max-width: 1100px) {
+  .garage-hero::after { right: 0; }
   .sticker-features { width: 176px; right: 18px; }
   .sticker-screens { width: 220px; top: 72px; right: 36px; }
   .sticker-privacy { width: 148px; right: 18px; }
