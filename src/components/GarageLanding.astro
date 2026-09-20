@@ -29,6 +29,12 @@ const socialImage = await getImage({
   quality: 82,
 });
 
+const faviconImage = await getImage({
+  src: garageIcon,
+  width: 64,
+  format: "png",
+});
+
 const [orangeMask, roadMask, mountainsMask, suvMask] = await Promise.all([
   getImage({ src: orangeCarSticker, width: 256, format: "webp", quality: 20 }),
   getImage({ src: roadSticker, width: 256, format: "webp", quality: 20 }),
@@ -175,7 +181,7 @@ const schema = {
     />
     <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/webp" href={garageIcon.src} />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
     <title>{copy.title}</title>
     <ClientRouter fallback="animate" />
   </head>
