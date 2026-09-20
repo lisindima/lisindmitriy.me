@@ -125,6 +125,61 @@ test.describe("responsive visual regression", () => {
 });
 
 test.describe("known layout regressions", () => {
+  for (const viewport of [
+    { width: 844, height: 390 },
+    { width: 932, height: 430 },
+    { width: 956, height: 440 },
+  ]) {
+    test(`Garage screenshots sticker clears heading at ${viewport.width}×${viewport.height}`, async ({ page }, testInfo) => {
+      await page.setViewportSize(viewport);
+      await page.goto("/garage/", { waitUntil: "networkidle" });
+      await settle(page);
+
+      const section = page.locator("#screenshots");
+      const heading = section.locator(".section-heading");
+      const sticker = section.locator(".sticker-screens");
+      await section.scrollIntoViewIfNeeded();
+
+      const boxes = await section.evaluate((sectionElement) => {
+        const headingElement = sectionElement.querySelector<HTMLElement>(".section-heading");
+        const stickerElement = sectionElement.querySelector<HTMLElement>(".sticker-screens");
+        if (!headingElement || !stickerElement) throw new Error("Screens heading or sticker missing");
+
+        const headingRect = headingElement.getBoundingClientRect();
+        const stickerRect = stickerElement.getBoundingClientRect();
+
+        return {
+          heading: {
+            left: headingRect.left,
+            top: headingRect.top,
+            right: headingRect.right,
+            bottom: headingRect.bottom,
+          },
+          sticker: {
+            left: stickerRect.left,
+            top: stickerRect.top,
+            right: stickerRect.right,
+            bottom: stickerRect.bottom,
+          },
+        };
+      });
+
+      const overlaps =
+        boxes.sticker.left < boxes.heading.right &&
+        boxes.sticker.right > boxes.heading.left &&
+        boxes.sticker.top < boxes.heading.bottom &&
+        boxes.sticker.bottom > boxes.heading.top;
+
+      expect(overlaps).toBeFalsy();
+      expect(boxes.sticker.bottom).toBeLessThanOrEqual(boxes.heading.top - 12);
+
+      await page.screenshot({
+        path: `test-results/screenshots/${testInfo.project.name}-garage-screens-landscape-${viewport.width}x${viewport.height}.png`,
+        fullPage: false,
+      });
+    });
+  }
+
   for (const width of [1024, 390]) {
     test(`Garage mileage pill does not overlap copy at ${width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: width === 390 ? 844 : 768 });
