@@ -3,6 +3,7 @@ import { Image, getImage } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
 import garageIcon from "../assets/garage-icon.webp";
 import garageBoxCutout from "../assets/garage-box-cutout.webp";
+import garageHeroScene from "../assets/garage-hero-scene.webp";
 import orangeCarSticker from "../assets/garage-sticker-orange.webp";
 import roadSticker from "../assets/garage-sticker-road.webp";
 import mountainsSticker from "../assets/garage-sticker-mountains.webp";
@@ -10,6 +11,7 @@ import suvSticker from "../assets/garage-sticker-suv.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
 import "../styles/site-ui.css";
+import SeoHead from "./SeoHead.astro";
 
 interface Props {
   locale?: "ru" | "en";
@@ -19,6 +21,23 @@ const { locale = "ru" } = Astro.props;
 const isRu = locale === "ru";
 const alternateHref = isRu ? "/garage/en/" : "/garage/";
 const privacyHref = isRu ? "/garage/privacy/" : "/garage/en/privacy/";
+
+const socialImage = await getImage({
+  src: garageHeroScene,
+  width: 1200,
+  format: "webp",
+  quality: 82,
+});
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Garage",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "iOS",
+  description: copy.description,
+  url: isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/",
+};
 
 const [orangeMask, roadMask, mountainsMask, suvMask] = await Promise.all([
   getImage({ src: orangeCarSticker, width: 256, format: "webp", quality: 20 }),
@@ -36,6 +55,7 @@ const copy = isRu
       navSupport: "Поддержка",
       language: "EN",
       backToPortfolio: "На главную",
+      skipToContent: "Перейти к содержимому",
       eyebrow: "История обслуживания · полностью на устройстве",
       headlineA: "Все документы",
       headlineB: "по машине. В\u00A0одном месте.",
@@ -88,6 +108,7 @@ const copy = isRu
       navSupport: "Support",
       language: "RU",
       backToPortfolio: "Back to portfolio",
+      skipToContent: "Skip to content",
       eyebrow: "Car service history · entirely on device",
       headlineA: "Every service record.",
       headlineB: "One private place.",
@@ -139,17 +160,27 @@ const copy = isRu
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content={copy.description} />
+    <SeoHead
+      title={copy.title}
+      description={copy.description}
+      canonical={isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/"}
+      locale={locale}
+      alternates={[
+        { hreflang: "ru", href: "https://lisindmitriy.ru/garage/" },
+        { hreflang: "en", href: "https://lisindmitriy.ru/garage/en/" },
+        { hreflang: "x-default", href: "https://lisindmitriy.ru/garage/" },
+      ]}
+      image={socialImage.src}
+      schema={schema}
+    />
     <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
-    <link rel="canonical" href={isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/"} />
-    <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/garage/" />
-    <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/garage/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://lisindmitriy.ru/garage/" />
+    <link rel="icon" type="image/webp" href={garageIcon.src} />
     <title>{copy.title}</title>
     <ClientRouter fallback="animate" />
   </head>
   <body class="garage-site">
+    <a class="skip-link" href="#main-content">{copy.skipToContent}</a>
     <header class="garage-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
@@ -170,7 +201,7 @@ const copy = isRu
       <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
     </header>
 
-    <main transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+    <main id="main-content" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <section class="garage-hero garage-shell">
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
