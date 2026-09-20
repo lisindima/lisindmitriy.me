@@ -456,17 +456,6 @@ body.garage-site::before {
     display: none;
   }
 
-  .screens-section {
-    padding-top: 82px;
-  }
-
-  .sticker-screens {
-    position: absolute;
-    width: clamp(150px, 19vw, 190px);
-    top: -150px;
-    right: max(24px, env(safe-area-inset-right));
-    margin: 0;
-  }
 }
 
 @media (max-width: 760px) {
@@ -572,6 +561,67 @@ body.garage-site::before {
   .privacy-shell { padding-block: 70px 90px; }
   .back-link { margin-bottom: 48px; }
   .privacy-shell h1 { font-size: clamp(3.1rem, 14vw, 4.8rem); }
+}
+
+
+
+/* Keep the road sticker in the reserved air above the Screens heading at every size. */
+.screens-section {
+  --screens-sticker-size: clamp(210px, 17vw, 250px);
+  --screens-sticker-lift: 64px;
+  padding-top: calc(var(--screens-sticker-size) - var(--screens-sticker-lift) + 32px);
+}
+
+.sticker-screens {
+  position: absolute;
+  width: var(--screens-sticker-size);
+  top: calc(-1 * var(--screens-sticker-lift));
+  right: clamp(56px, 7vw, 88px);
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .screens-section {
+    --screens-sticker-size: 220px;
+    --screens-sticker-lift: 56px;
+  }
+
+  .sticker-screens {
+    right: 36px;
+  }
+}
+
+@media (max-width: 900px) {
+  .screens-section {
+    --screens-sticker-size: 190px;
+    --screens-sticker-lift: 52px;
+  }
+
+  .sticker-screens {
+    right: 22px;
+  }
+}
+
+@media (max-width: 680px) {
+  .screens-section {
+    --screens-sticker-size: 152px;
+    --screens-sticker-lift: 48px;
+  }
+
+  .sticker-screens {
+    right: 10px;
+  }
+}
+
+@media (max-width: 1100px) and (orientation: landscape) and (max-height: 520px) {
+  .screens-section {
+    --screens-sticker-size: clamp(150px, 19vw, 190px);
+    --screens-sticker-lift: 56px;
+  }
+
+  .sticker-screens {
+    right: max(24px, env(safe-area-inset-right));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
