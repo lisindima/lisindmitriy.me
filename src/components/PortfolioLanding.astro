@@ -195,6 +195,12 @@ const socialImage = await getImage({
   quality: 82,
 });
 
+const faviconImage = await getImage({
+  src: favicon,
+  width: 64,
+  format: "png",
+});
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -226,7 +232,7 @@ const schema = {
     />
     <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
     <title>{copy.title}</title>
     <ClientRouter fallback="animate" />
   </head>
