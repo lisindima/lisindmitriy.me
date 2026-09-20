@@ -374,6 +374,34 @@
   }
 }
 
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .archive-hero {
+    min-height: auto;
+    padding-block: 108px 52px;
+  }
+
+  .archive-hero h1,
+  .project-covid .archive-hero h1 {
+    max-width: 12ch;
+    font-size: clamp(3.2rem, 9.6vw, 5rem);
+    line-height: .9;
+  }
+
+  .archive-lead {
+    max-width: 720px;
+    font-size: 1rem;
+  }
+
+  .archive-screenshot {
+    padding-bottom: 72px;
+  }
+
+  .archive-overview,
+  .archive-features {
+    padding-top: 54px;
+  }
+}
+
 @media (max-width: 680px) {
   .archive-hero {
     min-height: auto;
