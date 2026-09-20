@@ -121,7 +121,7 @@ a {
 
 .floating-header {
   position: fixed;
-  top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
+  top: calc(env(safe-area-inset-top) + var(--site-ui-header-offset));
   right: env(safe-area-inset-right);
   left: env(safe-area-inset-left);
   z-index: 100;
