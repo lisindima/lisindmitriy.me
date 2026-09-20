@@ -426,6 +426,28 @@ body.garage-site::before {
   .privacy-panel { grid-template-columns: 1fr; gap: 34px; }
   .support-section { grid-template-columns: 1fr; }
 }
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .garage-hero {
+    min-height: auto;
+    display: block;
+    padding-block: 64px 56px;
+  }
+
+  .garage-hero-copy {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .garage-hero h1 {
+    font-size: clamp(3.2rem, 9vw, 4.8rem);
+  }
+
+  .garage-hero::after,
+  .garage-hero-visual {
+    display: none;
+  }
+}
+
 @media (max-width: 760px) {
   .garage-hero { min-height: auto; display: block; padding-block: 96px 76px; overflow: visible; }
   .garage-hero-copy { width: 100%; }
