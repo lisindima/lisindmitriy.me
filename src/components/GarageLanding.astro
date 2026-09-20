@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
 import garageIcon from "../assets/garage-icon.webp";
 import garageBoxCutout from "../assets/garage-box-cutout.webp";
@@ -19,6 +19,13 @@ const { locale = "ru" } = Astro.props;
 const isRu = locale === "ru";
 const alternateHref = isRu ? "/garage/en/" : "/garage/";
 const privacyHref = isRu ? "/garage/privacy/" : "/garage/en/privacy/";
+
+const [orangeMask, roadMask, mountainsMask, suvMask] = await Promise.all([
+  getImage({ src: orangeCarSticker, width: 256, format: "webp", quality: 20 }),
+  getImage({ src: roadSticker, width: 256, format: "webp", quality: 20 }),
+  getImage({ src: mountainsSticker, width: 256, format: "webp", quality: 20 }),
+  getImage({ src: suvSticker, width: 256, format: "webp", quality: 20 }),
+]);
 
 const copy = isRu
   ? {
@@ -181,12 +188,33 @@ const copy = isRu
 
         <div class="garage-hero-visual" aria-hidden="true">
           <div class="garage-hero-visual-glow"></div>
-          <img src={garageBoxCutout.src} alt="" width={garageBoxCutout.width} height={garageBoxCutout.height} loading="eager" fetchpriority="high" decoding="async" />
+          <Image
+            src={garageBoxCutout}
+            alt=""
+            widths={[320, 480, 640, 768, 960, 1252]}
+            sizes="(max-width: 760px) 1px, (max-width: 900px) 33vw, (max-width: 1400px) 38vw, 640px"
+            format="webp"
+            quality={82}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
         </div>
       </section>
 
       <section id="features" class="feature-grid garage-shell" aria-label={copy.navFeatures}>
-        <span class="sticker-art decor-sticker sticker-features" style={`--sticker-mask: url(${orangeCarSticker.src})`} aria-hidden="true"><img src={orangeCarSticker.src} alt="" width={orangeCarSticker.width} height={orangeCarSticker.height} loading="lazy" decoding="async" /></span>
+        <span class="sticker-art decor-sticker sticker-features" data-sticker-mask={orangeMask.src} aria-hidden="true">
+          <Image
+            src={orangeCarSticker}
+            alt=""
+            widths={[96, 128, 160, 192, 256, 320, 384, 480]}
+            sizes="(max-width: 680px) 140px, (max-width: 900px) 160px, (max-width: 1100px) 176px, 205px"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
         <article class="feature-card feature-card-large site-lift-card">
           <span class="feature-index">01</span>
           <h2>{copy.cardOneTitle}</h2>
@@ -225,7 +253,18 @@ const copy = isRu
       </section>
 
       <section id="screenshots" class="screens-section garage-shell">
-        <span class="sticker-art decor-sticker sticker-screens" style={`--sticker-mask: url(${roadSticker.src})`} aria-hidden="true"><img src={roadSticker.src} alt="" width={roadSticker.width} height={roadSticker.height} loading="lazy" decoding="async" /></span>
+        <span class="sticker-art decor-sticker sticker-screens" data-sticker-mask={roadMask.src} aria-hidden="true">
+          <Image
+            src={roadSticker}
+            alt=""
+            widths={[96, 128, 160, 192, 256, 320, 384, 480]}
+            sizes="(max-width: 680px) 124px, (max-width: 900px) 150px, (max-width: 1100px) 164px, 195px"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
         <div class="section-heading compact">
           <p class="garage-eyebrow">{copy.screensEyebrow}</p>
           <h2>{copy.screensTitle}</h2>
@@ -250,7 +289,18 @@ const copy = isRu
       </section>
 
       <section id="privacy" class="privacy-section garage-shell">
-        <span class="sticker-art decor-sticker sticker-privacy" style={`--sticker-mask: url(${mountainsSticker.src})`} aria-hidden="true"><img src={mountainsSticker.src} alt="" width={mountainsSticker.width} height={mountainsSticker.height} loading="lazy" decoding="async" /></span>
+        <span class="sticker-art decor-sticker sticker-privacy" data-sticker-mask={mountainsMask.src} aria-hidden="true">
+          <Image
+            src={mountainsSticker}
+            alt=""
+            widths={[96, 128, 160, 192, 256, 320, 384, 480]}
+            sizes="(max-width: 680px) 116px, (max-width: 900px) 138px, (max-width: 1100px) 148px, 180px"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
         <div class="privacy-panel site-lift-card">
           <div>
             <p class="garage-eyebrow">{copy.privacyEyebrow}</p>
@@ -265,7 +315,18 @@ const copy = isRu
       </section>
 
       <section id="support" class="support-section garage-shell">
-        <span class="sticker-art decor-sticker sticker-support" style={`--sticker-mask: url(${suvSticker.src})`} aria-hidden="true"><img src={suvSticker.src} alt="" width={suvSticker.width} height={suvSticker.height} loading="lazy" decoding="async" /></span>
+        <span class="sticker-art decor-sticker sticker-support" data-sticker-mask={suvMask.src} aria-hidden="true">
+          <Image
+            src={suvSticker}
+            alt=""
+            widths={[96, 128, 160, 192, 256, 320, 384, 480]}
+            sizes="(max-width: 680px) 126px, (max-width: 900px) 148px, (max-width: 1100px) 160px, 195px"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
         <div>
           <p class="garage-eyebrow">{copy.supportEyebrow}</p>
           <h2>{copy.supportTitle}</h2>
@@ -287,7 +348,15 @@ const copy = isRu
           if (sticker.dataset.tiltReady === "true") return;
           sticker.dataset.tiltReady = "true";
 
+          const prepareStickerMask = () => {
+            if (sticker.style.getPropertyValue("--sticker-mask")) return;
+            const mask = sticker.dataset.stickerMask;
+            if (mask) sticker.style.setProperty("--sticker-mask", `url("${mask}")`);
+          };
+
+          sticker.addEventListener("pointerenter", prepareStickerMask);
           sticker.addEventListener("pointermove", (event) => {
+            prepareStickerMask();
             const rect = sticker.getBoundingClientRect();
             const normalizedX = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
             const normalizedY = Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height));
