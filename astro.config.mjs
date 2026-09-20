@@ -19,6 +19,7 @@ export default defineConfig({
       styleDirective: {
         resources: [
           { resource: "'self'", kind: "element" },
+          { resource: "'unsafe-inline'", kind: "element" },
           { resource: "'unsafe-inline'", kind: "attribute" },
         ],
       },
