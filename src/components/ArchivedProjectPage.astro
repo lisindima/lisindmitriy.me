@@ -31,7 +31,7 @@ const projects = {
       title: "Netliphy",
       metaTitle: "Netliphy — архивный проект Дмитрия Лисина",
       description: "Netliphy — SwiftUI-клиент для управления сайтами Netlify на iPhone, iPad и Mac.",
-      eyebrow: "SwiftUI · Netlify · 2021–2022",
+      eyebrow: "SwiftUI · Netlify",
       status: "Архивный проект",
       lead: "Нативный клиент для управления сайтами на Netlify с устройств Apple — сайты, деплои, логи, Functions, уведомления и WidgetKit.",
       storyTitle: "Netlify без браузера.",
@@ -65,7 +65,7 @@ const projects = {
       title: "Netliphy",
       metaTitle: "Netliphy — archived project by Dmitriy Lisin",
       description: "Netliphy — a SwiftUI client for managing Netlify sites from iPhone, iPad, and Mac.",
-      eyebrow: "SwiftUI · Netlify · 2021–2022",
+      eyebrow: "SwiftUI · Netlify",
       status: "Archived project",
       lead: "A native client for managing Netlify sites across Apple devices — sites, deploys, logs, Functions, notifications, and WidgetKit.",
       storyTitle: "Netlify without the browser.",
@@ -106,7 +106,7 @@ const projects = {
       title: "OTPHub",
       metaTitle: "OTPHub — архивный проект Дмитрия Лисина",
       description: "OTPHub — SwiftUI-приложение для TOTP и HOTP на iOS и macOS.",
-      eyebrow: "SwiftUI · Security · 2021",
+      eyebrow: "SwiftUI · Security",
       status: "Архивный проект",
       lead: "Генератор одноразовых паролей для iOS и macOS с TOTP/HOTP, QR-настройкой, синхронизируемым Keychain и резервными копиями.",
       storyTitle: "2FA как нативное приложение.",
@@ -140,7 +140,7 @@ const projects = {
       title: "OTPHub",
       metaTitle: "OTPHub — archived project by Dmitriy Lisin",
       description: "OTPHub — a SwiftUI TOTP and HOTP app for iOS and macOS.",
-      eyebrow: "SwiftUI · Security · 2021",
+      eyebrow: "SwiftUI · Security",
       status: "Archived project",
       lead: "A one-time-password app for iOS and macOS with TOTP/HOTP, QR setup, synchronizable Keychain storage, and backups.",
       storyTitle: "Native 2FA.",
@@ -181,7 +181,7 @@ const projects = {
       title: "COVID-19 Dashboard",
       metaTitle: "COVID-19 Dashboard — архивный проект Дмитрия Лисина",
       description: "COVID-19 Dashboard — проект на R и Shiny для моделирования распространения COVID-19 и возможностей системы здравоохранения.",
-      eyebrow: "R · Shiny · Plotly · 2021",
+      eyebrow: "R · Shiny · Plotly",
       status: "Архивный проект",
       lead: "Интерактивный дашборд для моделирования распространения COVID-19, влияния вмешательств и доступности ресурсов здравоохранения.",
       storyTitle: "Модель эпидемии и ресурсов.",
@@ -215,7 +215,7 @@ const projects = {
       title: "COVID-19 Dashboard",
       metaTitle: "COVID-19 Dashboard — archived project by Dmitriy Lisin",
       description: "COVID-19 Dashboard — an R and Shiny project for modeling COVID-19 spread and healthcare capacity.",
-      eyebrow: "R · Shiny · Plotly · 2021",
+      eyebrow: "R · Shiny · Plotly",
       status: "Archived project",
       lead: "An interactive dashboard for modeling COVID-19 spread, intervention effects, and healthcare-resource capacity.",
       storyTitle: "Epidemic and capacity modeling.",
@@ -250,8 +250,8 @@ const projects = {
 
 const item = projects[project];
 const copy = item[locale];
-const basePath = `/projects/${item.slug}/`;
-const localizedPath = `/en/projects/${item.slug}/`;
+const basePath = `/${item.slug}/`;
+const localizedPath = `/en/${item.slug}/`;
 const canonicalPath = isRu ? basePath : localizedPath;
 const alternateHref = isRu ? localizedPath : basePath;
 const portfolioHref = isRu ? "/#work" : "/en/#work";
@@ -261,7 +261,6 @@ const alternateCanonical = `https://lisindmitriy.ru${alternateHref}`;
 const navItems = [
   { label: copy.navAbout, href: "#overview" },
   { label: copy.navFeatures, href: "#features" },
-  ...(item.repoUrl ? [{ label: "GitHub", href: item.repoUrl, external: true }] : []),
 ];
 ---
 
