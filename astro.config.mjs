@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   site: "https://lisindmitriy.ru",
+  markdown: { syntaxHighlight: false },
   redirects: {
     "/projects/netliphy/": "/netliphy/",
     "/projects/otphub/": "/otphub/",

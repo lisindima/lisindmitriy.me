@@ -1,0 +1,58 @@
+---
+interface AlternateLink {
+  hreflang: "ru" | "en" | "x-default";
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  locale: "ru" | "en";
+  alternates: AlternateLink[];
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  locale,
+  alternates,
+  image,
+  type = "website",
+  noindex = false,
+  schema,
+} = Astro.props;
+
+const imageUrl = image ? new URL(image, canonical).href : undefined;
+const ogLocale = locale === "ru" ? "ru_RU" : "en_US";
+const alternateOgLocale = locale === "ru" ? "en_US" : "ru_RU";
+---
+
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<link rel="canonical" href={canonical} />
+{alternates.map(({ hreflang, href }) => (
+  <link rel="alternate" hreflang={hreflang} href={href} />
+))}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="Dmitriy Lisin" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:locale:alternate" content={alternateOgLocale} />
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+
+<meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl} />}
+
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

@@ -9,7 +9,7 @@
   --garage-border: rgba(55, 45, 34, 0.12);
   --garage-orange: #e86f2f;
   --garage-orange-soft: rgba(232, 111, 47, 0.12);
-  --garage-green: #2f7d5d;
+  --garage-green: #2d7658;
   --garage-shadow: 0 28px 90px rgba(68, 47, 29, 0.12);
   --garage-radius: 34px;
 
@@ -360,6 +360,11 @@ body.garage-site::before {
 .policy-sections p { margin: 0; color: var(--garage-secondary); line-height: 1.7; }
 
 @media (max-width: 1100px) {
+  .garage-hero::after { right: 0; }
+  .garage-hero-visual {
+    right: 36px;
+    width: min(380px, 35vw);
+  }
   .sticker-features { width: 176px; right: 18px; }
   .sticker-screens { width: 220px; top: 72px; right: 36px; }
   .sticker-privacy { width: 148px; right: 18px; }
@@ -411,9 +416,11 @@ body.garage-site::before {
     top: 10px;
   }
   .sticker-screens {
+    position: relative;
     width: 190px;
-    right: 22px;
-    top: 238px;
+    top: auto;
+    right: auto;
+    margin: -24px 22px 30px auto;
   }
   .sticker-privacy {
     width: 138px;
@@ -477,7 +484,7 @@ body.garage-site::before {
   .garage-text-link { text-align: center; }
   .sticker-art { filter: drop-shadow(0 12px 14px rgba(25,17,11,.18)); }
   .sticker-features { width: 140px; top: 0; right: 14px; }
-  .sticker-screens { width: 152px; top: 440px; right: 10px; }
+  .sticker-screens { width: 152px; top: auto; right: auto; margin: -26px 10px 24px auto; }
   .sticker-privacy { width: 116px; top: -20px; right: 14px; }
   .sticker-support { width: 126px; top: -26px; right: 14px; }
   .feature-grid { padding-bottom: 58px; }

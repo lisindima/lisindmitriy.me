@@ -1,10 +1,12 @@
 ---
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
 import garageIcon from "../assets/garage-icon.webp";
+import garageHeroScene from "../assets/garage-hero-scene.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
 import "../styles/site-ui.css";
+import SeoHead from "./SeoHead.astro";
 
 interface Props {
   locale?: "ru" | "en";
@@ -60,6 +62,37 @@ const copy = isRu
       summaryTitle: "In short",
       summary: ["No account", "No analytics", "No ads", "No server-side document processing"],
     };
+
+const skipToContent = isRu ? "Перейти к содержимому" : "Skip to content";
+const canonicalHref = isRu
+  ? "https://lisindmitriy.ru/garage/privacy/"
+  : "https://lisindmitriy.ru/garage/en/privacy/";
+
+const socialImage = await getImage({
+  src: garageHeroScene,
+  width: 1200,
+  format: "webp",
+  quality: 82,
+});
+
+const faviconImage = await getImage({
+  src: garageIcon,
+  width: 64,
+  format: "png",
+});
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: copy.pageTitle,
+  description: copy.description,
+  url: canonicalHref,
+  isPartOf: {
+    "@type": "SoftwareApplication",
+    name: "Garage",
+    operatingSystem: "iOS",
+  },
+};
 ---
 
 <!doctype html>
@@ -67,16 +100,27 @@ const copy = isRu
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content={copy.description} />
+    <SeoHead
+      title={copy.pageTitle}
+      description={copy.description}
+      canonical={canonicalHref}
+      locale={locale}
+      alternates={[
+        { hreflang: "ru", href: "https://lisindmitriy.ru/garage/privacy/" },
+        { hreflang: "en", href: "https://lisindmitriy.ru/garage/en/privacy/" },
+        { hreflang: "x-default", href: "https://lisindmitriy.ru/garage/privacy/" },
+      ]}
+      image={socialImage.src}
+      schema={schema}
+    />
     <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
-    <link rel="canonical" href={isRu ? "https://lisindmitriy.ru/garage/privacy/" : "https://lisindmitriy.ru/garage/en/privacy/"} />
-    <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/garage/privacy/" />
-    <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/garage/en/privacy/" />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
     <title>{copy.pageTitle}</title>
     <ClientRouter fallback="animate" />
   </head>
   <body class="garage-site privacy-page">
+    <a class="skip-link" href="#main-content">{skipToContent}</a>
     <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
@@ -89,10 +133,10 @@ const copy = isRu
           <span>Garage</span>
         </a>
       </div>
-      <a class="site-language-switch site-header-end" href={alternateHref}>{copy.lang}</a>
+      <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.lang}</a>
     </header>
 
-    <main class="privacy-shell" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+    <main id="main-content" class="privacy-shell" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <a class="back-link" href={homeHref}>{copy.back}</a>
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>

@@ -1,12 +1,11 @@
 ---
 import "../styles/typography.css";
 import "../styles/global.css";
-import "../styles/redesign-overrides.css";
-import "../styles/hero-overrides.css";
 import "../styles/site-ui.css";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
 import SiteHeader from "./SiteHeader.astro";
+import SeoHead from "./SeoHead.astro";
 
 import favicon from "../assets/favicon.png";
 import netliphyImage from "../assets/Netliphy.png";
@@ -31,6 +30,7 @@ const copy = isRu
       navWork: "Проекты",
       navContact: "Контакты",
       navAria: "Основная навигация",
+      skipToContent: "Перейти к содержимому",
       heroEyebrow: "iOS-разработчик · SwiftUI",
       nameFirst: "Дмитрий",
       nameLast: "Лисин.",
@@ -61,6 +61,7 @@ const copy = isRu
       navWork: "Work",
       navContact: "Contact",
       navAria: "Main navigation",
+      skipToContent: "Skip to content",
       heroEyebrow: "iOS Developer · SwiftUI",
       nameFirst: "Dmitriy",
       nameLast: "Lisin.",
@@ -186,6 +187,29 @@ const socialLinks = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/lisindmitriy/" },
   { label: "X", href: "https://twitter.com/lisindima" },
 ];
+
+const socialImage = await getImage({
+  src: garageImage,
+  width: 1200,
+  format: "webp",
+  quality: 82,
+});
+
+const faviconImage = await getImage({
+  src: favicon,
+  width: 64,
+  format: "png",
+});
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Dmitriy Lisin",
+  url: "https://lisindmitriy.ru/",
+  jobTitle: "iOS Developer",
+  sameAs: socialLinks.map((link) => link.href),
+  knowsAbout: ["iOS", "Swift", "SwiftUI"],
+};
 ---
 
 <!doctype html>
@@ -193,18 +217,27 @@ const socialLinks = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content={copy.description} />
+    <SeoHead
+      title={copy.title}
+      description={copy.description}
+      canonical={canonicalHref}
+      locale={locale}
+      alternates={[
+        { hreflang: "ru", href: "https://lisindmitriy.ru/" },
+        { hreflang: "en", href: "https://lisindmitriy.ru/en/" },
+        { hreflang: "x-default", href: "https://lisindmitriy.ru/" },
+      ]}
+      image={socialImage.src}
+      schema={schema}
+    />
     <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" href={favicon.src} />
-    <link rel="canonical" href={canonicalHref} />
-    <link rel="alternate" hreflang="ru" href="https://lisindmitriy.ru/" />
-    <link rel="alternate" hreflang="en" href="https://lisindmitriy.ru/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://lisindmitriy.ru/" />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
     <title>{copy.title}</title>
     <ClientRouter fallback="animate" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">{copy.skipToContent}</a>
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
@@ -215,12 +248,12 @@ const socialLinks = [
       navAria={copy.navAria}
       navItems={[
         { label: copy.navWork, href: "#work" },
-        { label: copy.navContact, href: "#contact" },
+        { label: copy.navContact, href: "#contact", className: "nav-contact" },
         { label: "GitHub", href: "https://github.com/lisindima", external: true, className: "nav-github" },
       ]}
     />
 
-    <main transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+    <main id="main-content" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <section id="hero" class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {copy.heroEyebrow}</p>
@@ -251,14 +284,13 @@ const socialLinks = [
               <div class="project-media">
                 <Image
                   src={project.image}
-                  alt={project.title}
+                  alt=""
                   widths={[320, 480, 640, 800, 960]}
                   sizes={index === 0 ? "(max-width: 900px) calc(100vw - 40px), 720px" : "(max-width: 900px) calc(100vw - 40px), 480px"}
                   format="webp"
                   quality={70}
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
-                  fetchpriority={index === 0 ? "high" : "auto"}
                 />
               </div>
               <div class="project-info">
