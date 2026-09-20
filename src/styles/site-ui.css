@@ -2,41 +2,77 @@
   navigation: auto;
 }
 
-@keyframes site-page-out {
+@keyframes site-main-out {
   to {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-18px) scale(.985);
+    filter: blur(4px);
   }
 }
 
-@keyframes site-page-in {
+@keyframes site-main-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(22px) scale(.975);
+    filter: blur(6px);
   }
+
+  65% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes site-root-out {
+  to { opacity: .76; }
+}
+
+@keyframes site-root-in {
+  from { opacity: .82; }
 }
 
 ::view-transition-old(root),
-::view-transition-new(root) {
+::view-transition-new(root),
+::view-transition-old(site-main),
+::view-transition-new(site-main),
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
   mix-blend-mode: normal;
 }
 
 ::view-transition-old(root) {
-  animation: site-page-out 150ms ease both;
+  animation: site-root-out 260ms ease both;
 }
 
 ::view-transition-new(root) {
-  animation: site-page-in 260ms cubic-bezier(.2, .8, .2, 1) both;
+  animation: site-root-in 430ms ease both;
+}
+
+::view-transition-old(site-main) {
+  animation: site-main-out 260ms cubic-bezier(.4, 0, 1, 1) both;
+}
+
+::view-transition-new(site-main) {
+  animation: site-main-in 520ms cubic-bezier(.16, 1, .3, 1) both;
 }
 
 ::view-transition-group(root) {
-  animation-duration: 280ms;
-  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+}
+
+::view-transition-group(site-main) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
 }
 
 ::view-transition-group(site-header) {
-  animation-duration: 320ms;
-  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+}
+
+main {
+  view-transition-name: site-main;
 }
 
 :root {
@@ -204,9 +240,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(root),
+  ::view-transition-group(site-main),
   ::view-transition-group(site-header),
   ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-new(root),
+  ::view-transition-old(site-main),
+  ::view-transition-new(site-main),
+  ::view-transition-old(site-header),
+  ::view-transition-new(site-header) {
     animation-duration: 0.01ms;
     animation-delay: 0ms;
   }
