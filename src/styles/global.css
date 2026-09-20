@@ -434,12 +434,34 @@ h1 {
   padding: clamp(26px, 4vw, 42px);
 }
 
-.project-eyebrow {
+.project-kicker-row {
+  min-height: 31px;
   margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-eyebrow {
+  margin: 0;
   color: var(--secondary);
   font-size: 0.73rem;
   font-weight: 720;
   letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.project-status {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--secondary);
+  font-size: .66rem;
+  font-weight: 760;
+  letter-spacing: .045em;
   text-transform: uppercase;
 }
 

@@ -51,6 +51,19 @@
   justify-self: end;
 }
 
+.site-header-brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 9px;
+  color: var(--site-ui-text);
+  font-size: .92rem;
+  font-weight: 780;
+  line-height: 1;
+  letter-spacing: -.012em;
+  white-space: nowrap;
+}
+
 .site-back-button {
   display: inline-flex;
   align-items: center;
@@ -188,6 +201,11 @@
 
   .site-header-start {
     gap: 4px;
+  }
+
+  .site-header-brand {
+    padding-inline: 6px;
+    font-size: .86rem;
   }
 
   .site-back-button {

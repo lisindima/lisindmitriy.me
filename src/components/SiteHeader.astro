@@ -1,0 +1,103 @@
+---
+import { fade } from "astro:transitions";
+
+interface NavItem {
+  label: string;
+  href: string;
+  external?: boolean;
+  className?: string;
+}
+
+interface Props {
+  locale: "ru" | "en";
+  alternateHref: string;
+  languageLabel: string;
+  navAria: string;
+  navItems?: NavItem[];
+  navClass?: string;
+  outerClass?: string;
+  backHref?: string;
+  backLabel?: string;
+  brandLabel?: string;
+  brandHref?: string;
+}
+
+const {
+  locale,
+  alternateHref,
+  languageLabel,
+  navAria,
+  navItems = [],
+  navClass,
+  outerClass = "floating-header",
+  backHref,
+  backLabel,
+  brandLabel,
+  brandHref = "#",
+} = Astro.props;
+---
+
+<header class={outerClass}>
+  <div
+    class="site-header-shell portfolio-header"
+    transition:name="site-header"
+    transition:animate={fade({ duration: "0.18s" })}
+  >
+    {backHref || brandLabel ? (
+      <div class="site-header-start">
+        {backHref && (
+          <a
+            class="site-back-button site-nav-link"
+            href={backHref}
+            aria-label={backLabel}
+            title={backLabel}
+          >
+            <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.5 5.5 8 12l6.5 6.5" />
+            </svg>
+          </a>
+        )}
+        {brandLabel && (
+          <a class="site-header-brand" href={brandHref}>{brandLabel}</a>
+        )}
+        {navItems.length > 0 && (
+          <nav class:list={["site-header-nav", navClass]} aria-label={navAria}>
+            {navItems.map((item) => (
+              <a
+                class:list={["site-nav-link", item.className]}
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+              >
+                {item.label}
+                {item.external && <span aria-hidden="true"> ↗</span>}
+              </a>
+            ))}
+          </nav>
+        )}
+      </div>
+    ) : (
+      <nav class:list={["site-header-start", "site-header-nav", navClass]} aria-label={navAria}>
+        {navItems.map((item) => (
+          <a
+            class:list={["site-nav-link", item.className]}
+            href={item.href}
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noreferrer" : undefined}
+          >
+            {item.label}
+            {item.external && <span aria-hidden="true"> ↗</span>}
+          </a>
+        ))}
+      </nav>
+    )}
+
+    <a
+      class="site-language-switch site-header-end"
+      href={alternateHref}
+      hreflang={locale === "ru" ? "en" : "ru"}
+    >
+      {languageLabel}
+    </a>
+  </div>
+</header>
