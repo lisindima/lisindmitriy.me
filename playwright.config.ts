@@ -21,8 +21,14 @@ export default defineConfig({
       use: { browserName: "chromium" },
     },
     {
-      name: "webkit",
-      use: { browserName: "webkit" },
+      name: "webkit-iphone",
+      use: {
+        browserName: "webkit",
+        viewport: { width: 390, height: 844 },
+        screen: { width: 390, height: 844 },
+        isMobile: true,
+        hasTouch: true,
+      },
     },
   ],
   webServer: {
