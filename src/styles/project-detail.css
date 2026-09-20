@@ -149,11 +149,13 @@
 }
 
 .archive-screenshot-media {
+  --screenshot-radius: 34px;
+  --screenshot-inset: 12px;
   width: 100%;
   margin: 0;
-  padding: 12px;
+  padding: var(--screenshot-inset);
   border: 1px solid var(--border);
-  border-radius: 34px;
+  border-radius: var(--screenshot-radius);
   background: var(--surface);
   box-shadow: var(--shadow);
 }
@@ -164,6 +166,7 @@
   height: auto;
   max-height: none;
   object-fit: contain;
+  border-radius: calc(var(--screenshot-radius) - var(--screenshot-inset));
 }
 
 .archive-screenshot-media figcaption {
@@ -402,8 +405,8 @@
   }
 
   .archive-screenshot-media {
-    padding: 8px;
-    border-radius: 26px;
+    --screenshot-radius: 26px;
+    --screenshot-inset: 8px;
   }
 
   .archive-screenshot-media figcaption {
