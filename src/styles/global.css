@@ -328,6 +328,11 @@ h1 {
   background: var(--surface-muted);
 }
 
+.project-card.featured .project-media {
+  min-height: 0;
+  aspect-ratio: 1353 / 1163;
+}
+
 .project-card:not(.featured) .project-media {
   aspect-ratio: 16 / 10;
 }
