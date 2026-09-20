@@ -5,7 +5,7 @@ import "../styles/redesign-overrides.css";
 import "../styles/hero-overrides.css";
 import "../styles/site-ui.css";
 import { Image } from "astro:assets";
-import { ClientRouter } from "astro:transitions";
+import { ClientRouter, fade } from "astro:transitions";
 
 import favicon from "../assets/favicon.png";
 import netliphyImage from "../assets/Netliphy.png";
@@ -176,7 +176,7 @@ const socialLinks = [
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} transition:name="site-root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -196,7 +196,7 @@ const socialLinks = [
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
     <header class="floating-header">
-      <div class="site-header-shell portfolio-header" transition:name="site-header">
+      <div class="site-header-shell portfolio-header" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
         <nav class="site-header-start site-header-nav" aria-label={copy.navAria}>
           <a class="site-nav-link" href="#work">{copy.navWork}</a>
           <a class="site-nav-link" href="#contact">{copy.navContact}</a>
@@ -206,7 +206,7 @@ const socialLinks = [
       </div>
     </header>
 
-    <main transition:name="site-main" transition:animate="slide">
+    <main transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <section id="hero" class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {copy.heroEyebrow}</p>
