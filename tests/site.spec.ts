@@ -164,6 +164,31 @@ test.describe("known layout regressions", () => {
     });
   }
 
+  for (const width of [320, 360, 390, 430, 480, 540]) {
+    test(`portfolio display text stays inside narrow viewport at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/", { waitUntil: "networkidle" });
+      await settle(page);
+
+      const heroTitle = page.locator(".hero h1");
+      const contactTitle = page.locator(".contact-panel h2");
+      await contactTitle.scrollIntoViewIfNeeded();
+
+      for (const locator of [heroTitle, contactTitle]) {
+        const fits = await locator.evaluate((element) => {
+          const htmlElement = element as HTMLElement;
+          return htmlElement.scrollWidth <= htmlElement.clientWidth + 1;
+        });
+        expect(fits).toBeTruthy();
+      }
+
+      await page.screenshot({
+        path: `test-results/screenshots/portfolio-narrow-${width}.png`,
+        fullPage: false,
+      });
+    });
+  }
+
   test("320px portfolio header keeps controls inside the pill", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 700 });
     await page.goto("/", { waitUntil: "networkidle" });
