@@ -1,3 +1,44 @@
+@view-transition {
+  navigation: auto;
+}
+
+@keyframes site-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes site-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  animation: site-page-out 150ms ease both;
+}
+
+::view-transition-new(root) {
+  animation: site-page-in 260ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+::view-transition-group(root) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+
+::view-transition-group(site-header) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+
 :root {
   --site-ui-radius-pill: 999px;
   --site-ui-header-offset: 14px;
@@ -7,6 +48,7 @@
 }
 
 .site-header-shell {
+  view-transition-name: site-header;
   position: relative;
   pointer-events: auto;
   isolation: isolate;
@@ -161,6 +203,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-group(site-header),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms;
+    animation-delay: 0ms;
+  }
+
   .site-nav-link,
   .site-language-switch,
   .site-lift-card {
