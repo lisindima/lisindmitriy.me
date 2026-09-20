@@ -3,8 +3,11 @@ import "../styles/typography.css";
 import "../styles/global.css";
 import "../styles/site-ui.css";
 import { ClientRouter, fade } from "astro:transitions";
+import { getImage } from "astro:assets";
 import favicon from "../assets/favicon.png";
 import SiteHeader from "../components/SiteHeader.astro";
+
+const faviconImage = await getImage({ src: favicon, width: 64, format: "png" });
 ---
 
 <!doctype html>
@@ -16,7 +19,7 @@ import SiteHeader from "../components/SiteHeader.astro";
     <meta name="description" content="Запрошенная страница не найдена." />
     <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" href={favicon.src} />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
     <title>404 — страница не найдена</title>
     <ClientRouter fallback="animate" />
   </head>
