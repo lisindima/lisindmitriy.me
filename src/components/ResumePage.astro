@@ -92,7 +92,9 @@ const copy = isRu
       closingEyebrow: "Контакты",
       closingTitle: "Поговорим про iOS?",
       closingText: "Если нужен опытный iOS-разработчик, технический лидер или просто хочется обсудить интересную инженерную задачу — лучше всего написать на почту.",
-      footer: "Lead iOS-разработчик · SwiftUI · Swift Concurrency",
+      footerUpdate: "Обновлено 21 сентября 2026",
+      footerChange: "web-резюме · iOS-first hero · Safari polish",
+      footerSource: "Исходники",
     }
   : {
       title: "Resume — Dmitriy Lisin, Lead iOS Developer",
@@ -162,7 +164,9 @@ const copy = isRu
       closingEyebrow: "Contact",
       closingTitle: "Let’s talk iOS.",
       closingText: "If you need an experienced iOS developer, a technical lead, or simply want to discuss an interesting engineering problem, email is the best way to reach me.",
-      footer: "Lead iOS Developer · SwiftUI · Swift Concurrency",
+      footerUpdate: "Updated 21 Sep 2026",
+      footerChange: "web resume · iOS-first hero · Safari polish",
+      footerSource: "Source",
     };
 
 const faviconImage = await getImage({
@@ -343,9 +347,12 @@ const schema = {
       </section>
     </main>
 
-    <footer class="site-footer shell">
+    <footer class="site-footer site-footer-with-changelog shell">
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
-      <span>{copy.footer}</span>
+      <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong><span> · {copy.footerChange}</span></span>
+      <a class="site-footer-source" href="https://github.com/lisindima/lisindmitriy.me" target="_blank" rel="noreferrer">
+        {copy.footerSource} <span aria-hidden="true">↗</span>
+      </a>
     </footer>
   </body>
 </html>
