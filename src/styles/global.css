@@ -525,78 +525,6 @@ h1 {
   transform: translateY(-2px);
 }
 
-.activity-section {
-  padding: 86px 0 30px;
-}
-
-.activity-intro {
-  margin-bottom: 34px;
-}
-
-.activity-list {
-  border-top: 1px solid var(--border);
-}
-
-.activity-item {
-  display: grid;
-  grid-template-columns: minmax(130px, .25fr) minmax(0, 1fr) auto;
-  gap: 18px 28px;
-  align-items: center;
-  padding: 22px 4px;
-  border-bottom: 1px solid var(--border);
-  transition: color 160ms ease, transform 180ms ease, background 180ms ease;
-}
-
-.activity-item:hover {
-  color: var(--accent);
-  transform: translateX(4px);
-}
-
-.activity-repo {
-  color: var(--secondary);
-  font-size: .76rem;
-  font-weight: 760;
-  letter-spacing: var(--tracking-label);
-}
-
-.activity-message {
-  min-width: 0;
-  overflow: hidden;
-  font-size: 1rem;
-  font-weight: 680;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.activity-meta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  color: var(--tertiary);
-  font-size: .76rem;
-  white-space: nowrap;
-}
-
-.activity-meta code {
-  font: inherit;
-  letter-spacing: .04em;
-}
-
-.activity-more {
-  display: inline-flex;
-  gap: 8px;
-  margin-top: 24px;
-  color: var(--secondary);
-  font-size: .9rem;
-  font-weight: 680;
-  transition: color 160ms ease;
-}
-
-.activity-more:hover {
-  color: var(--accent);
-}
-
 .contact-section {
   padding: 110px 0 70px;
 }
@@ -701,6 +629,33 @@ h1 {
   font-size: 0.8rem;
 }
 
+.site-footer-with-changelog {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px 28px;
+}
+
+.site-footer-changelog {
+  min-width: 0;
+  justify-self: center;
+  text-align: center;
+}
+
+.site-footer-changelog strong {
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+.site-footer-source {
+  color: var(--secondary);
+  font-weight: 680;
+  transition: color 160ms ease;
+}
+
+.site-footer-source:hover {
+  color: var(--accent);
+}
+
 @media (max-width: 980px) {
   .hero {
     min-height: auto;
@@ -780,24 +735,6 @@ h1 {
     padding-top: 84px;
   }
 
-  .activity-section {
-    padding-top: 64px;
-  }
-
-  .activity-item {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 7px 14px;
-    padding-block: 18px;
-  }
-
-  .activity-repo {
-    grid-column: 1 / -1;
-  }
-
-  .activity-meta {
-    font-size: .7rem;
-  }
-
   .section-intro h2 {
     font-size: clamp(3rem, calc(9vw + 1rem), 5rem);
   }
@@ -842,6 +779,17 @@ h1 {
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .site-footer-with-changelog {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .site-footer-changelog {
+    justify-self: start;
+    text-align: left;
   }
 }
 
