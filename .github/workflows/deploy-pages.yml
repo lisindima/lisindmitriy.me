@@ -32,8 +32,6 @@ jobs:
 
       - name: Build Astro site
         run: npm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium webkit
