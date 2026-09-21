@@ -251,15 +251,6 @@ test.describe("known layout regressions", () => {
     await expect(page.locator('.hero-actions a[href="/resume/"]')).toHaveCount(1);
   });
 
-  test("portfolio activity is generated at build time", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
-    const items = page.locator(".activity-item");
-
-    expect(await items.count()).toBeGreaterThanOrEqual(2);
-    await expect(items.first()).toHaveAttribute("href", /^https:\/\/github\.com\/lisindima\//);
-    await expect(items.first().locator("time")).toHaveAttribute("datetime", /.+/);
-  });
-
   test("public resume uses the public contact channel", async ({ page }) => {
     await page.goto("/resume/", { waitUntil: "networkidle" });
 
@@ -267,6 +258,61 @@ test.describe("known layout regressions", () => {
     await expect(page.locator(".experience-item")).toHaveCount(2);
     await expect(page.locator('a[href="mailto:me@lisindmitriy.ru"]')).not.toHaveCount(0);
     await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  });
+
+  test("portfolio and resume use the footer micro changelog", async ({ page }) => {
+    for (const path of ["/", "/resume/"]) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      await expect(page.locator(".activity-section")).toHaveCount(0);
+      await expect(page.locator(".site-footer-changelog")).toContainText("21");
+      await expect(
+        page.locator('.site-footer-source[href="https://github.com/lisindima/lisindmitriy.me"]'),
+      ).toHaveCount(1);
+    }
+  });
+
+  test("resume sections keep one aligned grid without sticky overlap", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/en/resume/", { waitUntil: "networkidle" });
+    await settle(page);
+
+    const layout = await page.evaluate(() => {
+      const sections = Array.from(document.querySelectorAll<HTMLElement>(".resume-section"));
+      const bodyRects = sections.map((section) => {
+        const body = section.children.item(1) as HTMLElement | null;
+        if (!body) throw new Error("Resume section body missing");
+        const rect = body.getBoundingClientRect();
+        return { left: rect.left, right: rect.right, width: rect.width };
+      });
+
+      const headingPositions = sections.map((section) => {
+        const heading = section.querySelector<HTMLElement>(".resume-section-heading");
+        if (!heading) throw new Error("Resume section heading missing");
+        return getComputedStyle(heading).position;
+      });
+
+      const experienceMeta = document.querySelector<HTMLElement>(".experience-item > :first-child");
+      const educationMeta = document.querySelector<HTMLElement>(".resume-education > article > :first-child");
+      if (!experienceMeta || !educationMeta) throw new Error("Resume meta columns missing");
+
+      return {
+        bodyRects,
+        headingPositions,
+        experienceMetaWidth: experienceMeta.getBoundingClientRect().width,
+        educationMetaWidth: educationMeta.getBoundingClientRect().width,
+      };
+    });
+
+    expect(layout.headingPositions.every((position) => position !== "sticky")).toBeTruthy();
+
+    const reference = layout.bodyRects[0];
+    for (const rect of layout.bodyRects.slice(1)) {
+      expect(Math.abs(rect.left - reference.left)).toBeLessThanOrEqual(1);
+      expect(Math.abs(rect.right - reference.right)).toBeLessThanOrEqual(1);
+      expect(Math.abs(rect.width - reference.width)).toBeLessThanOrEqual(1);
+    }
+
+    expect(Math.abs(layout.experienceMetaWidth - layout.educationMetaWidth)).toBeLessThanOrEqual(1);
   });
 
   test("Geely Diagnostics is the first standard project after Garage", async ({ page }) => {
