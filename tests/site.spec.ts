@@ -3,6 +3,8 @@ import { expect, test, type Page } from "@playwright/test";
 const publicRoutes = [
   "/",
   "/en/",
+  "/resume/",
+  "/en/resume/",
   "/netliphy/",
   "/en/netliphy/",
   "/otphub/",
@@ -17,6 +19,7 @@ const publicRoutes = [
 
 const representativePages = [
   { name: "portfolio", path: "/" },
+  { name: "resume", path: "/resume/" },
   { name: "garage", path: "/garage/" },
   { name: "archive", path: "/otphub/" },
 ];
@@ -235,6 +238,36 @@ test.describe("known layout regressions", () => {
       });
     });
   }
+
+  test("portfolio hero stays iOS-first and links to the web resume", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    await expect(page.locator(".hero-eyebrow")).toContainText("iOS-разработчик");
+    await expect(page.locator(".hero-rotator > span")).toHaveCount(4);
+    await expect(page.locator(".hero-rotator > span").nth(0)).toHaveText("SwiftUI");
+    await expect(page.locator(".hero-rotator > span").nth(1)).toHaveText("Swift Concurrency");
+    await expect(page.locator(".hero-rotator > span").nth(2)).toHaveText("iOS Architecture");
+    await expect(page.locator(".hero-rotator > span").nth(3)).toHaveText("Core ML");
+    await expect(page.locator('.hero-actions a[href="/resume/"]')).toHaveCount(1);
+  });
+
+  test("portfolio activity is generated at build time", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+    const items = page.locator(".activity-item");
+
+    expect(await items.count()).toBeGreaterThanOrEqual(2);
+    await expect(items.first()).toHaveAttribute("href", /^https:\/\/github\.com\/lisindima\//);
+    await expect(items.first().locator("time")).toHaveAttribute("datetime", /.+/);
+  });
+
+  test("public resume uses the public contact channel", async ({ page }) => {
+    await page.goto("/resume/", { waitUntil: "networkidle" });
+
+    await expect(page.locator("h1")).toHaveText("Дмитрий Лисин");
+    await expect(page.locator(".experience-item")).toHaveCount(2);
+    await expect(page.locator('a[href="mailto:me@lisindmitriy.ru"]')).not.toHaveCount(0);
+    await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  });
 
   test("Geely Diagnostics is the first standard project after Garage", async ({ page }) => {
     await page.goto("/en/", { waitUntil: "networkidle" });

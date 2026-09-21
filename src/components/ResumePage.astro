@@ -1,0 +1,351 @@
+---
+import "../styles/typography.css";
+import "../styles/global.css";
+import "../styles/site-ui.css";
+import "../styles/resume.css";
+import { getImage } from "astro:assets";
+import { ClientRouter, fade } from "astro:transitions";
+import favicon from "../assets/favicon.png";
+import garageImage from "../assets/garage-hero-scene.webp";
+import SiteHeader from "./SiteHeader.astro";
+import SeoHead from "./SeoHead.astro";
+
+interface Props {
+  locale?: "ru" | "en";
+}
+
+const { locale = "ru" } = Astro.props;
+const isRu = locale === "ru";
+
+const homeHref = isRu ? "/" : "/en/";
+const alternateHref = isRu ? "/en/resume/" : "/resume/";
+const canonicalHref = isRu
+  ? "https://lisindmitriy.ru/resume/"
+  : "https://lisindmitriy.ru/en/resume/";
+
+const copy = isRu
+  ? {
+      title: "Резюме — Дмитрий Лисин, Lead iOS-разработчик",
+      description: "Резюме Дмитрия Лисина: Lead iOS-разработчик, SwiftUI, Swift Concurrency, архитектура и техническое лидерство.",
+      language: "EN",
+      navAria: "Навигация резюме",
+      back: "На главную",
+      brand: "Резюме",
+      skip: "Перейти к содержимому",
+      eyebrow: "Lead iOS-разработчик",
+      name: "Дмитрий Лисин",
+      lead: "Веду iOS-разработку двух корпоративных приложений: отвечаю за архитектуру, сложные технические решения и работу команды, оставаясь hands-on разработчиком.",
+      contact: "Написать мне",
+      github: "GitHub",
+      stats: [
+        ["6+ лет", "коммерческой iOS-разработки"],
+        ["20 000+", "ежедневных пользователей одного из приложений"],
+        ["2", "корпоративных iOS-приложения в текущей роли"],
+      ],
+      experienceEyebrow: "Опыт",
+      experienceTitle: "Разработка и техническое лидерство.",
+      experience: [
+        {
+          period: "Авг 2021 — сейчас",
+          company: "Иннотех, Группа компаний",
+          role: "Lead iOS-разработчик",
+          intro: "Веду iOS-разработку двух корпоративных приложений для сотрудников крупных компаний.",
+          bullets: [
+            "Отвечаю за архитектуру, техническую проработку, декомпозицию и оценку задач.",
+            "Распределяю задачи в команде, провожу код-ревью и помогаю с проектированием и отладкой.",
+            "Развиваю модульную архитектуру на Swift и SwiftUI; общий код выношу в отдельные SPM-пакеты.",
+            "Перевёл сетевой слой с Combine на Swift Concurrency (async/await), упростив цепочки запросов, обработку ошибок и отмену операций.",
+            "Работаю с авторизацией, Keychain, WKWebView, HealthKit, WidgetKit, кешированием изображений и корпоративными MDM-решениями.",
+            "Отвечаю за подготовку и выпуск iOS-релизов, конфигурации сборок и стабильность после обновлений.",
+          ],
+        },
+        {
+          period: "Сен 2019 — май 2021",
+          company: "НСГ-РОСЭНЕРГО",
+          role: "iOS-разработчик",
+          intro: "С нуля разработал iOS-приложение для страховых агентов.",
+          bullets: [
+            "Был единственным iOS-разработчиком: выбрал архитектуру и стек, интегрировал API и выпускал релизы.",
+            "Разработал интерфейсы на SwiftUI и основные пользовательские сценарии.",
+            "Реализовал загрузку, сжатие и обработку фотографий со стабильной работой на слабом соединении.",
+            "Настроил безопасную передачу данных, обработку сетевых ошибок и поддержку приложения после запуска.",
+          ],
+        },
+      ],
+      skillsEyebrow: "Стек",
+      skillsTitle: "Основной инструментарий.",
+      skillGroups: [
+        ["iOS", ["Swift", "SwiftUI", "Swift Concurrency", "Combine", "UIKit", "Swift Package Manager"]],
+        ["Platform", ["WKWebView", "HealthKit", "WidgetKit", "Keychain", "Nuke", "REST API"]],
+        ["Delivery", ["Fastlane", "TestFlight", "CI/CD", "Unit Testing", "Git"]],
+        ["Leadership", ["Architecture", "Code Review", "Team Leadership", "Наставничество"]],
+      ],
+      educationEyebrow: "Образование",
+      educationTitle: "Фундамент и развитие.",
+      education: [
+        ["2021", "Магистр", "Прикладная информатика", "АлтГТУ им. И.И. Ползунова"],
+        ["2019", "Бакалавр", "Бизнес-информатика", "АлтГТУ им. И.И. Ползунова"],
+        ["2025", "Курс", "Развитие управленческих навыков", "Т1 Цифровая академия"],
+      ],
+      languages: "Языки",
+      languageItems: ["Русский — родной", "Английский — B2"],
+      closingEyebrow: "Контакты",
+      closingTitle: "Поговорим про iOS?",
+      closingText: "Если нужен опытный iOS-разработчик, технический лидер или просто хочется обсудить интересную инженерную задачу — лучше всего написать на почту.",
+      footer: "Lead iOS-разработчик · SwiftUI · Swift Concurrency",
+    }
+  : {
+      title: "Resume — Dmitriy Lisin, Lead iOS Developer",
+      description: "Resume of Dmitriy Lisin: Lead iOS Developer focused on SwiftUI, Swift Concurrency, architecture, and technical leadership.",
+      language: "RU",
+      navAria: "Resume navigation",
+      back: "Back home",
+      brand: "Resume",
+      skip: "Skip to content",
+      eyebrow: "Lead iOS Developer",
+      name: "Dmitriy Lisin",
+      lead: "I lead iOS development for two corporate employee apps, owning architecture, difficult technical decisions, and team execution while remaining a hands-on developer.",
+      contact: "Email me",
+      github: "GitHub",
+      stats: [
+        ["6+ years", "of commercial iOS development"],
+        ["20,000+", "daily users for one of the apps"],
+        ["2", "corporate iOS apps in my current role"],
+      ],
+      experienceEyebrow: "Experience",
+      experienceTitle: "Engineering and technical leadership.",
+      experience: [
+        {
+          period: "Aug 2021 — present",
+          company: "Innotech Group",
+          role: "Lead iOS Developer",
+          intro: "I lead iOS development for two corporate applications used by employees of large companies.",
+          bullets: [
+            "Own iOS architecture, technical design, task decomposition, and estimation.",
+            "Distribute work across the team, review code, and help developers with design and debugging.",
+            "Develop a modular Swift and SwiftUI architecture with shared code extracted into SPM packages.",
+            "Migrated the networking layer from Combine to Swift Concurrency (async/await), simplifying request chains, error handling, and cancellation.",
+            "Work with authentication, Keychain, WKWebView, HealthKit, WidgetKit, image caching, and corporate MDM integrations.",
+            "Own iOS release preparation, build configurations, and post-release stability.",
+          ],
+        },
+        {
+          period: "Sep 2019 — May 2021",
+          company: "NSG-ROSENERGO",
+          role: "iOS Developer",
+          intro: "Built an iOS application for insurance agents from scratch.",
+          bullets: [
+            "Worked as the sole iOS developer: chose the architecture and stack, integrated APIs, and shipped releases.",
+            "Built the interfaces in SwiftUI and designed the core user flows.",
+            "Implemented photo upload, compression, and processing with an emphasis on unreliable connections.",
+            "Implemented secure data transfer, network error handling, and maintained the app after launch.",
+          ],
+        },
+      ],
+      skillsEyebrow: "Stack",
+      skillsTitle: "Tools I use every day.",
+      skillGroups: [
+        ["iOS", ["Swift", "SwiftUI", "Swift Concurrency", "Combine", "UIKit", "Swift Package Manager"]],
+        ["Platform", ["WKWebView", "HealthKit", "WidgetKit", "Keychain", "Nuke", "REST API"]],
+        ["Delivery", ["Fastlane", "TestFlight", "CI/CD", "Unit Testing", "Git"]],
+        ["Leadership", ["Architecture", "Code Review", "Team Leadership", "Mentoring"]],
+      ],
+      educationEyebrow: "Education",
+      educationTitle: "Foundation and growth.",
+      education: [
+        ["2021", "Master’s degree", "Applied Informatics", "Altai State Technical University"],
+        ["2019", "Bachelor’s degree", "Business Informatics", "Altai State Technical University"],
+        ["2025", "Course", "Management Skills Development", "T1 Digital Academy"],
+      ],
+      languages: "Languages",
+      languageItems: ["Russian — native", "English — B2"],
+      closingEyebrow: "Contact",
+      closingTitle: "Let’s talk iOS.",
+      closingText: "If you need an experienced iOS developer, a technical lead, or simply want to discuss an interesting engineering problem, email is the best way to reach me.",
+      footer: "Lead iOS Developer · SwiftUI · Swift Concurrency",
+    };
+
+const faviconImage = await getImage({
+  src: favicon,
+  width: 64,
+  format: "png",
+});
+
+const socialImage = await getImage({
+  src: garageImage,
+  width: 1200,
+  format: "webp",
+  quality: 82,
+});
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  mainEntity: {
+    "@type": "Person",
+    name: "Dmitriy Lisin",
+    url: "https://lisindmitriy.ru/",
+    jobTitle: "Lead iOS Developer",
+    email: "mailto:me@lisindmitriy.ru",
+    sameAs: [
+      "https://github.com/lisindima",
+      "https://www.linkedin.com/in/lisindmitriy/",
+      "https://twitter.com/lisindima",
+    ],
+    knowsAbout: [
+      "iOS",
+      "Swift",
+      "SwiftUI",
+      "Swift Concurrency",
+      "Software Architecture",
+      "Technical Leadership",
+    ],
+  },
+};
+---
+
+<!doctype html>
+<html lang={locale} transition:name="site-root" transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <SeoHead
+      title={copy.title}
+      description={copy.description}
+      canonical={canonicalHref}
+      locale={locale}
+      alternates={[
+        { hreflang: "ru", href: "https://lisindmitriy.ru/resume/" },
+        { hreflang: "en", href: "https://lisindmitriy.ru/en/resume/" },
+        { hreflang: "x-default", href: "https://lisindmitriy.ru/resume/" },
+      ]}
+      image={socialImage.src}
+      schema={schema}
+    />
+    <meta name="theme-color" content="#f7f7f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
+    <title>{copy.title}</title>
+    <ClientRouter fallback="animate" />
+  </head>
+  <body class="resume-page">
+    <a class="skip-link" href="#main-content">{copy.skip}</a>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <SiteHeader
+      locale={locale}
+      alternateHref={alternateHref}
+      languageLabel={copy.language}
+      navAria={copy.navAria}
+      navItems={[]}
+      backHref={homeHref}
+      backLabel={copy.back}
+      brandLabel={copy.brand}
+      brandHref={canonicalHref}
+    />
+
+    <main id="main-content" class="resume-main" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+      <section class="resume-hero shell">
+        <div class="resume-hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{copy.eyebrow}</p>
+          <h1>{copy.name}</h1>
+          <p class="resume-lead">{copy.lead}</p>
+          <div class="resume-actions">
+            <a class="primary-action" href="mailto:me@lisindmitriy.ru">{copy.contact} <span aria-hidden="true">↗</span></a>
+            <a class="secondary-action" href="https://github.com/lisindima" target="_blank" rel="noreferrer">{copy.github} <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <div class="resume-stats" aria-label={isRu ? "Ключевые факты" : "Key facts"}>
+          {copy.stats.map(([value, label]) => (
+            <div class="resume-stat">
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="resume-section shell">
+        <header class="resume-section-heading">
+          <p class="eyebrow">{copy.experienceEyebrow}</p>
+          <h2>{copy.experienceTitle}</h2>
+        </header>
+
+        <div class="resume-experience">
+          {copy.experience.map((item) => (
+            <article class="experience-item">
+              <p class="experience-period">{item.period}</p>
+              <div class="experience-body">
+                <p class="experience-company">{item.company}</p>
+                <h3>{item.role}</h3>
+                <p class="experience-intro">{item.intro}</p>
+                <ul>
+                  {item.bullets.map((bullet) => <li>{bullet}</li>)}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="resume-section shell">
+        <header class="resume-section-heading">
+          <p class="eyebrow">{copy.skillsEyebrow}</p>
+          <h2>{copy.skillsTitle}</h2>
+        </header>
+
+        <div class="resume-skill-groups">
+          {copy.skillGroups.map(([title, items]) => (
+            <article class="resume-skill-group">
+              <h3>{title}</h3>
+              <div class="resume-skills">
+                {items.map((skill) => <span>{skill}</span>)}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="resume-section shell">
+        <header class="resume-section-heading">
+          <p class="eyebrow">{copy.educationEyebrow}</p>
+          <h2>{copy.educationTitle}</h2>
+        </header>
+
+        <div class="resume-education">
+          {copy.education.map(([year, degree, specialization, institution]) => (
+            <article>
+              <span>{year}</span>
+              <div>
+                <p>{degree}</p>
+                <h3>{specialization}</h3>
+                <p>{institution}</p>
+              </div>
+            </article>
+          ))}
+
+          <aside class="resume-languages">
+            <p>{copy.languages}</p>
+            {copy.languageItems.map((language) => <span>{language}</span>)}
+          </aside>
+        </div>
+      </section>
+
+      <section class="resume-contact shell">
+        <div class="resume-contact-card">
+          <p class="eyebrow">{copy.closingEyebrow}</p>
+          <h2>{copy.closingTitle}</h2>
+          <p>{copy.closingText}</p>
+          <a class="primary-action" href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer shell">
+      <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
+      <span>{copy.footer}</span>
+    </footer>
+  </body>
+</html>

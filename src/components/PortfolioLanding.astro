@@ -6,6 +6,7 @@ import { Image, getImage } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
+import { getRecentGithubActivity } from "../lib/githubActivity";
 
 import favicon from "../assets/favicon.png";
 import netliphyImage from "../assets/Netliphy.png";
@@ -22,6 +23,7 @@ const { locale = "ru" } = Astro.props;
 const isRu = locale === "ru";
 const alternateHref = isRu ? "/en/" : "/";
 const canonicalHref = isRu ? "https://lisindmitriy.ru/" : "https://lisindmitriy.ru/en/";
+const resumeHref = isRu ? "/resume/" : "/en/resume/";
 
 const copy = isRu
   ? {
@@ -32,17 +34,24 @@ const copy = isRu
       navContact: "Контакты",
       navAria: "Основная навигация",
       skipToContent: "Перейти к содержимому",
-      heroEyebrow: "iOS-разработчик · SwiftUI",
+      heroEyebrow: "iOS-разработчик",
+      heroRotator: ["SwiftUI", "Swift Concurrency", "iOS Architecture", "Core ML"],
       nameFirst: "Дмитрий",
       nameLast: "Лисин.",
       heroLeadBefore: "Делаю iOS-приложения на",
       heroLeadAfter: "— быстрые, сфокусированные и органичные для платформ Apple.",
       heroAction: "Посмотреть проекты",
+      resumeAction: "Резюме",
+      emailLabel: "Почта",
       socialAria: "Социальные сети",
       workEyebrow: "Избранные проекты",
       workTitle: "Что я сделал.",
       workText: "Небольшая подборка продуктов и экспериментов для платформ Apple, автомобилей, безопасности и данных.",
       moreWork: "Больше экспериментов — на GitHub",
+      activityEyebrow: "Activity",
+      activityTitle: "Последние изменения.",
+      activityText: "Свежие публичные коммиты из активных репозиториев. Секция обновляется при каждом деплое сайта.",
+      activityMore: "Вся активность на GitHub",
       contactEyebrow: "Контакты",
       contactTitleA: "Есть интересная",
       contactTitleB: "идея?",
@@ -63,17 +72,24 @@ const copy = isRu
       navContact: "Contact",
       navAria: "Main navigation",
       skipToContent: "Skip to content",
-      heroEyebrow: "iOS Developer · SwiftUI",
+      heroEyebrow: "iOS Developer",
+      heroRotator: ["SwiftUI", "Swift Concurrency", "iOS Architecture", "Core ML"],
       nameFirst: "Dmitriy",
       nameLast: "Lisin.",
       heroLeadBefore: "I make iOS apps with",
       heroLeadAfter: "— focused, fast, and made to feel at home on Apple platforms.",
       heroAction: "View selected work",
+      resumeAction: "Resume",
+      emailLabel: "Email",
       socialAria: "Social links",
       workEyebrow: "Selected work",
       workTitle: "Things I’ve built.",
       workText: "A small selection of products and experiments across Apple platforms, automotive, security, and data.",
       moreWork: "More experiments live on GitHub",
+      activityEyebrow: "Activity",
+      activityTitle: "Recent commits.",
+      activityText: "Recent public commits from active repositories. This section refreshes on every site deployment.",
+      activityMore: "View all activity on GitHub",
       contactEyebrow: "Contact",
       contactTitleA: "Have something",
       contactTitleB: "interesting in mind?",
@@ -211,6 +227,13 @@ const socialLinks = [
   { label: "X", href: "https://twitter.com/lisindima" },
 ];
 
+const activity = await getRecentGithubActivity(4);
+const activityDateFormatter = new Intl.DateTimeFormat(isRu ? "ru-RU" : "en-US", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
 const socialImage = await getImage({
   src: garageImage,
   width: 1200,
@@ -272,6 +295,7 @@ const schema = {
       navItems={[
         { label: copy.navWork, href: "#work" },
         { label: copy.navContact, href: "#contact", className: "nav-contact" },
+        { label: copy.resumeAction, href: resumeHref, className: "nav-resume" },
         { label: "GitHub", href: "https://github.com/lisindima", external: true, className: "nav-github" },
       ]}
     />
@@ -279,14 +303,22 @@ const schema = {
     <main id="main-content" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
       <section id="hero" class="hero shell">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {copy.heroEyebrow}</p>
+          <p class="eyebrow hero-eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>{copy.heroEyebrow}</span>
+            <span aria-hidden="true">·</span>
+            <span class="hero-rotator" aria-hidden="true">
+              {copy.heroRotator.map((word) => <span>{word}</span>)}
+            </span>
+          </p>
           <h1>{copy.nameFirst}<br />{copy.nameLast}</h1>
           <p class="hero-lead">{copy.heroLeadBefore} <strong>SwiftUI</strong> {copy.heroLeadAfter}</p>
           <div class="hero-actions">
             <a class="primary-action" href="#work">{copy.heroAction} <span aria-hidden="true">↓</span></a>
-            <a class="secondary-action" href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+            <a class="secondary-action" href={resumeHref}>{copy.resumeAction} <span aria-hidden="true">↗</span></a>
           </div>
           <div class="hero-socials" aria-label={copy.socialAria}>
+            <a href="mailto:me@lisindmitriy.ru">{copy.emailLabel} <span aria-hidden="true">↗</span></a>
             {socialLinks.map((link) => (
               <a href={link.href} target="_blank" rel="noreferrer">{link.label} <span aria-hidden="true">↗</span></a>
             ))}
@@ -355,6 +387,32 @@ const schema = {
         <a class="more-work" href="https://github.com/lisindima" target="_blank" rel="noreferrer">
           <span>{copy.moreWork}</span>
           <strong aria-hidden="true">↗</strong>
+        </a>
+      </section>
+
+      <section id="activity" class="activity-section shell">
+        <div class="section-intro activity-intro">
+          <p class="eyebrow">{copy.activityEyebrow}</p>
+          <h2>{copy.activityTitle}</h2>
+          <p>{copy.activityText}</p>
+        </div>
+
+        <div class="activity-list">
+          {activity.map((item) => (
+            <a class="activity-item" href={item.url} target="_blank" rel="noreferrer">
+              <span class="activity-repo">{item.repoLabel}</span>
+              <span class="activity-message">{item.message}</span>
+              <span class="activity-meta">
+                <time datetime={item.date}>{activityDateFormatter.format(new Date(item.date))}</time>
+                <code>{item.shortSha}</code>
+                <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+          ))}
+        </div>
+
+        <a class="activity-more" href="https://github.com/lisindima" target="_blank" rel="noreferrer">
+          {copy.activityMore} <span aria-hidden="true">↗</span>
         </a>
       </section>
 

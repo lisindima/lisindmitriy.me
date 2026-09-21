@@ -4,6 +4,7 @@ const origin = "https://lisindmitriy.ru";
 
 const pairs = [
   { ru: "/", en: "/en/" },
+  { ru: "/resume/", en: "/en/resume/" },
   { ru: "/netliphy/", en: "/en/netliphy/" },
   { ru: "/otphub/", en: "/en/otphub/" },
   { ru: "/covid-dashboard/", en: "/en/covid-dashboard/" },
