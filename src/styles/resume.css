@@ -69,17 +69,23 @@
 }
 
 .resume-section {
+  --resume-meta-column: 150px;
   display: grid;
-  grid-template-columns: minmax(220px, .34fr) minmax(0, 1fr);
-  gap: clamp(40px, 8vw, 100px);
+  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  gap: clamp(52px, 7vw, 90px);
   padding-block: 88px;
   border-top: 1px solid var(--border);
 }
 
+.resume-section > :last-child {
+  width: 100%;
+  min-width: 0;
+}
+
 .resume-section-heading {
   align-self: start;
-  position: sticky;
-  top: 120px;
+  min-width: 0;
+  max-width: 360px;
 }
 
 .resume-section-heading .eyebrow {
@@ -88,9 +94,11 @@
 
 .resume-section-heading h2 {
   margin: 0;
-  font-size: clamp(2.4rem, 4.5vw, 4.6rem);
-  line-height: .94;
+  max-width: 100%;
+  font-size: clamp(2.35rem, 3.5vw, 3.4rem);
+  line-height: .96;
   letter-spacing: var(--tracking-heading);
+  text-wrap: balance;
 }
 
 .resume-experience {
@@ -99,7 +107,7 @@
 
 .experience-item {
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-columns: var(--resume-meta-column) minmax(0, 1fr);
   gap: 28px;
   padding: 34px 0 46px;
   border-bottom: 1px solid var(--border);
@@ -200,8 +208,8 @@
 
 .resume-education > article {
   display: grid;
-  grid-template-columns: 90px minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: var(--resume-meta-column) minmax(0, 1fr);
+  gap: 28px;
   padding: 25px 0;
   border-bottom: 1px solid var(--border);
 }
@@ -293,7 +301,7 @@
   }
 
   .resume-section-heading {
-    position: static;
+    max-width: 720px;
   }
 }
 
@@ -322,7 +330,8 @@
     padding-block: 66px;
   }
 
-  .experience-item {
+  .experience-item,
+  .resume-education > article {
     grid-template-columns: 1fr;
     gap: 8px;
   }
@@ -357,7 +366,4 @@
     font-size: clamp(2.35rem, 10vw, 3.2rem);
   }
 
-  .resume-education > article {
-    grid-template-columns: 64px minmax(0, 1fr);
-  }
 }
