@@ -93,7 +93,6 @@ const copy = isRu
       closingTitle: "Поговорим про iOS?",
       closingText: "Если нужен опытный iOS-разработчик, технический лидер или просто хочется обсудить интересную инженерную задачу — лучше всего написать на почту.",
       footerUpdate: "Обновлено 21 сентября 2026",
-      footerChange: "web-резюме · iOS-first hero · Safari polish",
       footerSource: "Исходники",
     }
   : {
@@ -165,7 +164,6 @@ const copy = isRu
       closingTitle: "Let’s talk iOS.",
       closingText: "If you need an experienced iOS developer, a technical lead, or simply want to discuss an interesting engineering problem, email is the best way to reach me.",
       footerUpdate: "Updated 21 Sep 2026",
-      footerChange: "web resume · iOS-first hero · Safari polish",
       footerSource: "Source",
     };
 
@@ -349,7 +347,7 @@ const schema = {
 
     <footer class="site-footer site-footer-with-changelog shell">
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
-      <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong><span> · {copy.footerChange}</span></span>
+      <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong></span>
       <a class="site-footer-source" href="https://github.com/lisindima/lisindmitriy.me" target="_blank" rel="noreferrer">
         {copy.footerSource} <span aria-hidden="true">↗</span>
       </a>
