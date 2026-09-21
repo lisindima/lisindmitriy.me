@@ -6,7 +6,6 @@ import { Image, getImage } from "astro:assets";
 import { ClientRouter, fade } from "astro:transitions";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
-import { getRecentGithubActivity } from "../lib/githubActivity";
 
 import favicon from "../assets/favicon.png";
 import netliphyImage from "../assets/Netliphy.png";
@@ -48,17 +47,15 @@ const copy = isRu
       workTitle: "Что я сделал.",
       workText: "Небольшая подборка продуктов и экспериментов для платформ Apple, автомобилей, безопасности и данных.",
       moreWork: "Больше экспериментов — на GitHub",
-      activityEyebrow: "Activity",
-      activityTitle: "Последние изменения.",
-      activityText: "Свежие публичные коммиты из активных репозиториев. Секция обновляется при каждом деплое сайта.",
-      activityMore: "Вся активность на GitHub",
       contactEyebrow: "Контакты",
       contactTitleA: "Есть интересная",
       contactTitleB: "идея?",
       contactText: "По вопросам проектов можно написать в GitHub. Для всего остального удобнее всего почта.",
       emailAction: "Написать письмо",
       footerLeft: "Дмитрий Лисин",
-      footerRight: "SwiftUI в приложениях · Astro в вебе",
+      footerUpdate: "Обновлено 21 сентября 2026",
+      footerChange: "резюме · iOS-first hero · Safari polish",
+      footerSource: "Исходники",
       technologies: "технологии",
       website: "Сайт",
       details: "Подробнее",
@@ -86,17 +83,15 @@ const copy = isRu
       workTitle: "Things I’ve built.",
       workText: "A small selection of products and experiments across Apple platforms, automotive, security, and data.",
       moreWork: "More experiments live on GitHub",
-      activityEyebrow: "Activity",
-      activityTitle: "Recent commits.",
-      activityText: "Recent public commits from active repositories. This section refreshes on every site deployment.",
-      activityMore: "View all activity on GitHub",
       contactEyebrow: "Contact",
       contactTitleA: "Have something",
       contactTitleB: "interesting in mind?",
       contactText: "For project questions, open an issue on GitHub. For everything else, email works best.",
       emailAction: "Send an email",
       footerLeft: "Dmitriy Lisin",
-      footerRight: "SwiftUI by day · Astro on the web",
+      footerUpdate: "Updated 21 Sep 2026",
+      footerChange: "resume · iOS-first hero · Safari polish",
+      footerSource: "Source",
       technologies: "technologies",
       website: "Website",
       details: "Details",
@@ -226,13 +221,6 @@ const socialLinks = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/lisindmitriy/" },
   { label: "X", href: "https://twitter.com/lisindima" },
 ];
-
-const activity = await getRecentGithubActivity(4);
-const activityDateFormatter = new Intl.DateTimeFormat(isRu ? "ru-RU" : "en-US", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-});
 
 const socialImage = await getImage({
   src: garageImage,
@@ -390,32 +378,6 @@ const schema = {
         </a>
       </section>
 
-      <section id="activity" class="activity-section shell">
-        <div class="section-intro activity-intro">
-          <p class="eyebrow">{copy.activityEyebrow}</p>
-          <h2>{copy.activityTitle}</h2>
-          <p>{copy.activityText}</p>
-        </div>
-
-        <div class="activity-list">
-          {activity.map((item) => (
-            <a class="activity-item" href={item.url} target="_blank" rel="noreferrer">
-              <span class="activity-repo">{item.repoLabel}</span>
-              <span class="activity-message">{item.message}</span>
-              <span class="activity-meta">
-                <time datetime={item.date}>{activityDateFormatter.format(new Date(item.date))}</time>
-                <code>{item.shortSha}</code>
-                <span aria-hidden="true">↗</span>
-              </span>
-            </a>
-          ))}
-        </div>
-
-        <a class="activity-more" href="https://github.com/lisindima" target="_blank" rel="noreferrer">
-          {copy.activityMore} <span aria-hidden="true">↗</span>
-        </a>
-      </section>
-
       <section id="contact" class="contact-section shell">
         <div class="contact-panel">
           <p class="eyebrow">{copy.contactEyebrow}</p>
@@ -429,9 +391,12 @@ const schema = {
       </section>
     </main>
 
-    <footer class="site-footer shell">
+    <footer class="site-footer site-footer-with-changelog shell">
       <span>© {new Date().getFullYear()} {copy.footerLeft}</span>
-      <span>{copy.footerRight}</span>
+      <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong><span> · {copy.footerChange}</span></span>
+      <a class="site-footer-source" href="https://github.com/lisindima/lisindmitriy.me" target="_blank" rel="noreferrer">
+        {copy.footerSource} <span aria-hidden="true">↗</span>
+      </a>
     </footer>
   </body>
 </html>
