@@ -3,7 +3,8 @@ import "../styles/typography.css";
 import "../styles/global.css";
 import "../styles/site-ui.css";
 import { Image, getImage } from "astro:assets";
-import { ClientRouter, fade } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
+import { siteContentTransition, siteFooterTransition } from "../lib/siteTransitions";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 
@@ -286,7 +287,7 @@ const schema = {
       ]}
     />
 
-    <main id="main-content" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
       <section id="hero" class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow hero-eyebrow">
@@ -389,7 +390,7 @@ const schema = {
       </section>
     </main>
 
-    <footer class="site-footer site-footer-with-changelog shell">
+    <footer class="site-footer site-footer-with-changelog shell" transition:name="site-footer" transition:animate={siteFooterTransition()}>
       <span>© {new Date().getFullYear()} {copy.footerLeft}</span>
       <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong></span>
       <a class="site-footer-source" href="https://github.com/lisindima/lisindmitriy.me" target="_blank" rel="noreferrer">
