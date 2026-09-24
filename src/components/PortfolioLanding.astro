@@ -4,7 +4,7 @@ import "../styles/global.css";
 import "../styles/site-ui.css";
 import { Image, getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { siteContentTransition, siteFooterTransition } from "../lib/siteTransitions";
+import { sitePageTransition } from "../lib/siteTransitions";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 
@@ -246,7 +246,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate="none">
+<html lang={locale} transition:name="site-root" transition:animate={sitePageTransition()}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -287,7 +287,7 @@ const schema = {
       ]}
     />
 
-    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
+    <main id="main-content">
       <section id="hero" class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow hero-eyebrow">
@@ -390,7 +390,7 @@ const schema = {
       </section>
     </main>
 
-    <footer class="site-footer site-footer-with-changelog shell" transition:name="site-footer" transition:animate={siteFooterTransition()}>
+    <footer class="site-footer site-footer-with-changelog shell">
       <span>© {new Date().getFullYear()} {copy.footerLeft}</span>
       <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong></span>
       <a class="site-footer-source" href="https://github.com/lisindima/lisindmitriy.me" target="_blank" rel="noreferrer">
