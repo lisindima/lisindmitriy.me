@@ -5,7 +5,7 @@ import "../styles/site-ui.css";
 import "../styles/project-detail.css";
 import { Image, getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { siteContentTransition, siteFooterTransition } from "../lib/siteTransitions";
+import { sitePageTransition } from "../lib/siteTransitions";
 
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
@@ -292,7 +292,7 @@ const navItems = [
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate="none">
+<html lang={locale} transition:name="site-root" transition:animate={sitePageTransition()}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -332,7 +332,7 @@ const navItems = [
       brandHref="#top"
     />
 
-    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
+    <main id="main-content">
       <section id="top" class="archive-hero shell">
         <div class="archive-hero-copy">
           <div class="archive-status-row">
@@ -429,7 +429,7 @@ const navItems = [
       </section>
     </main>
 
-    <footer class="archive-footer shell" transition:name="site-footer" transition:animate={siteFooterTransition()}>
+    <footer class="archive-footer shell">
       <span>{isRu ? "Дмитрий Лисин" : "Dmitriy Lisin"}</span>
       <span>{copy.status} · {copy.period}</span>
     </footer>
