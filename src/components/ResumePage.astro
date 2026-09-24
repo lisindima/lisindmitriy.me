@@ -4,7 +4,8 @@ import "../styles/global.css";
 import "../styles/site-ui.css";
 import "../styles/resume.css";
 import { getImage } from "astro:assets";
-import { ClientRouter, fade } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
+import { siteContentTransition, siteFooterTransition } from "../lib/siteTransitions";
 import favicon from "../assets/favicon.png";
 import garageImage from "../assets/garage-hero-scene.webp";
 import SiteHeader from "./SiteHeader.astro";
@@ -247,7 +248,7 @@ const schema = {
       brandHref={canonicalHref}
     />
 
-    <main id="main-content" class="resume-main" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+    <main id="main-content" class="resume-main" transition:name="site-main" transition:animate={siteContentTransition()}>
       <section class="resume-hero shell">
         <div class="resume-hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{copy.eyebrow}</p>
@@ -345,7 +346,7 @@ const schema = {
       </section>
     </main>
 
-    <footer class="site-footer site-footer-with-changelog shell">
+    <footer class="site-footer site-footer-with-changelog shell" transition:name="site-footer" transition:animate={siteFooterTransition()}>
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
       <span class="site-footer-changelog"><strong>{copy.footerUpdate}</strong></span>
       <a class="site-footer-source" href="https://github.com/lisindima/lisindmitriy.me" target="_blank" rel="noreferrer">
