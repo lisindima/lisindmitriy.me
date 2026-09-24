@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
-import { ClientRouter, fade } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
+import { siteHeaderTransition, siteContentTransition, siteFooterTransition } from "../lib/siteTransitions";
 import garageIcon from "../assets/garage-icon.webp";
 import garageBoxCutout from "../assets/garage-box-cutout.webp";
 import garageHeroScene from "../assets/garage-hero-scene.webp";
@@ -187,7 +188,7 @@ const schema = {
   </head>
   <body class="garage-site">
     <a class="skip-link" href="#main-content">{copy.skipToContent}</a>
-    <header class="garage-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
+    <header class="garage-header site-header-shell" transition:name="site-header" transition:animate={siteHeaderTransition()}>
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -207,7 +208,7 @@ const schema = {
       <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
     </header>
 
-    <main id="main-content" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
+    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
       <section class="garage-hero garage-shell">
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
@@ -373,7 +374,7 @@ const schema = {
       </section>
     </main>
 
-    <footer class="garage-footer garage-shell">
+    <footer class="garage-footer garage-shell" transition:name="site-footer" transition:animate={siteFooterTransition()}>
       <span>© {new Date().getFullYear()} {copy.developer}</span>
       <span>{copy.footer}</span>
       <a href={privacyHref}>{copy.privacyLink}</a>
