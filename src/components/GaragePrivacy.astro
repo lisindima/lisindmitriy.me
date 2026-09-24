@@ -21,9 +21,8 @@ const copy = isRu
   ? {
       pageTitle: "Политика конфиденциальности Garage",
       description: "Политика конфиденциальности приложения Garage. Garage не собирает пользовательские данные, а обработка документов выполняется локально на устройстве.",
-      back: "← Garage",
+      back: "Назад в Garage",
       lang: "EN",
-      backToPortfolio: "На главную",
       eyebrow: "Политика конфиденциальности",
       title: "Приватность — не настройка. Это архитектура Garage.",
       updated: "Дата вступления в силу: 19 сентября 2026",
@@ -43,9 +42,8 @@ const copy = isRu
   : {
       pageTitle: "Garage Privacy Policy",
       description: "Garage Privacy Policy. Garage does not collect user data, and service-document processing happens locally on the device.",
-      back: "← Garage",
+      back: "Back to Garage",
       lang: "RU",
-      backToPortfolio: "Back to portfolio",
       eyebrow: "Privacy Policy",
       title: "Privacy is not a setting. It is how Garage is built.",
       updated: "Effective date: September 19, 2026",
@@ -123,7 +121,7 @@ const schema = {
     <a class="skip-link" href="#main-content">{skipToContent}</a>
     <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
       <div class="site-header-start">
-        <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
+        <a class="site-back-button site-nav-link" href={homeHref} aria-label={copy.back} title={copy.back}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M14.5 5.5 8 12l6.5 6.5" />
           </svg>
@@ -137,7 +135,6 @@ const schema = {
     </header>
 
     <main id="main-content" class="privacy-shell" transition:name="site-main" transition:animate={fade({ duration: "0.22s" })}>
-      <a class="back-link" href={homeHref}>{copy.back}</a>
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>
       <p class="privacy-updated">{copy.updated}</p>
