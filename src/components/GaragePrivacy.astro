@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { siteHeaderTransition, siteContentTransition, siteFooterTransition } from "../lib/siteTransitions";
+import { sitePageTransition } from "../lib/siteTransitions";
 import garageIcon from "../assets/garage-icon.webp";
 import garageHeroScene from "../assets/garage-hero-scene.webp";
 import "../styles/typography.css";
@@ -95,7 +95,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate="none">
+<html lang={locale} transition:name="site-root" transition:animate={sitePageTransition()}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -120,7 +120,7 @@ const schema = {
   </head>
   <body class="garage-site privacy-page">
     <a class="skip-link" href="#main-content">{skipToContent}</a>
-    <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={siteHeaderTransition()}>
+    <header class="garage-header privacy-header site-header-shell">
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={homeHref} aria-label={copy.back} title={copy.back}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -135,7 +135,7 @@ const schema = {
       <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.lang}</a>
     </header>
 
-    <main id="main-content" class="privacy-shell" transition:name="site-main" transition:animate={siteContentTransition()}>
+    <main id="main-content" class="privacy-shell">
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>
       <p class="privacy-updated">{copy.updated}</p>
@@ -156,7 +156,7 @@ const schema = {
       </div>
     </main>
 
-    <footer class="garage-footer garage-shell" transition:name="site-footer" transition:animate={siteFooterTransition()}>
+    <footer class="garage-footer garage-shell">
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
       <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
     </footer>
