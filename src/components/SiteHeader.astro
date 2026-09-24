@@ -1,5 +1,4 @@
 ---
-import { siteHeaderTransition } from "../lib/siteTransitions";
 
 interface NavItem {
   label: string;
@@ -37,11 +36,7 @@ const {
 } = Astro.props;
 ---
 
-<header
-  class={outerClass}
-  transition:name="site-header"
-  transition:animate={siteHeaderTransition()}
->
+<header class={outerClass}>
   <div class="site-header-shell portfolio-header">
     {backHref || brandLabel ? (
       <div class="site-header-start">
