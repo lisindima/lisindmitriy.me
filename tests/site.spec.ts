@@ -251,6 +251,18 @@ test.describe("known layout regressions", () => {
     await expect(page.locator('.hero-actions a[href="/resume/"]')).toHaveCount(1);
   });
 
+  test("Garage privacy uses only the header back button", async ({ page }) => {
+    for (const [path, href] of [
+      ["/garage/privacy/", "/garage/"],
+      ["/garage/en/privacy/", "/garage/en/"],
+    ] as const) {
+      await page.goto(path, { waitUntil: "networkidle" });
+
+      await expect(page.locator(".privacy-header .site-back-button")).toHaveAttribute("href", href);
+      await expect(page.locator("main .back-link")).toHaveCount(0);
+    }
+  });
+
   test("public resume uses the public contact channel", async ({ page }) => {
     await page.goto("/resume/", { waitUntil: "networkidle" });
 
