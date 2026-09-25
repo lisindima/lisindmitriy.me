@@ -69,6 +69,20 @@ body.garage-site::before {
 .garage-site img { display: block; max-width: 100%; }
 .garage-shell { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
 
+.garage-transition-main {
+  width: min(860px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.garage-transition-main > .garage-shell {
+  position: relative;
+  left: 50%;
+  width: min(1180px, calc(100vw - 48px));
+  max-width: none;
+  margin-inline: 0;
+  translate: -50% 0;
+}
+
 .garage-header {
   position: sticky;
   top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
@@ -467,6 +481,12 @@ body.garage-site::before {
 @media (max-width: 680px) {
   html { scroll-padding-top: 88px; }
   .garage-shell, .privacy-shell { width: min(100% - 28px, 1180px); }
+  .garage-transition-main {
+    width: min(100% - 28px, 860px);
+  }
+  .garage-transition-main > .garage-shell {
+    width: min(100vw - 28px, 1180px);
+  }
   .garage-header {
     position: sticky;
     top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
