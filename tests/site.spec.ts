@@ -127,58 +127,6 @@ test.describe("responsive visual regression", () => {
   }
 });
 
-test.describe("transition diagnostics", () => {
-  test("logs Privacy and archive transition geometry", async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== "chromium");
-    await page.emulateMedia({ reducedMotion: "no-preference" });
-
-    const inspectTransition = async (from: string, targetHref: string) => {
-      await page.goto(from, { waitUntil: "networkidle" });
-
-      const before = await page.evaluate(() => {
-        const main = document.querySelector<HTMLElement>("main");
-        const header = document.querySelector<HTMLElement>(".site-header-shell");
-        return {
-          scrollY: window.scrollY,
-          main: main ? main.getBoundingClientRect().toJSON() : null,
-          header: header ? header.getBoundingClientRect().toJSON() : null,
-        };
-      });
-
-      const link = page.locator(`a[href="${targetHref}"]`).first();
-      await link.scrollIntoViewIfNeeded();
-      await link.click({ noWaitAfter: true });
-      await page.waitForURL((url) => url.pathname === targetHref, { timeout: 5000 });
-      await page.waitForTimeout(35);
-
-      const during = await page.evaluate(() => {
-        const main = document.querySelector<HTMLElement>("main");
-        const header = document.querySelector<HTMLElement>(".site-header-shell");
-        return {
-          scrollY: window.scrollY,
-          main: main ? main.getBoundingClientRect().toJSON() : null,
-          header: header ? header.getBoundingClientRect().toJSON() : null,
-          animations: document.getAnimations().map((animation: any) => ({
-            animationName: animation.animationName ?? null,
-            pseudoElement: animation.effect?.pseudoElement ?? null,
-            playState: animation.playState,
-            currentTime: animation.currentTime,
-            timing: animation.effect?.getTiming?.() ?? null,
-            keyframes: animation.effect?.getKeyframes?.() ?? null,
-          })),
-        };
-      });
-
-      return { before, during };
-    };
-
-    const privacy = await inspectTransition("/garage/", "/garage/privacy/");
-    const archive = await inspectTransition("/en/", "/en/netliphy/");
-    console.log("TRANSITION_DEBUG_PRIVACY=" + JSON.stringify(privacy));
-    console.log("TRANSITION_DEBUG_ARCHIVE=" + JSON.stringify(archive));
-  });
-});
-
 test.describe("known layout regressions", () => {
   for (const viewport of [
     { width: 390, height: 844 },
@@ -312,6 +260,44 @@ test.describe("known layout regressions", () => {
 
       await expect(page.locator(".privacy-header .site-back-button")).toHaveAttribute("href", href);
       await expect(page.locator("main .back-link")).toHaveCount(0);
+    }
+  });
+
+  test("detail pages match Garage Privacy transition geometry without changing visual width", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+
+    const readGeometry = async (path: string) => {
+      await page.goto(path, { waitUntil: "networkidle" });
+      return await page.evaluate(() => {
+        const main = document.querySelector<HTMLElement>("main");
+        const firstShell = main?.querySelector<HTMLElement>(":scope > .shell");
+        const header = document.querySelector<HTMLElement>(".site-header-shell");
+        if (!main || !header) throw new Error("Transition geometry target missing");
+        const mainRect = main.getBoundingClientRect();
+        const shellRect = firstShell?.getBoundingClientRect();
+        const headerRect = header.getBoundingClientRect();
+        return {
+          main: { x: mainRect.x, y: mainRect.y, width: mainRect.width },
+          shell: shellRect ? { x: shellRect.x, width: shellRect.width } : null,
+          header: { x: headerRect.x, y: headerRect.y, width: headerRect.width },
+        };
+      });
+    };
+
+    const privacy = await readGeometry("/garage/privacy/");
+    for (const path of ["/en/netliphy/", "/en/otphub/", "/en/covid-dashboard/", "/resume/"]) {
+      const detail = await readGeometry(path);
+      expect(Math.abs(detail.main.x - privacy.main.x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(detail.main.y - privacy.main.y)).toBeLessThanOrEqual(1);
+      expect(Math.abs(detail.main.width - privacy.main.width)).toBeLessThanOrEqual(1);
+      expect(Math.abs(detail.header.x - privacy.header.x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(detail.header.y - privacy.header.y)).toBeLessThanOrEqual(1);
+      expect(Math.abs(detail.header.width - privacy.header.width)).toBeLessThanOrEqual(1);
+
+      if (detail.shell) {
+        expect(detail.shell.x).toBeCloseTo(50, 0);
+        expect(detail.shell.width).toBeCloseTo(1180, 0);
+      }
     }
   });
 
