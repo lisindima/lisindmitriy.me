@@ -96,6 +96,22 @@ a {
   margin-inline: auto;
 }
 
+.detail-transition-main {
+  --detail-header-flow: 76px;
+  width: min(860px, calc(100% - 48px));
+  margin-inline: auto;
+  margin-bottom: calc(-1 * var(--detail-header-flow));
+}
+
+.detail-transition-main > .shell {
+  position: relative;
+  left: 50%;
+  width: min(1180px, calc(100vw - 48px));
+  max-width: none;
+  margin-inline: 0;
+  translate: -50% calc(-1 * var(--detail-header-flow));
+}
+
 .ambient {
   position: fixed;
   z-index: -1;
@@ -702,6 +718,15 @@ h1 {
 
   .shell {
     width: min(100% - 28px, 1180px);
+  }
+
+  .detail-transition-main {
+    --detail-header-flow: 64px;
+    width: min(100% - 28px, 860px);
+  }
+
+  .detail-transition-main > .shell {
+    width: min(100vw - 28px, 1180px);
   }
 
   .hero {
