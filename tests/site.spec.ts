@@ -285,7 +285,7 @@ test.describe("known layout regressions", () => {
     };
 
     const privacy = await readGeometry("/garage/privacy/");
-    for (const path of ["/en/netliphy/", "/en/otphub/", "/en/covid-dashboard/", "/resume/"]) {
+    for (const path of ["/garage/", "/en/netliphy/", "/en/otphub/", "/en/covid-dashboard/", "/resume/"]) {
       const detail = await readGeometry(path);
       expect(Math.abs(detail.main.x - privacy.main.x)).toBeLessThanOrEqual(1);
       expect(Math.abs(detail.main.y - privacy.main.y)).toBeLessThanOrEqual(1);
@@ -298,6 +298,20 @@ test.describe("known layout regressions", () => {
         expect(detail.shell.x).toBeCloseTo(50, 0);
         expect(detail.shell.width).toBeCloseTo(1180, 0);
       }
+    }
+  });
+
+  test("archived project back arrow returns to portfolio home without hash scrolling", async ({ page }) => {
+    for (const [path, href] of [
+      ["/netliphy/", "/"],
+      ["/en/netliphy/", "/en/"],
+      ["/otphub/", "/"],
+      ["/en/otphub/", "/en/"],
+      ["/covid-dashboard/", "/"],
+      ["/en/covid-dashboard/", "/en/"],
+    ] as const) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      await expect(page.locator(".site-back-button")).toHaveAttribute("href", href);
     }
   });
 
