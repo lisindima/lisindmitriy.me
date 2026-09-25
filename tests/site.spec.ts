@@ -127,6 +127,59 @@ test.describe("responsive visual regression", () => {
   }
 });
 
+test.describe("transition diagnostics", () => {
+  test("logs Privacy and archive transition geometry", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium");
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+
+    const inspectTransition = async (from: string, targetHref: string) => {
+      await page.goto(from, { waitUntil: "networkidle" });
+      await page.addInitScript(() => {
+        (window as any).__transitionDebug = null;
+        document.addEventListener("astro:before-swap", () => {
+          const main = document.querySelector<HTMLElement>("main");
+          const header = document.querySelector<HTMLElement>("[style*='view-transition-name: site-header'], .site-header-shell");
+          (window as any).__transitionBefore = {
+            scrollY: window.scrollY,
+            main: main ? main.getBoundingClientRect().toJSON() : null,
+            header: header ? header.getBoundingClientRect().toJSON() : null,
+          };
+        });
+        document.addEventListener("astro:after-swap", () => {
+          requestAnimationFrame(() => {
+            const main = document.querySelector<HTMLElement>("main");
+            const header = document.querySelector<HTMLElement>(".site-header-shell");
+            (window as any).__transitionDebug = {
+              before: (window as any).__transitionBefore,
+              after: {
+                scrollY: window.scrollY,
+                main: main ? main.getBoundingClientRect().toJSON() : null,
+                header: header ? header.getBoundingClientRect().toJSON() : null,
+              },
+              animations: document.getAnimations().map((animation: any) => ({
+                animationName: animation.animationName ?? null,
+                pseudoElement: animation.effect?.pseudoElement ?? null,
+                timing: animation.effect?.getTiming?.() ?? null,
+                keyframes: animation.effect?.getKeyframes?.() ?? null,
+              })),
+            };
+          });
+        });
+      });
+      const link = page.locator(`a[href="${targetHref}"]`).first();
+      await link.scrollIntoViewIfNeeded();
+      await link.click();
+      await page.waitForTimeout(80);
+      return await page.evaluate(() => (window as any).__transitionDebug);
+    };
+
+    const privacy = await inspectTransition("/garage/", "/garage/privacy/");
+    const archive = await inspectTransition("/en/", "/en/netliphy/");
+    console.log("TRANSITION_DEBUG_PRIVACY=" + JSON.stringify(privacy));
+    console.log("TRANSITION_DEBUG_ARCHIVE=" + JSON.stringify(archive));
+  });
+});
+
 test.describe("known layout regressions", () => {
   for (const viewport of [
     { width: 390, height: 844 },
