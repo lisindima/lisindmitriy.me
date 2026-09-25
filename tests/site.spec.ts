@@ -134,43 +134,42 @@ test.describe("transition diagnostics", () => {
 
     const inspectTransition = async (from: string, targetHref: string) => {
       await page.goto(from, { waitUntil: "networkidle" });
-      await page.evaluate(() => {
-        (window as any).__transitionDebug = null;
-        document.addEventListener("astro:before-swap", () => {
-          const main = document.querySelector<HTMLElement>("main");
-          const header = document.querySelector<HTMLElement>("[style*='view-transition-name: site-header'], .site-header-shell");
-          (window as any).__transitionBefore = {
-            scrollY: window.scrollY,
-            main: main ? main.getBoundingClientRect().toJSON() : null,
-            header: header ? header.getBoundingClientRect().toJSON() : null,
-          };
-        });
-        document.addEventListener("astro:after-swap", () => {
-          requestAnimationFrame(() => {
-            const main = document.querySelector<HTMLElement>("main");
-            const header = document.querySelector<HTMLElement>(".site-header-shell");
-            (window as any).__transitionDebug = {
-              before: (window as any).__transitionBefore,
-              after: {
-                scrollY: window.scrollY,
-                main: main ? main.getBoundingClientRect().toJSON() : null,
-                header: header ? header.getBoundingClientRect().toJSON() : null,
-              },
-              animations: document.getAnimations().map((animation: any) => ({
-                animationName: animation.animationName ?? null,
-                pseudoElement: animation.effect?.pseudoElement ?? null,
-                timing: animation.effect?.getTiming?.() ?? null,
-                keyframes: animation.effect?.getKeyframes?.() ?? null,
-              })),
-            };
-          });
-        });
+
+      const before = await page.evaluate(() => {
+        const main = document.querySelector<HTMLElement>("main");
+        const header = document.querySelector<HTMLElement>(".site-header-shell");
+        return {
+          scrollY: window.scrollY,
+          main: main ? main.getBoundingClientRect().toJSON() : null,
+          header: header ? header.getBoundingClientRect().toJSON() : null,
+        };
       });
+
       const link = page.locator(`a[href="${targetHref}"]`).first();
       await link.scrollIntoViewIfNeeded();
-      await link.click();
-      await page.waitForTimeout(80);
-      return await page.evaluate(() => (window as any).__transitionDebug);
+      await link.click({ noWaitAfter: true });
+      await page.waitForURL((url) => url.pathname === targetHref, { timeout: 5000 });
+      await page.waitForTimeout(35);
+
+      const during = await page.evaluate(() => {
+        const main = document.querySelector<HTMLElement>("main");
+        const header = document.querySelector<HTMLElement>(".site-header-shell");
+        return {
+          scrollY: window.scrollY,
+          main: main ? main.getBoundingClientRect().toJSON() : null,
+          header: header ? header.getBoundingClientRect().toJSON() : null,
+          animations: document.getAnimations().map((animation: any) => ({
+            animationName: animation.animationName ?? null,
+            pseudoElement: animation.effect?.pseudoElement ?? null,
+            playState: animation.playState,
+            currentTime: animation.currentTime,
+            timing: animation.effect?.getTiming?.() ?? null,
+            keyframes: animation.effect?.getKeyframes?.() ?? null,
+          })),
+        };
+      });
+
+      return { before, during };
     };
 
     const privacy = await inspectTransition("/garage/", "/garage/privacy/");
