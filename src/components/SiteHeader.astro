@@ -44,7 +44,7 @@ const {
     transition:animate={fade({ duration: "0.18s" })}
   >
     {backHref || brandLabel ? (
-      <div class="site-header-start">
+      <div class="site-header-start" transition:name="site-header-content" transition:animate={fade({ duration: "0.18s" })}>
         {backHref && (
           <a
             class="site-back-button site-nav-link"
@@ -77,7 +77,7 @@ const {
         )}
       </div>
     ) : (
-      <nav class:list={["site-header-start", "site-header-nav", navClass]} aria-label={navAria}>
+      <nav class:list={["site-header-start", "site-header-nav", navClass]} aria-label={navAria} transition:name="site-header-content" transition:animate={fade({ duration: "0.18s" })}>
         {navItems.map((item) => (
           <a
             class:list={["site-nav-link", item.className]}
