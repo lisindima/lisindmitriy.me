@@ -356,6 +356,17 @@ body.garage-site::before {
 .garage-footer a:hover { color: var(--garage-orange); }
 
 .privacy-page { min-height: 100svh; }
+.privacy-transition-main {
+  width: min(580px, calc(100% - 48px));
+  margin-inline: auto;
+}
+.privacy-transition-main > .privacy-shell {
+  position: relative;
+  left: 50%;
+  width: min(860px, calc(100vw - 48px));
+  margin-inline: 0;
+  translate: -50% 0;
+}
 .privacy-header { position: relative; top: 0; }
 .privacy-shell { width: min(860px, calc(100% - 48px)); margin: 0 auto; padding: 90px 0 120px; }
 .back-link { display: inline-block; margin-bottom: 70px; color: var(--garage-secondary); font-weight: 700; }
@@ -481,6 +492,12 @@ body.garage-site::before {
 @media (max-width: 680px) {
   html { scroll-padding-top: 88px; }
   .garage-shell, .privacy-shell { width: min(100% - 28px, 1180px); }
+  .privacy-transition-main {
+    width: max(240px, calc(67.4vw - 19px));
+  }
+  .privacy-transition-main > .privacy-shell {
+    width: min(100vw - 28px, 860px);
+  }
   .garage-transition-main {
     width: min(100% - 28px, 860px);
   }
