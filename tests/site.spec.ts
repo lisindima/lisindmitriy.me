@@ -134,7 +134,7 @@ test.describe("transition diagnostics", () => {
 
     const inspectTransition = async (from: string, targetHref: string) => {
       await page.goto(from, { waitUntil: "networkidle" });
-      await page.addInitScript(() => {
+      await page.evaluate(() => {
         (window as any).__transitionDebug = null;
         document.addEventListener("astro:before-swap", () => {
           const main = document.querySelector<HTMLElement>("main");
