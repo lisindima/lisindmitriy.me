@@ -1,5 +1,5 @@
 ---
-import { siteHeaderTransition } from "../lib/siteTransitions";
+import { fade } from "astro:transitions";
 
 interface NavItem {
   label: string;
@@ -41,7 +41,7 @@ const {
   <div
     class="site-header-shell portfolio-header"
     transition:name="site-header"
-    transition:animate={siteHeaderTransition()}
+    transition:animate={fade({ duration: "0.18s" })}
   >
     {backHref || brandLabel ? (
       <div class="site-header-start">
