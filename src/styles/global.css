@@ -98,6 +98,8 @@ a {
 
 .detail-transition-main {
   --detail-header-flow: 76px;
+  position: relative;
+  top: var(--detail-header-flow);
   width: min(860px, calc(100% - 48px));
   margin-inline: auto;
   margin-bottom: calc(-1 * var(--detail-header-flow));
