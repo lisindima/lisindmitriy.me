@@ -330,9 +330,10 @@ const navItems = [
       backLabel={copy.back}
       brandLabel={copy.title}
       brandHref="#top"
+      outerClass="route-header"
     />
 
-    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
+    <main id="main-content" class="detail-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
       <section id="top" class="archive-hero shell">
         <div class="archive-hero-copy">
           <div class="archive-status-row">
