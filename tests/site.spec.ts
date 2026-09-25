@@ -263,55 +263,54 @@ test.describe("known layout regressions", () => {
     }
   });
 
-  test("route transition frames keep the intended morph chain", async ({ page }) => {
+  test("route and Garage detail transition layers keep their geometry", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
 
     const readGeometry = async (path: string) => {
       await page.goto(path, { waitUntil: "networkidle" });
       return await page.evaluate(() => {
         const main = document.querySelector<HTMLElement>("main");
+        const routeFrame = document.querySelector<HTMLElement>(".garage-transition-main");
         const header = document.querySelector<HTMLElement>(".site-header-shell");
-        const visiblePrivacy = main?.querySelector<HTMLElement>(":scope > .privacy-shell");
-        const visibleDetail = main?.querySelector<HTMLElement>(":scope > .shell");
-        if (!main || !header) throw new Error("Transition geometry target missing");
+        const headerContent = document.querySelector<HTMLElement>(".site-header-start");
+        if (!main || !header || !headerContent) {
+          throw new Error("Transition geometry target missing");
+        }
 
         const mainRect = main.getBoundingClientRect();
+        const routeRect = routeFrame?.getBoundingClientRect();
         const headerRect = header.getBoundingClientRect();
-        const visibleRect = (visiblePrivacy ?? visibleDetail)?.getBoundingClientRect();
+        const headerContentRect = headerContent.getBoundingClientRect();
 
         return {
           main: { x: mainRect.x, y: mainRect.y, width: mainRect.width },
-          visible: visibleRect ? { x: visibleRect.x, width: visibleRect.width } : null,
+          route: routeRect ? { x: routeRect.x, y: routeRect.y, width: routeRect.width } : null,
           header: { x: headerRect.x, y: headerRect.y, width: headerRect.width },
+          headerContent: { x: headerContentRect.x, width: headerContentRect.width },
         };
       });
     };
 
     const garage = await readGeometry("/garage/");
-    expect(garage.main.width).toBeCloseTo(860, 0);
-    expect(garage.main.y).toBeCloseTo(76, 0);
+    expect(garage.route?.width).toBeCloseTo(860, 0);
+    expect(garage.route?.y).toBeCloseTo(76, 0);
+    expect(garage.main.width).toBeCloseTo(1280, 0);
+
+    const privacy = await readGeometry("/garage/privacy/");
+    expect(privacy.route?.width).toBeCloseTo(860, 0);
+    expect(privacy.route?.y).toBeCloseTo(76, 0);
+    expect(privacy.main.width).toBeCloseTo(860, 0);
+
+    expect(garage.header.y).toBeCloseTo(14, 0);
+    expect(privacy.header.y).toBeCloseTo(14, 0);
+    expect(garage.headerContent.width).toBeGreaterThan(privacy.headerContent.width + 100);
 
     for (const path of ["/en/netliphy/", "/en/otphub/", "/en/covid-dashboard/", "/resume/"]) {
       const detail = await readGeometry(path);
       expect(detail.main.width).toBeCloseTo(860, 0);
       expect(detail.main.y).toBeCloseTo(76, 0);
       expect(detail.header.y).toBeCloseTo(14, 0);
-
-      if (detail.visible) {
-        expect(detail.visible.x).toBeCloseTo(50, 0);
-        expect(detail.visible.width).toBeCloseTo(1180, 0);
-      }
     }
-
-    const privacy = await readGeometry("/garage/privacy/");
-    expect(privacy.main.width).toBeCloseTo(580, 0);
-    expect(privacy.main.y).toBeCloseTo(76, 0);
-    expect(privacy.header.y).toBeCloseTo(14, 0);
-    expect(privacy.visible?.width).toBeCloseTo(860, 0);
-
-    const garageToPrivacyRatio = privacy.main.width / garage.main.width;
-    const originalRatio = 860 / 1280;
-    expect(Math.abs(garageToPrivacyRatio - originalRatio)).toBeLessThan(0.01);
   });
 
   test("archived project back arrow returns to portfolio home without hash scrolling", async ({ page }) => {
