@@ -189,7 +189,7 @@ const schema = {
   <body class="garage-site">
     <a class="skip-link" href="#main-content">{copy.skipToContent}</a>
     <header class="garage-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
-      <div class="site-header-start">
+      <div class="site-header-start" transition:name="site-header-content" transition:animate={fade({ duration: "0.18s" })}>
         <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M14.5 5.5 8 12l6.5 6.5" />
@@ -208,7 +208,8 @@ const schema = {
       <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
     </header>
 
-    <main id="main-content" class="garage-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
+    <div class="garage-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
+      <main id="main-content" transition:name="garage-main" transition:animate={siteContentTransition()}>
       <section class="garage-hero garage-shell">
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
@@ -372,7 +373,8 @@ const schema = {
         </div>
         <a class="support-email" href="mailto:me@lisindmitriy.ru">{copy.emailLabel}<span>me@lisindmitriy.ru ↗</span></a>
       </section>
-    </main>
+      </main>
+    </div>
 
     <footer class="garage-footer garage-shell">
       <span>© {new Date().getFullYear()} {copy.developer}</span>
