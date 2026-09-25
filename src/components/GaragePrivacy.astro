@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
-import { ClientRouter } from "astro:transitions";
-import { siteHeaderTransition, siteContentTransition } from "../lib/siteTransitions";
+import { ClientRouter, fade } from "astro:transitions";
+import { siteContentTransition } from "../lib/siteTransitions";
 import garageIcon from "../assets/garage-icon.webp";
 import garageHeroScene from "../assets/garage-hero-scene.webp";
 import "../styles/typography.css";
@@ -120,7 +120,7 @@ const schema = {
   </head>
   <body class="garage-site privacy-page">
     <a class="skip-link" href="#main-content">{skipToContent}</a>
-    <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={siteHeaderTransition()}>
+    <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
       <div class="site-header-start">
         <a class="site-back-button site-nav-link" href={homeHref} aria-label={copy.back} title={copy.back}>
           <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
