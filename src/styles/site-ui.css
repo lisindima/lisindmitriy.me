@@ -48,16 +48,6 @@
   outline-offset: 3px;
 }
 
-.route-header {
-  position: sticky;
-  top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  margin-top: var(--site-ui-header-offset);
-  pointer-events: none;
-}
-
 .site-header-shell {
   position: relative;
   pointer-events: auto;
