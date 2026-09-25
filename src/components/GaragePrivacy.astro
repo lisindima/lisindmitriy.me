@@ -135,7 +135,8 @@ const schema = {
       <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.lang}</a>
     </header>
 
-    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()} class="privacy-shell">
+    <main id="main-content" class="privacy-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
+      <div class="privacy-shell">
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>
       <p class="privacy-updated">{copy.updated}</p>
@@ -153,6 +154,7 @@ const schema = {
             <p>{body}</p>
           </section>
         ))}
+      </div>
       </div>
     </main>
 
