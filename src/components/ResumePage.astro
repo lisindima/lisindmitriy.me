@@ -246,9 +246,10 @@ const schema = {
       backLabel={copy.back}
       brandLabel={copy.brand}
       brandHref={canonicalHref}
+      outerClass="route-header"
     />
 
-    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()} class="resume-main">
+    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()} class="resume-main detail-transition-main">
       <section class="resume-hero shell">
         <div class="resume-hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{copy.eyebrow}</p>
