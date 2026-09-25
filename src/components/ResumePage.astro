@@ -5,7 +5,7 @@ import "../styles/site-ui.css";
 import "../styles/resume.css";
 import { getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { sitePageTransition } from "../lib/siteTransitions";
+import { siteContentTransition } from "../lib/siteTransitions";
 import favicon from "../assets/favicon.png";
 import garageImage from "../assets/garage-hero-scene.webp";
 import SiteHeader from "./SiteHeader.astro";
@@ -208,7 +208,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate={sitePageTransition()}>
+<html lang={locale} transition:name="site-root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -248,7 +248,7 @@ const schema = {
       brandHref={canonicalHref}
     />
 
-    <main id="main-content" class="resume-main">
+    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()} class="resume-main">
       <section class="resume-hero shell">
         <div class="resume-hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{copy.eyebrow}</p>
