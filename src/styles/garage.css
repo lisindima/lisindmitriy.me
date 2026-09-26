@@ -82,6 +82,15 @@ body.garage-site::before {
   translate: -50% 0;
 }
 
+.garage-transition-main > .privacy-shell {
+  position: relative;
+  left: 50%;
+  width: min(860px, calc(100vw - 48px));
+  max-width: none;
+  margin-inline: 0;
+  translate: -50% 0;
+}
+
 .garage-header {
   position: sticky;
   top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
@@ -485,6 +494,9 @@ body.garage-site::before {
   }
   .garage-transition-main > #main-content:not(.privacy-shell) {
     width: 100vw;
+  }
+  .garage-transition-main > .privacy-shell {
+    width: min(860px, calc(100vw - 28px));
   }
   .garage-header {
     position: sticky;
