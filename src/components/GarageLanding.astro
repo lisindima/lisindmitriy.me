@@ -22,6 +22,7 @@ const { locale = "ru" } = Astro.props;
 const isRu = locale === "ru";
 const alternateHref = isRu ? "/garage/en/" : "/garage/";
 const privacyHref = isRu ? "/garage/privacy/" : "/garage/en/privacy/";
+const termsHref = isRu ? "/garage/terms/" : "/garage/en/terms/";
 
 const socialImage = await getImage({
   src: garageHeroScene,
@@ -86,6 +87,7 @@ const copy = isRu
       privacyTitle: "Ваши документы не должны становиться чьими‑то данными.",
       privacyText: "Распознавание и обработка выполняются локально. Garage не требует аккаунт, не отправляет заказ‑наряды на сервер, не использует рекламные SDK и не собирает аналитику о пользователях.",
       privacyLink: "Политика конфиденциальности",
+      termsLink: "Условия использования",
       privacyChip1: "Обработка на устройстве",
       privacyChip2: "Без аналитики",
       privacyChip3: "Без рекламы",
@@ -139,6 +141,7 @@ const copy = isRu
       privacyTitle: "Your service documents should stay your data.",
       privacyText: "Recognition and processing happen locally. Garage requires no account, sends no service documents to a developer server, uses no advertising SDKs, and collects no user analytics.",
       privacyLink: "Privacy Policy",
+      termsLink: "Terms of Use",
       privacyChip1: "On-device processing",
       privacyChip2: "No analytics",
       privacyChip3: "No ads",
@@ -379,7 +382,10 @@ const schema = {
     <footer class="garage-footer garage-shell">
       <span>© {new Date().getFullYear()} {copy.developer}</span>
       <span>{copy.footer}</span>
-      <a href={privacyHref}>{copy.privacyLink}</a>
+      <div class="garage-footer-links">
+        <a href={privacyHref}>{copy.privacyLink}</a>
+        <a href={termsHref}>{copy.termsLink}</a>
+      </div>
     </footer>
 
     <script>
