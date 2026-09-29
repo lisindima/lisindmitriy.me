@@ -1,0 +1,337 @@
+---
+import { Image, getImage } from "astro:assets";
+import { ClientRouter, fade } from "astro:transitions";
+import { siteContentTransition } from "../lib/siteTransitions";
+import garageIcon from "../assets/garage-icon.webp";
+import garageHeroScene from "../assets/garage-hero-scene.webp";
+import "../styles/typography.css";
+import "../styles/garage.css";
+import "../styles/site-ui.css";
+import SeoHead from "./SeoHead.astro";
+
+interface Props {
+  locale?: "ru" | "en";
+}
+
+const { locale = "ru" } = Astro.props;
+const isRu = locale === "ru";
+const homeHref = isRu ? "/garage/" : "/garage/en/";
+const alternateHref = isRu ? "/garage/en/terms/" : "/garage/terms/";
+const privacyHref = isRu ? "/garage/privacy/" : "/garage/en/privacy/";
+
+const copy = isRu
+  ? {
+      pageTitle: "Условия использования Garage",
+      description: "Условия использования приложения Garage, включая автоматически продлеваемые подписки и покупки через App Store.",
+      back: "Назад в Garage",
+      lang: "EN",
+      eyebrow: "Условия использования",
+      title: "Garage помогает следить за обслуживанием. Решения остаются за вами.",
+      updated: "Дата вступления в силу: 29 сентября 2026",
+      intro: "Настоящие условия регулируют использование приложения Garage, включая функции, доступные по платной автоматически продлеваемой подписке.",
+      summaryTitle: "Коротко",
+      summary: [
+        "Покупки через App Store",
+        "Автопродление подписки",
+        "Отмена в настройках Apple",
+        "Standard EULA Apple",
+      ],
+      privacyLabel: "Политика конфиденциальности",
+      appleEulaLabel: "Standard EULA Apple",
+      sections: [
+        {
+          title: "1. Принятие условий",
+          paragraphs: [
+            "Устанавливая или используя Garage, вы соглашаетесь с настоящими Условиями использования. Если вы не согласны с ними, прекратите использование приложения.",
+          ],
+        },
+        {
+          title: "2. Назначение Garage",
+          paragraphs: [
+            "Garage предназначен для хранения и организации информации об обслуживании автомобиля: заказ-нарядов, работ, запчастей, расходов, пробега, напоминаний и связанных данных.",
+            "Garage не является диагностическим сервисом, официальной сервисной документацией производителя или заменой профессионального технического обслуживания. Напоминания, прогнозы и распознанные данные носят информационный характер. Перед принятием решений по эксплуатации и обслуживанию автомобиля сверяйтесь с документацией производителя и рекомендациями квалифицированного сервиса.",
+          ],
+        },
+        {
+          title: "3. Подписки и покупки",
+          paragraphs: [
+            "Garage может предлагать автоматически продлеваемые подписки, открывающие дополнительные функции. Состав функций, срок подписки и актуальная цена показываются в приложении и в интерфейсе App Store до подтверждения покупки.",
+            "Оплата и продление подписки выполняются через вашу учётную запись Apple. Подписка продлевается автоматически, пока вы не отмените её через управление подписками Apple. После отмены доступ к оплаченной подписке сохраняется до окончания текущего оплаченного периода в соответствии с правилами Apple.",
+            "Garage не обрабатывает платёжные данные напрямую и не принимает решение о возврате средств. Оплата, налоги, возвраты и управление подпиской регулируются применимыми условиями Apple. Если покупка поддерживает восстановление, её можно восстановить через функцию Restore Purchases в приложении.",
+          ],
+        },
+        {
+          title: "4. Изменения платных функций",
+          paragraphs: [
+            "Garage может развиваться: отдельные функции, интерфейс и состав подписки могут изменяться со временем. Существенные изменения будут отражаться в приложении или в этих условиях, когда это требуется.",
+          ],
+        },
+        {
+          title: "5. Лицензия на приложение",
+          paragraphs: [
+            "Garage предоставляется по лицензии, а не продаётся. Если для Garage не опубликовано отдельное пользовательское лицензионное соглашение, использование приложения регулируется стандартным лицензионным соглашением Apple для приложений App Store.",
+          ],
+          link: {
+            href: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+            label: "Открыть Standard EULA Apple",
+          },
+        },
+        {
+          title: "6. Конфиденциальность",
+          paragraphs: [
+            "Обработка сервисных документов и пользовательских данных в Garage спроектирована с приоритетом локальной обработки на устройстве. Подробности о данных, разрешениях и хранении описаны в Политике конфиденциальности Garage.",
+          ],
+          link: {
+            href: privacyHref,
+            label: "Открыть Политику конфиденциальности",
+          },
+        },
+        {
+          title: "7. Допустимое использование",
+          paragraphs: [
+            "Нельзя использовать Garage для нарушения закона, вмешательства в работу приложения или сервисов Apple, обхода механизмов покупки и подписки, а также для попыток получить доступ к функциям приложения способом, не предусмотренным интерфейсом Garage. Ограничения на обратную разработку применяются только в той мере, в которой это допускает закон.",
+          ],
+        },
+        {
+          title: "8. Точность данных и доступность",
+          paragraphs: [
+            "Распознавание документов, автоматическая классификация и расчёт напоминаний могут содержать ошибки. Сохраняйте и проверяйте исходные документы перед тем, как полагаться на распознанные значения.",
+            "Garage предоставляется по мере доступности. Разработчик не гарантирует, что каждая функция будет постоянно доступна на всех версиях iOS, устройствах или во всех регионах.",
+          ],
+        },
+        {
+          title: "9. Ограничение ответственности",
+          paragraphs: [
+            "В максимально допустимой законом степени разработчик не несёт ответственности за ущерб, возникший из-за решений по эксплуатации или обслуживанию автомобиля, принятых исключительно на основании напоминаний, прогнозов или распознанных Garage данных. Это положение не ограничивает права пользователя, которые не могут быть исключены применимым законодательством.",
+          ],
+        },
+        {
+          title: "10. Изменения условий",
+          paragraphs: [
+            "Условия могут обновляться вместе с изменениями Garage, подписок или применимых требований. Актуальная версия публикуется на этой странице с новой датой вступления в силу. Если закон требует отдельного согласия на существенные изменения, оно будет запрошено отдельно.",
+          ],
+        },
+        {
+          title: "11. Контакты",
+          paragraphs: [
+            "По вопросам об условиях использования, подписке или Garage можно связаться с разработчиком по адресу me@lisindmitriy.ru.",
+          ],
+        },
+      ],
+    }
+  : {
+      pageTitle: "Garage Terms of Use",
+      description: "Terms of Use for the Garage app, including auto-renewable subscriptions and App Store purchases.",
+      back: "Back to Garage",
+      lang: "RU",
+      eyebrow: "Terms of Use",
+      title: "Garage helps you track maintenance. The decisions remain yours.",
+      updated: "Effective date: September 29, 2026",
+      intro: "These Terms of Use govern your use of Garage, including features made available through paid auto-renewable subscriptions.",
+      summaryTitle: "In short",
+      summary: [
+        "Purchases through App Store",
+        "Auto-renewable subscriptions",
+        "Cancel in Apple settings",
+        "Apple Standard EULA",
+      ],
+      privacyLabel: "Privacy Policy",
+      appleEulaLabel: "Apple Standard EULA",
+      sections: [
+        {
+          title: "1. Acceptance of these terms",
+          paragraphs: [
+            "By installing or using Garage, you agree to these Terms of Use. If you do not agree, stop using the app.",
+          ],
+        },
+        {
+          title: "2. What Garage is for",
+          paragraphs: [
+            "Garage is designed to store and organize vehicle maintenance information, including service orders, work, parts, expenses, mileage, reminders, and related records.",
+            "Garage is not a diagnostic service, official manufacturer documentation, or a substitute for professional vehicle maintenance. Reminders, forecasts, and recognized data are informational only. Use the vehicle manufacturer's documentation and qualified service professionals when making maintenance or safety decisions.",
+          ],
+        },
+        {
+          title: "3. Subscriptions and purchases",
+          paragraphs: [
+            "Garage may offer auto-renewable subscriptions that unlock additional features. The included features, subscription duration, and current price are shown in the app and in the App Store purchase interface before you confirm a purchase.",
+            "Payment and renewal are handled through your Apple Account. A subscription renews automatically until you cancel it through Apple's subscription management. After cancellation, access remains available through the end of the current paid period as determined under Apple's applicable terms.",
+            "Garage does not directly process payment-card information or decide refunds. Billing, taxes, refunds, and subscription management are governed by the applicable Apple terms. When supported, eligible purchases can be restored through Restore Purchases in the app.",
+          ],
+        },
+        {
+          title: "4. Changes to paid features",
+          paragraphs: [
+            "Garage may evolve over time, and individual features, interface elements, or the composition of subscription benefits may change. Material changes will be reflected in the app or these terms where required.",
+          ],
+        },
+        {
+          title: "5. App license",
+          paragraphs: [
+            "Garage is licensed, not sold. Unless a separate end-user license agreement is provided for Garage, use of the app is governed by Apple's Standard EULA for App Store applications.",
+          ],
+          link: {
+            href: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+            label: "View Apple Standard EULA",
+          },
+        },
+        {
+          title: "6. Privacy",
+          paragraphs: [
+            "Garage is designed around on-device processing of service documents and user data. Details about data, permissions, and storage are described in the Garage Privacy Policy.",
+          ],
+          link: {
+            href: privacyHref,
+            label: "View Privacy Policy",
+          },
+        },
+        {
+          title: "7. Acceptable use",
+          paragraphs: [
+            "You may not use Garage to violate applicable law, interfere with the app or Apple services, bypass purchase or subscription mechanisms, or obtain access to app features through methods not provided by Garage. Restrictions on reverse engineering apply only to the extent permitted by applicable law.",
+          ],
+        },
+        {
+          title: "8. Data accuracy and availability",
+          paragraphs: [
+            "Document recognition, automatic classification, and maintenance reminders may contain errors. Keep and verify source documents before relying on recognized values.",
+            "Garage is provided as available. The developer does not guarantee that every feature will remain continuously available on every iOS version, device, or in every region.",
+          ],
+        },
+        {
+          title: "9. Limitation of liability",
+          paragraphs: [
+            "To the maximum extent permitted by law, the developer is not liable for loss arising from vehicle operation or maintenance decisions made solely on the basis of Garage reminders, forecasts, or recognized data. Nothing in these terms limits consumer rights that cannot be excluded under applicable law.",
+          ],
+        },
+        {
+          title: "10. Changes to these terms",
+          paragraphs: [
+            "These terms may be updated as Garage, its subscriptions, or applicable requirements change. The current version will be published on this page with a new effective date. Where applicable law requires separate consent to material changes, that consent will be requested.",
+          ],
+        },
+        {
+          title: "11. Contact",
+          paragraphs: [
+            "For questions about these terms, subscriptions, or Garage, contact the developer at me@lisindmitriy.ru.",
+          ],
+        },
+      ],
+    };
+
+const skipToContent = isRu ? "Перейти к содержимому" : "Skip to content";
+const canonicalHref = isRu
+  ? "https://lisindmitriy.ru/garage/terms/"
+  : "https://lisindmitriy.ru/garage/en/terms/";
+
+const socialImage = await getImage({
+  src: garageHeroScene,
+  width: 1200,
+  format: "webp",
+  quality: 82,
+});
+
+const faviconImage = await getImage({
+  src: garageIcon,
+  width: 64,
+  format: "png",
+});
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: copy.pageTitle,
+  description: copy.description,
+  url: canonicalHref,
+  isPartOf: {
+    "@type": "SoftwareApplication",
+    name: "Garage",
+    operatingSystem: "iOS",
+  },
+};
+---
+
+<!doctype html>
+<html lang={locale} transition:name="site-root" transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <SeoHead
+      title={copy.pageTitle}
+      description={copy.description}
+      canonical={canonicalHref}
+      locale={locale}
+      alternates={[
+        { hreflang: "ru", href: "https://lisindmitriy.ru/garage/terms/" },
+        { hreflang: "en", href: "https://lisindmitriy.ru/garage/en/terms/" },
+        { hreflang: "x-default", href: "https://lisindmitriy.ru/garage/terms/" },
+      ]}
+      image={socialImage.src}
+      schema={schema}
+    />
+    <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href={faviconImage.src} />
+    <title>{copy.pageTitle}</title>
+    <ClientRouter fallback="animate" />
+  </head>
+  <body class="garage-site privacy-page">
+    <a class="skip-link" href="#main-content">{skipToContent}</a>
+
+    <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
+      <div class="site-header-start" transition:name="site-header-content" transition:animate={fade({ duration: "0.18s" })}>
+        <a class="site-back-button site-nav-link" href={homeHref} aria-label={copy.back} title={copy.back}>
+          <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14.5 5.5 8 12l6.5 6.5" />
+          </svg>
+        </a>
+        <a class="garage-brand" href={homeHref}>
+          <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
+          <span>Garage</span>
+        </a>
+      </div>
+      <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.lang}</a>
+    </header>
+
+    <div class="garage-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
+      <main id="main-content" class="privacy-shell" transition:name="garage-main" transition:animate={siteContentTransition()}>
+        <p class="garage-eyebrow">{copy.eyebrow}</p>
+        <h1>{copy.title}</h1>
+        <p class="privacy-updated">{copy.updated}</p>
+        <p class="privacy-intro">{copy.intro}</p>
+
+        <aside class="privacy-summary">
+          <strong>{copy.summaryTitle}</strong>
+          <div>{copy.summary.map((item) => <span>✓ {item}</span>)}</div>
+        </aside>
+
+        <div class="policy-sections">
+          {copy.sections.map((section) => (
+            <section>
+              <h2>{section.title}</h2>
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              {section.link && (
+                <a
+                  class="policy-link"
+                  href={section.link.href}
+                  target={section.link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={section.link.href.startsWith("http") ? "noreferrer" : undefined}
+                >
+                  {section.link.label} <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </section>
+          ))}
+        </div>
+      </main>
+    </div>
+
+    <footer class="garage-footer garage-shell">
+      <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
+      <div class="garage-footer-links">
+        <a href={privacyHref}>{copy.privacyLabel}</a>
+        <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+      </div>
+    </footer>
+  </body>
+</html>
