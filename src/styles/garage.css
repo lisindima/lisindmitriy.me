@@ -362,6 +362,8 @@ body.garage-site::before {
 }
 .garage-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 28px; padding-block: 30px 42px; border-top: 1px solid var(--garage-border); color: var(--garage-secondary); font-size: .8rem; }
 .garage-footer a:hover { color: var(--garage-orange); }
+.garage-footer-links { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.garage-footer-links a { white-space: nowrap; }
 
 .privacy-page { min-height: 100svh; }
 .privacy-header { position: relative; top: 0; }
@@ -380,6 +382,16 @@ body.garage-site::before {
 .policy-sections section:last-child { border-bottom: 1px solid var(--garage-border); }
 .policy-sections h2 { margin: 0 0 14px; font-size: 1.35rem; letter-spacing: var(--tracking-title); }
 .policy-sections p { margin: 0; color: var(--garage-secondary); line-height: 1.7; }
+.policy-sections p + p { margin-top: 14px; }
+.policy-link {
+  display: inline-flex;
+  margin-top: 16px;
+  color: var(--garage-orange);
+  font-weight: 720;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
 
 @media (max-width: 1100px) {
   .garage-hero::after { right: 0; }
