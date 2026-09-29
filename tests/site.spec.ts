@@ -15,6 +15,8 @@ const publicRoutes = [
   "/garage/en/",
   "/garage/privacy/",
   "/garage/en/privacy/",
+  "/garage/terms/",
+  "/garage/en/terms/",
 ];
 
 const representativePages = [
@@ -249,6 +251,21 @@ test.describe("known layout regressions", () => {
     await expect(page.locator(".hero-rotator > span").nth(2)).toHaveText("iOS Architecture");
     await expect(page.locator(".hero-rotator > span").nth(3)).toHaveText("Core ML");
     await expect(page.locator('.hero-actions a[href="/resume/"]')).toHaveCount(1);
+  });
+
+  test("Garage exposes subscription legal links", async ({ page }) => {
+    for (const [path, privacyHref, termsHref] of [
+      ["/garage/", "/garage/privacy/", "/garage/terms/"],
+      ["/garage/en/", "/garage/en/privacy/", "/garage/en/terms/"],
+    ] as const) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      await expect(page.locator(`.garage-footer a[href="${privacyHref}"]`)).toHaveCount(1);
+      await expect(page.locator(`.garage-footer a[href="${termsHref}"]`)).toHaveCount(1);
+    }
+
+    await page.goto("/garage/terms/", { waitUntil: "networkidle" });
+    await expect(page.locator('a[href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"]')).toHaveCount(1);
+    await expect(page.locator('a[href="/garage/privacy/"]')).not.toHaveCount(0);
   });
 
   test("Garage privacy uses only the header back button", async ({ page }) => {
