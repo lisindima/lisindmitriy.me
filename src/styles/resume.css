@@ -35,6 +35,30 @@
   gap: 12px;
 }
 
+.resume-side {
+  display: grid;
+  gap: 14px;
+  align-self: end;
+}
+
+.resume-photo {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.resume-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
 .resume-stats {
   display: grid;
   gap: 12px;
@@ -291,8 +315,18 @@
     gap: 48px;
   }
 
+  .resume-side {
+    grid-template-columns: minmax(230px, .78fr) minmax(0, 1.22fr);
+    align-items: stretch;
+  }
+
+  .resume-photo {
+    min-height: 360px;
+    aspect-ratio: auto;
+  }
+
   .resume-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .resume-section {
@@ -320,6 +354,15 @@
 
   .resume-actions {
     flex-direction: column;
+  }
+
+  .resume-side {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-photo {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
   }
 
   .resume-stats {

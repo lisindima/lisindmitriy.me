@@ -348,6 +348,8 @@ test.describe("known layout regressions", () => {
     await page.goto("/resume/", { waitUntil: "networkidle" });
 
     await expect(page.locator("h1")).toHaveText("Дмитрий Лисин");
+    await expect(page.locator(".resume-photo img")).toHaveCount(1);
+    await expect(page.locator(".resume-photo img")).toHaveAttribute("alt", /Дмитрий Лисин/);
     await expect(page.locator(".experience-item")).toHaveCount(2);
     await expect(page.locator('a[href="mailto:me@lisindmitriy.ru"]')).not.toHaveCount(0);
     await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);

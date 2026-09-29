@@ -3,11 +3,12 @@ import "../styles/typography.css";
 import "../styles/global.css";
 import "../styles/site-ui.css";
 import "../styles/resume.css";
-import { getImage } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { siteContentTransition } from "../lib/siteTransitions";
 import favicon from "../assets/favicon.png";
 import garageImage from "../assets/garage-hero-scene.webp";
+import resumePortrait from "../assets/resume-portrait.webp";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 
@@ -36,6 +37,7 @@ const copy = isRu
       eyebrow: "Lead iOS-разработчик",
       name: "Дмитрий Лисин",
       lead: "Веду iOS-разработку двух корпоративных приложений: отвечаю за архитектуру, сложные технические решения и работу команды, оставаясь hands-on разработчиком.",
+      photoAlt: "Дмитрий Лисин с кофе на улице",
       contact: "Написать мне",
       github: "GitHub",
       stats: [
@@ -107,6 +109,7 @@ const copy = isRu
       eyebrow: "Lead iOS Developer",
       name: "Dmitriy Lisin",
       lead: "I lead iOS development for two corporate employee apps, owning architecture, difficult technical decisions, and team execution while remaining a hands-on developer.",
+      photoAlt: "Dmitriy Lisin outdoors with a coffee",
       contact: "Email me",
       github: "GitHub",
       stats: [
@@ -260,13 +263,29 @@ const schema = {
           </div>
         </div>
 
-        <div class="resume-stats" aria-label={isRu ? "Ключевые факты" : "Key facts"}>
-          {copy.stats.map(([value, label]) => (
-            <div class="resume-stat">
-              <strong>{value}</strong>
-              <span>{label}</span>
-            </div>
-          ))}
+        <div class="resume-side">
+          <figure class="resume-photo">
+            <Image
+              src={resumePortrait}
+              alt={copy.photoAlt}
+              widths={[280, 360, 480]}
+              sizes="(max-width: 680px) calc(100vw - 48px), (max-width: 900px) 36vw, 320px"
+              format="webp"
+              quality={82}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </figure>
+
+          <div class="resume-stats" aria-label={isRu ? "Ключевые факты" : "Key facts"}>
+            {copy.stats.map(([value, label]) => (
+              <div class="resume-stat">
+                <strong>{value}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
