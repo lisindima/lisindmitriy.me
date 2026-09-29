@@ -10,6 +10,7 @@ const pairs = [
   { ru: "/covid-dashboard/", en: "/en/covid-dashboard/" },
   { ru: "/garage/", en: "/garage/en/" },
   { ru: "/garage/privacy/", en: "/garage/en/privacy/" },
+  { ru: "/garage/terms/", en: "/garage/en/terms/" },
 ] as const;
 
 const escapeXml = (value: string) =>
