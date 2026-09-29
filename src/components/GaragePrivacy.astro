@@ -17,6 +17,7 @@ const { locale = "ru" } = Astro.props;
 const isRu = locale === "ru";
 const homeHref = isRu ? "/garage/" : "/garage/en/";
 const alternateHref = isRu ? "/garage/en/privacy/" : "/garage/privacy/";
+const termsHref = isRu ? "/garage/terms/" : "/garage/en/terms/";
 
 const copy = isRu
   ? {
@@ -37,6 +38,7 @@ const copy = isRu
         ["6. Изменения политики", "Политика может обновляться при изменении функциональности Garage или требований законодательства. Актуальная версия всегда публикуется на этой странице."],
         ["7. Контакты", "По вопросам о Garage, конфиденциальности или обработке данных можно связаться с разработчиком по адресу me@lisindmitriy.ru."],
       ],
+      termsLabel: "Условия использования",
       summaryTitle: "Коротко",
       summary: ["Нет аккаунта", "Нет аналитики", "Нет рекламы", "Нет серверной обработки документов"],
     }
@@ -58,6 +60,7 @@ const copy = isRu
         ["6. Changes to this policy", "This policy may be updated when Garage features or applicable requirements change. The current version will always be published on this page."],
         ["7. Contact", "For questions about Garage, privacy, or data handling, contact the developer at me@lisindmitriy.ru."],
       ],
+      termsLabel: "Terms of Use",
       summaryTitle: "In short",
       summary: ["No account", "No analytics", "No ads", "No server-side document processing"],
     };
@@ -160,7 +163,10 @@ const schema = {
 
     <footer class="garage-footer garage-shell">
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>
-      <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+      <div class="garage-footer-links">
+        <a href={termsHref}>{copy.termsLabel}</a>
+        <a href="mailto:me@lisindmitriy.ru">me@lisindmitriy.ru</a>
+      </div>
     </footer>
   </body>
 </html>
