@@ -310,7 +310,7 @@ const schema = {
             <section>
               <h2>{section.title}</h2>
               {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-              {section.link && (
+              {"link" in section && section.link && (
                 <a
                   class="policy-link"
                   href={section.link.href}
