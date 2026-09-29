@@ -7,11 +7,12 @@
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, .55fr);
   gap: clamp(50px, 8vw, 110px);
-  align-items: end;
+  align-items: center;
   padding-block: 70px 100px;
 }
 
 .resume-hero-copy {
+  align-self: center;
   max-width: 820px;
 }
 
@@ -38,14 +39,19 @@
 .resume-side {
   display: grid;
   gap: 14px;
-  align-self: end;
+  align-self: center;
+  width: 100%;
+  min-width: 0;
 }
 
 .resume-photo {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: none;
   margin: 0;
   aspect-ratio: 4 / 5;
+  justify-self: stretch;
   border: 1px solid var(--border);
   border-radius: 30px;
   background: var(--surface);
@@ -357,12 +363,20 @@
   }
 
   .resume-side {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
   }
 
   .resume-photo {
+    width: 100%;
+    min-width: 0;
     min-height: 0;
     aspect-ratio: 4 / 5;
+  }
+
+  .resume-photo img {
+    width: 100%;
+    max-width: none;
   }
 
   .resume-stats {

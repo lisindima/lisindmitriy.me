@@ -344,6 +344,52 @@ test.describe("known layout regressions", () => {
     }
   });
 
+  test("resume portrait fills the mobile column and hero copy is vertically centered", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/resume/", { waitUntil: "networkidle" });
+    await settle(page);
+
+    const mobile = await page.evaluate(() => {
+      const hero = document.querySelector<HTMLElement>(".resume-hero");
+      const side = document.querySelector<HTMLElement>(".resume-side");
+      const photo = document.querySelector<HTMLElement>(".resume-photo");
+      if (!hero || !side || !photo) throw new Error("Resume hero elements missing");
+
+      const heroRect = hero.getBoundingClientRect();
+      const sideRect = side.getBoundingClientRect();
+      const photoRect = photo.getBoundingClientRect();
+
+      return {
+        heroWidth: heroRect.width,
+        sideWidth: sideRect.width,
+        photoWidth: photoRect.width,
+      };
+    });
+
+    expect(Math.abs(mobile.photoWidth - mobile.sideWidth)).toBeLessThanOrEqual(1);
+    expect(Math.abs(mobile.sideWidth - mobile.heroWidth)).toBeLessThanOrEqual(1);
+
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/resume/", { waitUntil: "networkidle" });
+    await settle(page);
+
+    const desktop = await page.evaluate(() => {
+      const copy = document.querySelector<HTMLElement>(".resume-hero-copy");
+      const side = document.querySelector<HTMLElement>(".resume-side");
+      if (!copy || !side) throw new Error("Resume hero columns missing");
+
+      const copyRect = copy.getBoundingClientRect();
+      const sideRect = side.getBoundingClientRect();
+
+      return {
+        copyCenter: copyRect.top + copyRect.height / 2,
+        sideCenter: sideRect.top + sideRect.height / 2,
+      };
+    });
+
+    expect(Math.abs(desktop.copyCenter - desktop.sideCenter)).toBeLessThanOrEqual(2);
+  });
+
   test("public resume uses the public contact channel", async ({ page }) => {
     await page.goto("/resume/", { waitUntil: "networkidle" });
 

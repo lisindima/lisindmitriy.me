@@ -8,7 +8,7 @@ import { ClientRouter } from "astro:transitions";
 import { siteContentTransition } from "../lib/siteTransitions";
 import favicon from "../assets/favicon.png";
 import garageImage from "../assets/garage-hero-scene.webp";
-import resumePortrait from "../assets/resume-portrait.webp";
+import resumePortrait from "../assets/resume-portrait-hq.jpg";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 
@@ -268,10 +268,10 @@ const schema = {
             <Image
               src={resumePortrait}
               alt={copy.photoAlt}
-              widths={[280, 360, 480]}
-              sizes="(max-width: 680px) calc(100vw - 48px), (max-width: 900px) 36vw, 320px"
+              widths={[360, 540, 640]}
+              sizes="(max-width: 680px) calc(100vw - 28px), (max-width: 900px) 36vw, 320px"
               format="webp"
-              quality={82}
+              quality={94}
               loading="eager"
               fetchpriority="high"
               decoding="async"
