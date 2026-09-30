@@ -9,6 +9,14 @@ import orangeCarSticker from "../assets/garage-sticker-orange.webp";
 import roadSticker from "../assets/garage-sticker-road.webp";
 import mountainsSticker from "../assets/garage-sticker-mountains.webp";
 import suvSticker from "../assets/garage-sticker-suv.webp";
+import garageRuOverview from "../assets/garage/screens/ru-01-overview.webp";
+import garageRuMaintenance from "../assets/garage/screens/ru-02-maintenance.webp";
+import garageRuExpenses from "../assets/garage/screens/ru-03-expenses.webp";
+import garageRuMileage from "../assets/garage/screens/ru-04-mileage.webp";
+import garageEnOverview from "../assets/garage/screens/en-01-overview.webp";
+import garageEnMaintenance from "../assets/garage/screens/en-02-maintenance.webp";
+import garageEnExpenses from "../assets/garage/screens/en-03-expenses.webp";
+import garageEnMileage from "../assets/garage/screens/en-04-mileage.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
 import "../styles/site-ui.css";
@@ -78,11 +86,12 @@ const copy = isRu
       step3: "03 · История",
       step3Text: "Сохраните запись, оригинал документа и будущие напоминания.",
       screensEyebrow: "Интерфейс",
-      screensTitle: "Место под реальные скриншоты приложения.",
-      screensText: "Когда будут готовы финальные экраны, эти три карточки заменятся экспортами из App Store Connect без переделки сетки.",
-      shot1: "Главная / автомобиль",
-      shot2: "Распознанный заказ‑наряд",
-      shot3: "История и напоминания",
+      screensTitle: "Так выглядит Garage.",
+      screensText: "Главная, обслуживание, расходы и пробег — реальные экраны приложения.",
+      shot1: "Главный экран Garage с автомобилем и сводкой",
+      shot2: "Экран обслуживания и плановых замен",
+      shot3: "Аналитика расходов на автомобиль",
+      shot4: "История пробега и структура расходов",
       privacyEyebrow: "Приватность по умолчанию",
       privacyTitle: "Ваши документы не должны становиться чьими‑то данными.",
       privacyText: "Распознавание и обработка выполняются локально. Garage не требует аккаунт, не отправляет заказ‑наряды на сервер, не использует рекламные SDK и не собирает аналитику о пользователях.",
@@ -132,11 +141,12 @@ const copy = isRu
       step3: "03 · Remember",
       step3Text: "Save the record, the original document, and future maintenance reminders.",
       screensEyebrow: "Interface",
-      screensTitle: "Reserved for real app screenshots.",
-      screensText: "Once the final screens are ready, these three placeholders can be replaced with App Store exports without changing the layout.",
-      shot1: "Vehicle overview",
-      shot2: "Parsed service order",
-      shot3: "History & reminders",
+      screensTitle: "See Garage in action.",
+      screensText: "Overview, maintenance, expenses, and mileage — real screens from the app.",
+      shot1: "Garage overview with vehicle summary",
+      shot2: "Maintenance and replacement schedule",
+      shot3: "Vehicle expense analytics",
+      shot4: "Mileage history and expense breakdown",
       privacyEyebrow: "Privacy by design",
       privacyTitle: "Your service documents should stay your data.",
       privacyText: "Recognition and processing happen locally. Garage requires no account, sends no service documents to a developer server, uses no advertising SDKs, and collects no user analytics.",
@@ -153,6 +163,20 @@ const copy = isRu
       footer: "Garage · made for iPhone",
       developer: "Dmitriy Lisin",
     };
+
+const screenshots = isRu
+  ? [
+      { src: garageRuOverview, alt: copy.shot1 },
+      { src: garageRuMaintenance, alt: copy.shot2 },
+      { src: garageRuExpenses, alt: copy.shot3 },
+      { src: garageRuMileage, alt: copy.shot4 },
+    ]
+  : [
+      { src: garageEnOverview, alt: copy.shot1 },
+      { src: garageEnMaintenance, alt: copy.shot2 },
+      { src: garageEnExpenses, alt: copy.shot3 },
+      { src: garageEnMileage, alt: copy.shot4 },
+    ];
 
 const schema = {
   "@context": "https://schema.org",
@@ -313,18 +337,19 @@ const schema = {
           />
         </span>
         <div class="screens-grid">
-          {[copy.shot1, copy.shot2, copy.shot3].map((label, index) => (
-            <figure class:list={["screenshot-slot", { raised: index === 1 }]}>
-              <div class="device-placeholder site-lift-card">
-                <div class="dynamic-island" aria-hidden="true"></div>
-                <div class="placeholder-ui" aria-hidden="true">
-                  <span class="ui-title"></span>
-                  <span class="ui-card"></span>
-                  <span class="ui-line"></span><span class="ui-line short"></span>
-                  <span class="ui-card lower"></span>
-                </div>
-              </div>
-              <figcaption>{label}</figcaption>
+          {screenshots.map((shot) => (
+            <figure class="screenshot-slot">
+              <Image
+                class="app-store-screenshot site-lift-card"
+                src={shot.src}
+                alt={shot.alt}
+                widths={[360, 540, 720, 900, 1284]}
+                sizes="(max-width: 680px) min(340px, 88vw), (max-width: 1100px) 44vw, 280px"
+                format="webp"
+                quality={90}
+                loading="lazy"
+                decoding="async"
+              />
             </figure>
           ))}
         </div>

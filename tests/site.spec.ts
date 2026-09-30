@@ -253,6 +253,18 @@ test.describe("known layout regressions", () => {
     await expect(page.locator('.hero-actions a[href="/resume/"]')).toHaveCount(1);
   });
 
+  test("Garage shows four localized App Store screenshots", async ({ page }) => {
+    for (const [path, firstAlt] of [
+      ["/garage/", "Главный экран Garage с автомобилем и сводкой"],
+      ["/garage/en/", "Garage overview with vehicle summary"],
+    ] as const) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      const screenshots = page.locator("#screenshots .app-store-screenshot");
+      await expect(screenshots).toHaveCount(4);
+      await expect(screenshots.first()).toHaveAttribute("alt", firstAlt);
+    }
+  });
+
   test("Garage exposes subscription legal links", async ({ page }) => {
     for (const [path, privacyHref, termsHref] of [
       ["/garage/", "/garage/privacy/", "/garage/terms/"],
