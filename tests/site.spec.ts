@@ -280,6 +280,34 @@ test.describe("known layout regressions", () => {
     await expect(page.locator('a[href="/garage/privacy/"]')).not.toHaveCount(0);
   });
 
+  test("Garage terms heading stays inside the mobile viewport", async ({ page }) => {
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 844 });
+
+      for (const path of ["/garage/terms/", "/garage/en/terms/"]) {
+        await page.goto(path, { waitUntil: "networkidle" });
+        await settle(page);
+
+        const geometry = await page.evaluate(() => {
+          const title = document.querySelector<HTMLElement>(".terms-page .privacy-shell h1");
+          if (!title) throw new Error("Garage terms title missing");
+
+          const rect = title.getBoundingClientRect();
+          return {
+            titleLeft: rect.left,
+            titleRight: rect.right,
+            viewportWidth: document.documentElement.clientWidth,
+            scrollWidth: document.documentElement.scrollWidth,
+          };
+        });
+
+        expect(geometry.titleLeft).toBeGreaterThanOrEqual(0);
+        expect(geometry.titleRight).toBeLessThanOrEqual(geometry.viewportWidth + 1);
+        expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.viewportWidth + 1);
+      }
+    }
+  });
+
   test("Garage privacy uses only the header back button", async ({ page }) => {
     for (const [path, href] of [
       ["/garage/privacy/", "/garage/"],
