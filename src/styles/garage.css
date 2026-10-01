@@ -370,6 +370,7 @@ body.garage-site::before {
 .back-link { display: inline-block; margin-bottom: 70px; color: var(--garage-secondary); font-weight: 700; }
 .back-link:hover { color: var(--garage-orange); }
 .privacy-shell h1 { margin: 0 0 22px; font-size: clamp(3.4rem, 7vw, 6.5rem); line-height: .92; letter-spacing: var(--tracking-display); }
+.terms-page .privacy-shell h1 { max-width: 100%; }
 .privacy-updated { margin: 0 0 30px; color: var(--garage-secondary); font-size: .9rem; }
 .privacy-intro { max-width: 760px; margin: 0 0 44px; font-size: 1.2rem; line-height: 1.58; color: var(--garage-secondary); }
 .privacy-summary { padding: 24px; margin-bottom: 60px; border: 1px solid rgba(47,125,93,.18); border-radius: 26px; background: rgba(47,125,93,.08); }
@@ -593,6 +594,11 @@ body.garage-site::before {
   .privacy-shell { padding-block: 70px 90px; }
   .back-link { margin-bottom: 48px; }
   .privacy-shell h1 { font-size: clamp(3.1rem, 14vw, 4.8rem); }
+  .terms-page .privacy-shell h1 {
+    font-size: clamp(2.2rem, 10.4vw, 3.9rem);
+    line-height: .96;
+    overflow-wrap: break-word;
+  }
 }
 
 
