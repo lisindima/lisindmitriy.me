@@ -39,6 +39,37 @@ async function settle(page: Page) {
   });
 }
 
+test.describe("global horizontal overflow protection", () => {
+  test("public pages never create horizontal document overflow", async ({ page }, testInfo) => {
+    const widths = testInfo.project.name === "webkit-iphone" ? [320, 390] : [320, 390];
+
+    for (const width of widths) {
+      await page.setViewportSize({ width, height: 844 });
+
+      for (const path of publicRoutes) {
+        await page.goto(path, { waitUntil: "networkidle" });
+        await settle(page);
+
+        const overflow = await page.evaluate(() => ({
+          viewportWidth: document.documentElement.clientWidth,
+          documentWidth: document.documentElement.scrollWidth,
+          bodyWidth: document.body.scrollWidth,
+        }));
+
+        expect(
+          overflow.documentWidth,
+          `${path} expands document at ${width}px`,
+        ).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+
+        expect(
+          overflow.bodyWidth,
+          `${path} expands body at ${width}px`,
+        ).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+      }
+    }
+  });
+});
+
 test.describe("metadata and routing", () => {
   for (const path of publicRoutes) {
     test(`${path} exposes complete metadata`, async ({ page }) => {
