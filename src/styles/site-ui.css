@@ -6,6 +6,34 @@
   --site-ui-card-lift: -5px;
 }
 
+/*
+ * Global overflow guard.
+ * Long localized words, URLs and user-facing text must wrap inside the
+ * component that owns them instead of widening the document.
+ */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+:where(main, section, article, aside, header, footer, nav, div, figure, blockquote, dl, ul, ol, li) {
+  min-width: 0;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, li, dt, dd, figcaption, blockquote) {
+  overflow-wrap: break-word;
+}
+
+:where(main, footer) a {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .skip-link {
   position: fixed;
   z-index: 1000;
