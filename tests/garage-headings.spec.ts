@@ -74,3 +74,29 @@ test("Garage body text and URLs retain overflow protection", async ({ page }) =>
   expect(protection.linkWrap).toBe("break-word");
   expect(protection.overflow).toBeLessThanOrEqual(1);
 });
+
+for (const path of ["/garage/privacy/", "/garage/en/privacy/", "/garage/terms/", "/garage/en/terms/"]) {
+  for (const width of [320, 390, 650]) {
+    test(`Garage legal heading keeps whole words inside its column at ${width}px (${path})`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto(path, { waitUntil: "networkidle" });
+      // Exercise both native Apple fonts and the Arial fallback used on Linux CI.
+      for (const font of [null, "Arial, sans-serif"]) {
+        if (font) await page.addStyleTag({ content: `:root { --font-ui: ${font}; }` });
+        await page.evaluate(() => document.fonts.ready);
+        const layout = await page.locator(".privacy-shell h1").evaluate((element) => {
+          const heading = element as HTMLElement;
+          const style = getComputedStyle(heading);
+          return {
+            wrapping: [style.overflowWrap, style.wordBreak, style.hyphens],
+            titleOverflow: heading.scrollWidth - heading.clientWidth,
+            bodyOverflow: document.body.scrollWidth - window.innerWidth,
+          };
+        });
+        expect(layout.wrapping).toEqual(["normal", "normal", "none"]);
+        expect(layout.titleOverflow).toBeLessThanOrEqual(1);
+        expect(layout.bodyOverflow).toBeLessThanOrEqual(1);
+      }
+    });
+  }
+}
