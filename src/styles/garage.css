@@ -128,10 +128,12 @@ body.garage-site::before {
   position: relative;
   z-index: 3;
   width: min(720px, 51%);
+  /* Cap display type against the copy column so whole words fit. */
+  container-type: inline-size;
   min-width: 0;
 }
 .garage-eyebrow { margin: 0 0 22px; color: var(--garage-secondary); font-size: .76rem; font-weight: 760; letter-spacing: var(--tracking-label); text-transform: uppercase; }
-.garage-hero h1 { margin: 0 0 28px; font-size: clamp(4.3rem, 8.4vw, 8rem); line-height: .89; letter-spacing: var(--tracking-display); font-weight: 830; }
+.garage-hero h1 { margin: 0 0 28px; font-size: min(clamp(4.3rem, 8.4vw, 8rem), 18cqw); line-height: .89; letter-spacing: var(--tracking-display); font-weight: 830; }
 .garage-hero h1 span { color: var(--garage-orange); }
 .garage-lead { max-width: 720px; margin: 0 0 30px; color: var(--garage-secondary); font-size: clamp(1.24rem, 2vw, 1.62rem); line-height: 1.32; letter-spacing: var(--tracking-body); }
 .garage-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
@@ -431,7 +433,7 @@ body.garage-site::before {
   .garage-nav { display: none; }
   .garage-hero { padding-top: 96px; }
   .garage-hero-copy { width: min(640px, 58%); }
-  .garage-hero h1 { font-size: clamp(3.9rem, 9.5vw, 6rem); }
+  .garage-hero h1 { font-size: min(clamp(3.9rem, 9.5vw, 6rem), 18cqw); }
   .garage-hero-visual {
     right: 12px;
     width: min(400px, 33vw);
@@ -477,7 +479,7 @@ body.garage-site::before {
   }
 
   .garage-hero h1 {
-    font-size: clamp(3.2rem, 9vw, 4.8rem);
+    font-size: min(clamp(3.2rem, 9vw, 4.8rem), 18cqw);
   }
 
   .garage-hero::after,
@@ -514,7 +516,7 @@ body.garage-site::before {
   .garage-hero { padding-block: 76px 64px; }
   .garage-hero h1 {
     max-width: 100%;
-    font-size: clamp(3.05rem, 13.6vw, 4.35rem);
+    font-size: min(clamp(3.05rem, 13.6vw, 4.35rem), 18cqw);
     line-height: .92;
   }
   .garage-lead { font-size: 1.12rem; }
@@ -597,7 +599,7 @@ body.garage-site::before {
   .terms-page .privacy-shell h1 {
     font-size: clamp(2.2rem, 10.4vw, 3.9rem);
     line-height: .96;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
   }
 }
 
@@ -667,7 +669,7 @@ body.garage-site::before {
 
 @media (max-width: 360px) {
   .garage-hero h1 {
-    font-size: clamp(2.8rem, 12.8vw, 3.5rem);
+    font-size: min(clamp(2.8rem, 12.8vw, 3.5rem), 18cqw);
   }
 
   .feature-card h2 {
@@ -688,4 +690,12 @@ body.garage-site::before {
       padding-right: env(safe-area-inset-right);
     }
   }
+}
+
+/* Display headings wrap at spaces, never inside a word. Body and URL guards
+   remain in site-ui.css. */
+.garage-site :is(h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
