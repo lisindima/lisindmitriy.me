@@ -137,9 +137,8 @@ body.garage-site::before {
 .garage-hero h1 span { color: var(--garage-orange); }
 .garage-lead { max-width: 720px; margin: 0 0 30px; color: var(--garage-secondary); font-size: clamp(1.24rem, 2vw, 1.62rem); line-height: 1.32; letter-spacing: var(--tracking-body); }
 .garage-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-.app-store-placeholder { min-height: 58px; padding: 8px 18px 8px 12px; display: inline-flex; align-items: center; gap: 12px; border-radius: 17px; background: var(--garage-text); color: var(--garage-bg); box-shadow: var(--garage-shadow); opacity: .88; cursor: default; }
-.app-store-mark { width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 10px; font-size: .66rem; }
-.app-store-placeholder small, .app-store-placeholder strong { display: block; }
+.app-store-badge { display: inline-flex; align-items: center; flex-shrink: 0; border-radius: 8px; }
+.app-store-badge img { display: block; width: auto; height: 56px; max-width: 100%; }
 .app-store-placeholder small { font-size: .64rem; line-height: 1; opacity: .75; }
 .app-store-placeholder strong { margin-top: 4px; font-size: .98rem; line-height: 1; }
 .garage-text-link { font-size: .92rem; font-weight: 720; color: var(--garage-secondary); padding: 16px 8px; }
@@ -521,7 +520,7 @@ body.garage-site::before {
   }
   .garage-lead { font-size: 1.12rem; }
   .garage-hero-actions { align-items: stretch; flex-direction: column; }
-  .app-store-placeholder { width: 100%; justify-content: center; }
+  .app-store-badge { align-self: center; }
   .garage-text-link { text-align: center; }
   .sticker-art { filter: drop-shadow(0 12px 14px rgba(25,17,11,.18)); }
   .sticker-features { width: 140px; top: 0; right: 14px; }

@@ -68,8 +68,6 @@ const copy = isRu
       headlineB: "по машине. В\u00A0одном месте.",
       lead: "Сканируйте заказ‑наряды, сохраняйте оригиналы, получайте структурированный список работ и запчастей и не забывайте о следующем ТО.",
       privateBadge: "Без аккаунта · Без облака · Без трекинга",
-      appStoreTop: "Скачать",
-      appStoreBottom: "в App Store",
       screenshotsLink: "Посмотреть интерфейс",
       iconAlt: "Иконка приложения Garage",
       cardOneTitle: "Заказ‑наряд → история",
@@ -123,8 +121,6 @@ const copy = isRu
       headlineB: "One private place.",
       lead: "Scan service orders, keep the originals, get a structured list of work and parts, and stay ahead of upcoming maintenance.",
       privateBadge: "No account · No cloud · No tracking",
-      appStoreTop: "Download",
-      appStoreBottom: "on the App Store",
       screenshotsLink: "See the interface",
       iconAlt: "Garage app icon",
       cardOneTitle: "Service order → history",
@@ -246,12 +242,16 @@ const schema = {
           <p class="garage-lead">{copy.lead}</p>
           <div class="garage-hero-actions">
             <a
-              class="app-store-placeholder"
+              class="app-store-badge"
               href={appStoreHref}
               aria-label={isRu ? "Скачать Garage в App Store" : "Download Garage on the App Store"}
             >
-              <span class="app-store-mark" aria-hidden="true">↗</span>
-              <span><small>{copy.appStoreTop}</small><strong>{copy.appStoreBottom}</strong></span>
+              <img
+                src={`/garage/app-store/download-${isRu ? "ru-ru" : "en-us"}.svg`}
+                alt={isRu ? "Загрузите в App Store" : "Download on the App Store"}
+                width="120"
+                height="40"
+              />
             </a>
             <a class="garage-text-link" href="#screenshots">{copy.screenshotsLink} <span aria-hidden="true">↓</span></a>
           </div>
