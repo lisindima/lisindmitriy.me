@@ -233,10 +233,8 @@ pre {
   border-color: color-mix(in srgb, var(--site-ui-accent) 28%, var(--site-ui-border));
 }
 
-/* Garage's App Store CTA used to be a non-link placeholder. Once it became
- * an anchor, .garage-site a { color: inherit } overrode its inverted text. */
-.garage-site a.app-store-placeholder {
-  color: var(--garage-bg);
+/* Keep the official App Store badge link intact. */
+.garage-site a.app-store-badge {
   cursor: pointer;
   white-space: nowrap;
   overflow-wrap: normal;
