@@ -26,7 +26,8 @@ body {
 }
 
 :where(main, footer) a {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 pre {
@@ -190,6 +191,9 @@ pre {
   font-size: .84rem;
   font-weight: 680;
   line-height: 1;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
   transition:
     color var(--site-ui-transition-fast),
     background var(--site-ui-transition-fast),
@@ -219,80 +223,44 @@ pre {
   justify-content: center;
   min-width: 46px;
   min-height: 40px;
-  padding: 9px 13px;
+  padding: 8px 12px;
   border-color: var(--site-ui-border);
-  background: color-mix(in srgb, var(--site-ui-surface) 82%, transparent);
+  background: color-mix(in srgb, var(--site-ui-surface) 84%, transparent);
   color: var(--site-ui-text);
-  font-size: .82rem;
-  font-weight: 720;
-  line-height: 1;
+}
+
+.site-header-shell .site-language-switch:hover {
+  border-color: color-mix(in srgb, var(--site-ui-accent) 28%, var(--site-ui-border));
 }
 
 .site-lift-card {
   transition:
     transform var(--site-ui-transition-card),
-    box-shadow 240ms ease,
-    border-color 240ms ease;
+    border-color var(--site-ui-transition-card),
+    box-shadow var(--site-ui-transition-card),
+    background var(--site-ui-transition-card);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .site-lift-card:hover {
     transform: translateY(var(--site-ui-card-lift));
+    border-color: color-mix(in srgb, var(--site-ui-accent) 28%, var(--site-ui-border));
     box-shadow: var(--site-ui-shadow-hover);
-    border-color: color-mix(in srgb, var(--site-ui-accent) 22%, var(--site-ui-border));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-nav-link,
-  .site-language-switch,
+  html { scroll-behavior: auto; }
+
+  .site-header-shell .site-nav-link,
+  .site-header-shell .site-language-switch,
   .site-lift-card {
     transition: none;
   }
 
-  .site-nav-link:hover,
-  .site-language-switch:hover,
+  .site-header-shell .site-nav-link:hover,
+  .site-header-shell .site-language-switch:hover,
   .site-lift-card:hover {
     transform: none;
-  }
-}
-
-@media (max-width: 680px) {
-  :root {
-    --site-ui-header-offset: 8px;
-  }
-
-  .site-header-shell {
-    width: calc(100% - 16px);
-    min-height: 56px;
-    padding: 8px 10px 8px 12px;
-    gap: 8px;
-  }
-
-  .site-header-start {
-    gap: 4px;
-  }
-
-  .site-header-brand {
-    padding-inline: 6px;
-    font-size: .86rem;
-  }
-
-  .site-back-button {
-    width: 38px;
-    height: 38px;
-    flex-basis: 38px;
-  }
-
-  .site-header-shell .site-nav-link {
-    padding: 8px 10px;
-    font-size: .8rem;
-  }
-
-  .site-header-shell .site-language-switch {
-    min-width: 42px;
-    min-height: 38px;
-    padding: 8px 11px;
-    font-size: .8rem;
   }
 }
