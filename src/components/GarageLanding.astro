@@ -31,6 +31,7 @@ const isRu = locale === "ru";
 const alternateHref = isRu ? "/garage/en/" : "/garage/";
 const privacyHref = isRu ? "/garage/privacy/" : "/garage/en/privacy/";
 const termsHref = isRu ? "/garage/terms/" : "/garage/en/terms/";
+const appStoreHref = "https://apps.apple.com/app/apple-store/id6817084863";
 
 const socialImage = await getImage({
   src: garageHeroScene,
@@ -67,7 +68,7 @@ const copy = isRu
       headlineB: "по машине. В\u00A0одном месте.",
       lead: "Сканируйте заказ‑наряды, сохраняйте оригиналы, получайте структурированный список работ и запчастей и не забывайте о следующем ТО.",
       privateBadge: "Без аккаунта · Без облака · Без трекинга",
-      appStoreTop: "Скоро",
+      appStoreTop: "Скачать",
       appStoreBottom: "в App Store",
       screenshotsLink: "Посмотреть интерфейс",
       iconAlt: "Иконка приложения Garage",
@@ -122,7 +123,7 @@ const copy = isRu
       headlineB: "One private place.",
       lead: "Scan service orders, keep the originals, get a structured list of work and parts, and stay ahead of upcoming maintenance.",
       privateBadge: "No account · No cloud · No tracking",
-      appStoreTop: "Coming soon",
+      appStoreTop: "Download",
       appStoreBottom: "on the App Store",
       screenshotsLink: "See the interface",
       iconAlt: "Garage app icon",
@@ -186,6 +187,7 @@ const schema = {
   operatingSystem: "iOS",
   description: copy.description,
   url: isRu ? "https://lisindmitriy.ru/garage/" : "https://lisindmitriy.ru/garage/en/",
+  downloadUrl: appStoreHref,
 };
 ---
 
@@ -243,10 +245,14 @@ const schema = {
           <h1 class="garage-hero-title"><span>{copy.headlineA}</span><br />{copy.headlineB}</h1>
           <p class="garage-lead">{copy.lead}</p>
           <div class="garage-hero-actions">
-            <span class="app-store-placeholder" aria-disabled="true" title={isRu ? "Ссылка появится после публикации приложения" : "The link will be added after the app is published"}>
-              <span class="app-store-mark" aria-hidden="true">●</span>
+            <a
+              class="app-store-placeholder"
+              href={appStoreHref}
+              aria-label={isRu ? "Скачать Garage в App Store" : "Download Garage on the App Store"}
+            >
+              <span class="app-store-mark" aria-hidden="true">↗</span>
               <span><small>{copy.appStoreTop}</small><strong>{copy.appStoreBottom}</strong></span>
-            </span>
+            </a>
             <a class="garage-text-link" href="#screenshots">{copy.screenshotsLink} <span aria-hidden="true">↓</span></a>
           </div>
           <div class="privacy-badge"><span aria-hidden="true">✓</span>{copy.privateBadge}</div>
