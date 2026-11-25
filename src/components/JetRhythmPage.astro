@@ -1,0 +1,252 @@
+---
+import { Image, getImage } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import SiteHeader from "./SiteHeader.astro";
+import SeoHead from "./SeoHead.astro";
+import { siteContentTransition } from "../lib/siteTransitions";
+import icon from "../assets/jetrhythm/icon.webp";
+import planPreview from "../assets/jetrhythm/today-plan.webp";
+import tripsPreview from "../assets/jetrhythm/today-trips.webp";
+import "../styles/typography.css";
+import "../styles/jetrhythm.css";
+import "../styles/site-ui.css";
+
+interface Props {
+  locale: "ru" | "en";
+  page?: "landing" | "privacy";
+}
+
+const { locale, page = "landing" } = Astro.props;
+const isRu = locale === "ru";
+const isPrivacy = page === "privacy";
+const routes = {
+  ru: "/jetrhythm/",
+  en: "/jetrhythm/en/",
+};
+const home = routes[locale];
+const privacy = `${home}privacy/`;
+const otherLocale = isRu ? "en" : "ru";
+const pathFor = (language: "ru" | "en") => `${routes[language]}${isPrivacy ? "privacy/" : ""}`;
+const absolute = (path: string) => new URL(path, Astro.site).href;
+const email = "me@lisindmitriy.ru";
+const supportHref = `mailto:${email}?subject=JetRhythm`;
+const [favicon, social] = await Promise.all([
+  getImage({ src: icon, width: 64, format: "png" }),
+  getImage({ src: icon, width: 780, format: "webp", quality: 85 }),
+]);
+
+const copy = isRu
+  ? {
+      title: "JetRhythm — план адаптации к новому часовому поясу",
+      description: "JetRhythm помогает спланировать сон и дневной свет до, во время и после перелёта. Для iPhone и iPad.",
+      tagline: "Перелёт меняет часовой пояс.",
+      accent: "Войдите в новый ритм.",
+      platform: "Для iPhone и iPad",
+      lead: "Персональный план сна, дневного света и кофеина поможет подготовиться к перелёту и перестроить режим после прилёта.",
+      status: "В разработке",
+      previewLink: "Посмотреть интерфейс",
+      sections: ["Возможности", "Приватность", "Поддержка"],
+      back: "На главную",
+      skip: "Перейти к содержимому",
+      featuresHeading: "От вылета до нового режима",
+      features: [
+        { title: "Добавьте перелёт", text: "Выберите аэропорты и укажите местное время вылета и прилёта. Можно добавить пересадки или начать план уже после прибытия." },
+        { title: "Получите план на каждый день", text: "Узнайте, когда спать, искать дневной свет, приглушать освещение и пить кофе. Основной план рассчитывается прямо на устройстве и доступен офлайн." },
+        { title: "Подстройте план под себя", text: "Включите будильники и напоминания по желанию. Уточняйте фактический сон вручную или подключите Apple Health, чтобы скорректировать оставшийся план." },
+      ],
+      screensTitle: "Что делать дальше",
+      screensText: "На экране «Сегодня» видно ближайшее действие, а в плане — расписание в местном времени. Ниже — концепты интерфейса.",
+      screens: [
+        "Ближайшее действие и план сна и света на несколько дней",
+        "Экран «Сегодня» и список поездок в тёмной теме",
+      ],
+      privacyTitle: "Расчёты остаются на устройстве",
+      privacyText: "Для JetRhythm не нужен аккаунт. Маршрут, режим сна и данные Apple Health используются для расчёта плана на устройстве. Для прогноза по выбранному месту приложение может обращаться к Apple WeatherKit.",
+      privacyLink: "Политика конфиденциальности",
+      privacyDescription: "Как JetRhythm планирует использовать данные о поездках и сне, Apple Health и WeatherKit.",
+      privacyIntro: "Проект политики для приложения в разработке. Здесь описано, как JetRhythm планирует обрабатывать данные в первой версии.",
+      privacySections: [
+        { title: "Поездки и режим сна", text: "Маршруты, профиль сна, ручные записи и план адаптации хранятся и обрабатываются на устройстве. Аккаунт, собственный сервер, реклама и сторонние трекеры не предусмотрены." },
+        { title: "Данные Apple Health", text: "С вашего разрешения JetRhythm сможет прочитать записи о сне и времени при дневном свете, если они доступны. Приложение использует эти данные на устройстве для уточнения плана и не передаёт их в WeatherKit. Доступом можно управлять в настройках Apple Health." },
+        { title: "Прогноз погоды", text: "Для получения прогноза JetRhythm может передавать Apple WeatherKit координаты выбранного места. Поиск аэропортов, расчёт плана и времени восхода и заката доступны без запроса погоды." },
+        { title: "Управление данными", text: "Вы сможете удалять поездки и очищать сведения, сохранённые JetRhythm на основе данных Apple Health. Исходные записи останутся в Apple Health. Будильники и уведомления запрашивают отдельные системные разрешения." },
+      ],
+      supportTitle: "Есть вопрос по JetRhythm?",
+      supportText: "Напишите напрямую разработчику. Сюда же можно отправить вопрос о данных и приватности.",
+      emailLabel: "Написать письмо",
+      footer: "Дмитрий Лисин",
+    }
+  : {
+      title: "JetRhythm — a jet lag plan for your next flight",
+      description: "JetRhythm helps you plan sleep and daylight before, during, and after flying across time zones. For iPhone and iPad.",
+      tagline: "New time zone.",
+      accent: "Find your rhythm.",
+      platform: "For iPhone and iPad",
+      lead: "Get a personalized plan for sleep, daylight, and caffeine, so you can prepare before takeoff and settle in after landing.",
+      status: "In development",
+      previewLink: "Preview the app",
+      sections: ["Features", "Privacy", "Support"],
+      back: "Back to portfolio",
+      skip: "Skip to content",
+      featuresHeading: "From takeoff to a new routine",
+      features: [
+        { title: "Add your flight", text: "Choose your airports and enter local departure and arrival times. Add any connections, or start a plan after you land." },
+        { title: "Follow a daily plan", text: "See when to sleep, get daylight, dim the lights, and have caffeine. Your device builds the core plan, so it’s available offline." },
+        { title: "Adjust as you go", text: "Use optional alarms and reminders. Log your sleep manually or connect Apple Health to adjust the rest of your plan." },
+      ],
+      screensTitle: "See what’s next",
+      screensText: "Today shows your next action. Plan lays out each day in local time. These are interface concepts.",
+      screens: [
+        "The next action alongside a multi-day sleep and daylight plan",
+        "Today and the trip list in dark mode",
+      ],
+      privacyTitle: "Your plan is calculated on your device",
+      privacyText: "JetRhythm requires no account. Your itinerary, sleep schedule, and Apple Health data are used on your device to build your plan. The app may use Apple WeatherKit for a forecast at a selected location.",
+      privacyLink: "Privacy Policy",
+      privacyDescription: "How JetRhythm plans to handle trip and sleep data, Apple Health, and WeatherKit.",
+      privacyIntro: "This is a draft policy for an app in development. It describes how JetRhythm plans to handle data in its first release.",
+      privacySections: [
+        { title: "Trips and sleep schedule", text: "Your itinerary, sleep profile, manual entries, and adjustment plan are stored and processed on your device. The app is designed to work without an account, a developer-operated server, ads, or third-party trackers." },
+        { title: "Apple Health data", text: "With your permission, JetRhythm can read sleep and time in daylight records when available. It uses them on your device to refine the plan and does not send them to WeatherKit. You can manage access in Apple Health settings." },
+        { title: "Weather forecasts", text: "JetRhythm may send the coordinates of a selected location to Apple WeatherKit to request a forecast. Airport search, plan calculation, and sunrise and sunset times are available without a weather request." },
+        { title: "Data controls", text: "You’ll be able to delete trips and clear information JetRhythm saves from Apple Health. Original records remain in Apple Health. Alarms and notifications require separate system permissions." },
+      ],
+      supportTitle: "Have a question about JetRhythm?",
+      supportText: "Email the developer directly for help or questions about your data.",
+      emailLabel: "Email support",
+      footer: "Dmitriy Lisin",
+    };
+
+const title = isPrivacy ? `JetRhythm — ${copy.privacyLink}` : copy.title;
+const description = isPrivacy ? copy.privacyDescription : copy.description;
+const anchors = ["features", "privacy", "support"];
+const previews = [planPreview, tripsPreview];
+---
+
+<!doctype html>
+<html lang={locale} transition:name="site-root" transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <SeoHead
+      title={title}
+      description={description}
+      canonical={absolute(pathFor(locale))}
+      locale={locale}
+      alternates={[
+        { hreflang: "ru", href: absolute(pathFor("ru")) },
+        { hreflang: "en", href: absolute(pathFor("en")) },
+        { hreflang: "x-default", href: absolute(pathFor("ru")) },
+      ]}
+      image={social.src}
+    />
+    <meta name="theme-color" content="#f5f2ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111524" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href={favicon.src} />
+    <ClientRouter fallback="animate" />
+  </head>
+  <body class="jet">
+    <a class="skip-link" href="#main-content">{copy.skip}</a>
+    <SiteHeader
+      locale={locale}
+      alternateHref={pathFor(otherLocale)}
+      languageLabel={otherLocale.toUpperCase()}
+      navAria={isRu ? "Навигация JetRhythm" : "JetRhythm navigation"}
+      navItems={copy.sections.map((label, index) => ({ label, href: `${isPrivacy ? home : ""}#${anchors[index]}` }))}
+      outerClass="jet-header"
+      backHref={isRu ? "/" : "/en/"}
+      backLabel={copy.back}
+      brandLabel="JetRhythm"
+      brandHref={home}
+    />
+
+    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
+      {isPrivacy ? (
+        <article class="jet-shell jet-policy">
+          <a class="jet-text-link" href={home}>← JetRhythm</a>
+          <h1>{copy.privacyLink}</h1>
+          <p class="jet-lead">{copy.privacyIntro}</p>
+          {copy.privacySections.map(({ title, text }) => (
+            <section>
+              <h2>{title}</h2>
+              <p>{text}</p>
+            </section>
+          ))}
+          <a class="jet-text-link" href={supportHref}>{email}</a>
+        </article>
+      ) : (
+        <>
+          <section class="jet-hero jet-shell" aria-labelledby="jet-title">
+            <div class="jet-hero-copy">
+              <p class="jet-platform">{copy.platform}</p>
+              <h1 id="jet-title">
+                {copy.tagline} <em>{copy.accent}</em>
+              </h1>
+              <p class="jet-lead">{copy.lead}</p>
+              <div class="jet-actions">
+                <a class="jet-button" href="#interface">{copy.previewLink} <span aria-hidden="true">↓</span></a>
+                <span class="jet-status">{copy.status}</span>
+              </div>
+            </div>
+            <div class="jet-hero-art">
+              <Image src={icon} alt="" widths={[320, 480, 640, 780]} sizes="(max-width: 760px) 62vw, 340px" width={780} format="webp" quality={90} loading="eager" fetchpriority="high" />
+            </div>
+          </section>
+
+          <section class="jet-shell jet-section" id="features" aria-labelledby="jet-features">
+            <h2 id="jet-features">{copy.featuresHeading}</h2>
+            <ul class="jet-features">
+              {copy.features.map(({ title, text }) => (
+                <li>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="jet-shell jet-section" id="interface" aria-labelledby="jet-interface">
+            <h2 id="jet-interface">{copy.screensTitle}</h2>
+            <p class="jet-section-intro">{copy.screensText}</p>
+            <div class="jet-gallery">
+              {previews.map((src, index) => (
+                <figure>
+                  <div class="jet-preview">
+                    <Image src={src} alt={copy.screens[index]} widths={[400, 600, 900, 1100]} sizes="(max-width: 620px) calc(100vw - 76px), (max-width: 1150px) 42vw, 460px" format="webp" quality={86} loading="lazy" />
+                  </div>
+                  <figcaption>{copy.screens[index]}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+
+          <section class="jet-shell jet-section" id="privacy" aria-labelledby="jet-privacy">
+            <div class="jet-privacy">
+              <div>
+                <p class="jet-platform">{copy.sections[1]}</p>
+                <h2 id="jet-privacy">{copy.privacyTitle}</h2>
+                <p>{copy.privacyText}</p>
+              </div>
+              <a class="jet-text-link" href={privacy}>{copy.privacyLink} <span aria-hidden="true">↗</span></a>
+            </div>
+          </section>
+
+          <section class="jet-shell jet-section jet-support" id="support" aria-labelledby="jet-support">
+            <div>
+              <h2 id="jet-support">{copy.supportTitle}</h2>
+              <p>{copy.supportText}</p>
+            </div>
+            <a class="jet-button" href={supportHref}>{copy.emailLabel} <span aria-hidden="true">↗</span></a>
+          </section>
+        </>
+      )}
+    </main>
+
+    <footer class="jet-shell jet-footer">
+      <span>JetRhythm</span>
+      {!isPrivacy && <a href={privacy}>{copy.privacyLink}</a>}
+      <a href={isRu ? "/" : "/en/"}>{copy.footer}</a>
+    </footer>
+  </body>
+</html>

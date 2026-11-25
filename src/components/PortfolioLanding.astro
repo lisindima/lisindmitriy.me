@@ -13,6 +13,7 @@ import netliphyImage from "../assets/Netliphy.png";
 import otpHubImage from "../assets/OTPHubMac.png";
 import covidImage from "../assets/covid.png";
 import garageImage from "../assets/garage-hero-scene.webp";
+import jetRhythmIcon from "../assets/jetrhythm/icon.webp";
 import geelyDiagnosticsImage from "../assets/geely-diagnostics.png";
 
 interface Props {
@@ -120,6 +121,15 @@ const projects = isRu
         ],
       },
       {
+        eyebrow: "iOS · iPadOS",
+        title: "JetRhythm",
+        description: "План сна, дневного света и кофеина для перелётов через часовые пояса. Помогает подготовиться к вылету и перестроить режим после прилёта.",
+        tags: ["SwiftUI", "HealthKit", "AlarmKit"],
+        image: jetRhythmIcon,
+        status: "В разработке",
+        links: [{ label: copy.website, href: "/jetrhythm/", external: false }],
+      },
+      {
         eyebrow: "SwiftUI · iOS · macOS",
         title: "Netliphy",
         description: "Управление сайтами на Netlify с iPhone, iPad и Mac в нативном интерфейсе для платформ Apple.",
@@ -176,6 +186,15 @@ const projects = isRu
         links: [
           { label: "GitHub", href: "https://github.com/lisindima/GeelyDiagnostics", external: true },
         ],
+      },
+      {
+        eyebrow: "iOS · iPadOS",
+        title: "JetRhythm",
+        description: "A sleep, daylight, and caffeine plan for flying across time zones, from preparing for takeoff to settling in after landing.",
+        tags: ["SwiftUI", "HealthKit", "AlarmKit"],
+        image: jetRhythmIcon,
+        status: "In development",
+        links: [{ label: copy.website, href: "/jetrhythm/en/", external: false }],
       },
       {
         eyebrow: "SwiftUI · iOS · macOS",
@@ -329,6 +348,7 @@ const schema = {
                 {
                   featured: index === 0,
                   "project-card-geely": project.title === "Geely Diagnostics",
+                  "project-card-jetrhythm": project.title === "JetRhythm",
                 },
               ]}
             >
