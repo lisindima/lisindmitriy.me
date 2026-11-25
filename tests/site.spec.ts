@@ -17,12 +17,17 @@ const publicRoutes = [
   "/garage/en/privacy/",
   "/garage/terms/",
   "/garage/en/terms/",
+  "/jetrhythm/",
+  "/jetrhythm/en/",
+  "/jetrhythm/privacy/",
+  "/jetrhythm/en/privacy/",
 ];
 
 const representativePages = [
   { name: "portfolio", path: "/" },
   { name: "resume", path: "/resume/" },
   { name: "garage", path: "/garage/" },
+  { name: "jetrhythm", path: "/jetrhythm/" },
   { name: "archive", path: "/otphub/" },
 ];
 
@@ -569,7 +574,7 @@ test.describe("known layout regressions", () => {
     await page.goto("/en/", { waitUntil: "networkidle" });
     await settle(page);
 
-    const cards = page.locator(".project-card");
+    const cards = page.locator(".project-card:not(.project-card-jetrhythm)");
     await expect(cards).toHaveCount(5);
 
     for (let index = 0; index < 5; index += 1) {
@@ -718,4 +723,24 @@ test.describe("known layout regressions", () => {
     );
     expect(background).toBe("rgb(9, 9, 11)");
   });
+});
+
+test("JetRhythm links from the portfolio and switches locale on both pages", async ({ page }) => {
+  await page.goto("/");
+  await page.locator(".project-card-jetrhythm").getByRole("link", { name: /Сайт/ }).click();
+  await expect(page).toHaveURL(/\/jetrhythm\/$/);
+
+  await page.getByRole("link", { name: /Посмотреть интерфейс/ }).click();
+  await expect(page).toHaveURL(/\/jetrhythm\/#interface$/);
+
+  await page.getByRole("link", { name: "EN", exact: true }).click();
+  await expect(page).toHaveURL(/\/jetrhythm\/en\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+
+  await page.getByRole("link", { name: "Privacy Policy", exact: true }).first().click();
+  await expect(page).toHaveURL(/\/jetrhythm\/en\/privacy\/$/);
+
+  await page.getByRole("link", { name: "RU", exact: true }).click();
+  await expect(page).toHaveURL(/\/jetrhythm\/privacy\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Политика конфиденциальности");
 });

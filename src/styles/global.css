@@ -413,6 +413,22 @@ h1 {
   padding: clamp(18px, 2.6vw, 34px);
 }
 
+.project-card-jetrhythm .project-media {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(ellipse at 68% 100%, #9c4e3c, transparent 65%), #1c2545;
+}
+
+.project-card-jetrhythm .project-media img {
+  position: static;
+  width: min(100%, 168px);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 23%;
+  box-shadow: 0 14px 36px #10102480;
+}
+
 .project-media img {
   position: absolute;
   inset: 0;
