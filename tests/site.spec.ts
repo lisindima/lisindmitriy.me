@@ -356,14 +356,14 @@ test.describe("known layout regressions", () => {
     }
   });
 
-  test("route and Garage detail transition layers keep their geometry", async ({ page }) => {
+  test("route and app detail transition layers keep their geometry", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
 
     const readGeometry = async (path: string) => {
       await page.goto(path, { waitUntil: "networkidle" });
       return await page.evaluate(() => {
         const main = document.querySelector<HTMLElement>("main");
-        const routeFrame = document.querySelector<HTMLElement>(".garage-transition-main");
+        const routeFrame = document.querySelector<HTMLElement>(".site-app-content");
         const header = document.querySelector<HTMLElement>(".site-header-shell");
         const headerContent = document.querySelector<HTMLElement>(".site-header-start");
         if (!main || !header || !headerContent) {
@@ -388,6 +388,11 @@ test.describe("known layout regressions", () => {
     expect(garage.route?.width).toBeCloseTo(860, 0);
     expect(garage.route?.y).toBeCloseTo(76, 0);
     expect(garage.main.width).toBeCloseTo(1280, 0);
+
+    const jetRhythm = await readGeometry("/jetrhythm/");
+    expect(jetRhythm.route).toEqual(garage.route);
+    expect(jetRhythm.main.width).toBeCloseTo(garage.main.width, 0);
+    expect(jetRhythm.header).toEqual(garage.header);
 
     const privacy = await readGeometry("/garage/privacy/");
     expect(privacy.route?.width).toBeCloseTo(860, 0);
@@ -728,7 +733,7 @@ test.describe("known layout regressions", () => {
 test("JetRhythm links from the portfolio and switches locale on both pages", async ({ page }) => {
   await page.goto("/");
   await page.locator(".project-card-jetrhythm").getByRole("link", { name: /Сайт/ }).click();
-  await expect(page).toHaveURL(/\/jetrhythm\/$/);
+  await expect(page).toHaveURL(/\/jetrhythm\/$/, { timeout: 15_000 });
   await expect(page.locator("#features")).toContainText("за последние 14 дней");
   const sleepSupport = page.locator("#support details").first();
   await sleepSupport.locator("summary").click();
@@ -763,4 +768,65 @@ test("JetRhythm links from the portfolio and switches locale on both pages", asy
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Политика конфиденциальности");
   await expect(page.getByRole("heading", { name: "Хранение и удаление данных" })).toBeVisible();
   await expect(page.locator(".jet-policy")).toContainText("за последние 14 дней");
+});
+
+test("JetRhythm header follows the app navigation pattern", async ({ page, browserName }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  await page.evaluate(() => {
+    document.addEventListener("astro:before-swap", () => {
+      Reflect.set(window, "testRouteSwap", true);
+    }, { once: true });
+  });
+  await page.locator(".project-card-jetrhythm").getByRole("link", { name: /Сайт/ }).click();
+  await expect(page).toHaveURL(/\/jetrhythm\/$/, { timeout: 15_000 });
+  expect(await page.evaluate(() => Reflect.get(window, "testRouteSwap"))).toBe(true);
+  await expect(page.locator("html")).not.toHaveAttribute("data-astro-transition", /.+/, { timeout: 15_000 });
+
+  const header = page.getByRole("banner");
+  const brand = header.getByRole("link", { name: "JetRhythm" });
+  await expect(brand).toHaveAttribute("href", "/jetrhythm/");
+  const icon = brand.locator("img");
+  await expect(icon).toHaveAttribute("alt", "");
+  await expect(icon).toHaveCSS("width", "34px");
+  await expect.poll(() => icon.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator("html")).toHaveCSS("scroll-behavior", "smooth");
+
+  const features = page.locator("#features");
+  const featuresLink = header.getByRole("link", { name: "Возможности", exact: true });
+  if (browserName === "chromium") {
+    const positions = await featuresLink.evaluate((link) => new Promise<number[]>((resolve) => {
+      const start = window.scrollY;
+      const goal = start + document.querySelector("#features")!.getBoundingClientRect().top
+        - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+      const samples: number[] = [];
+      const deadline = performance.now() + 1500;
+      (link as HTMLAnchorElement).click();
+      const sample = () => {
+        samples.push(window.scrollY);
+        if (Math.abs(window.scrollY - goal) < 2 || performance.now() > deadline) {
+          resolve([start, goal, ...samples]);
+        } else {
+          requestAnimationFrame(sample);
+        }
+      };
+      requestAnimationFrame(sample);
+    }));
+    const [start, goal, ...samples] = positions;
+    expect(samples.some((position) => position > start + 5 && position < goal - 5)).toBe(true);
+  } else {
+    await featuresLink.click();
+  }
+  await expect(page).toHaveURL(/#features$/);
+  await expect.poll(() => features.evaluate((section) => {
+    const top = section.getBoundingClientRect().top;
+    const headerBottom = document.querySelector("header")!.getBoundingClientRect().bottom;
+    return top >= headerBottom && top < window.innerHeight;
+  })).toBe(true);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(icon).toHaveCSS("width", "31px");
 });

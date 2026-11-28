@@ -6,6 +6,9 @@
   --site-ui-card-lift: -5px;
 }
 
+html { scroll-behavior: smooth; }
+html.site-app-page { scroll-padding-top: 96px; }
+
 /*
  * Global overflow guard.
  * Long localized words, URLs and user-facing text must wrap inside the
@@ -103,6 +106,30 @@ pre {
   gap: 12px;
 }
 
+.site-app-header-container { display: contents; }
+
+.site-header-shell.site-app-header {
+  position: sticky;
+  top: max(var(--site-ui-header-offset), env(safe-area-inset-top));
+  z-index: 100;
+  margin: var(--site-ui-header-offset) auto 0;
+}
+
+.site-app-header .site-header-nav { gap: 5px; }
+
+.site-app-content {
+  width: min(860px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.site-app-content > main {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  max-width: none;
+  translate: -50% 0;
+}
+
 .site-header-start {
   min-width: 0;
   display: flex;
@@ -133,6 +160,38 @@ pre {
   line-height: 1;
   letter-spacing: -.012em;
   white-space: nowrap;
+}
+
+.site-header-brand.site-header-brand-with-icon {
+  gap: 10px;
+  width: max-content;
+  padding: 0;
+  font-size: inherit;
+  font-weight: 800;
+  line-height: inherit;
+  letter-spacing: var(--tracking-title);
+}
+
+.site-header-brand-with-icon img {
+  display: block;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 9px;
+  object-fit: cover;
+  image-rendering: auto;
+  backface-visibility: hidden;
+  box-shadow: 0 4px 12px rgba(52, 35, 20, .16);
+}
+
+@media (max-width: 900px) {
+  .site-app-header .site-header-nav { display: none; }
+}
+
+@media (max-width: 680px) {
+  html.site-app-page { scroll-padding-top: 88px; }
+  .site-app-content { width: min(860px, calc(100% - 28px)); }
+  .site-header-brand-with-icon img { width: 31px; height: 31px; }
 }
 
 .site-back-button {

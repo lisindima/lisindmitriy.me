@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
-import { ClientRouter, fade } from "astro:transitions";
-import { siteContentTransition } from "../lib/siteTransitions";
+import { ClientRouter } from "astro:transitions";
+import AppPageContent from "./AppPageContent.astro";
 import garageIcon from "../assets/garage-icon.webp";
 import garageBoxCutout from "../assets/garage-box-cutout.webp";
 import garageHeroScene from "../assets/garage-hero-scene.webp";
@@ -20,6 +20,7 @@ import garageEnMileage from "../assets/garage/screens/en-04-mileage.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
 import "../styles/site-ui.css";
+import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 
 interface Props {
@@ -188,7 +189,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate="none">
+<html class="site-app-page" lang={locale} transition:name="site-root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -213,28 +214,27 @@ const schema = {
   </head>
   <body class="garage-site">
     <a class="skip-link" href="#main-content">{copy.skipToContent}</a>
-    <header class="garage-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
-      <div class="site-header-start" transition:name="site-header-content" transition:animate={fade({ duration: "0.18s" })}>
-        <a class="site-back-button site-nav-link" href={isRu ? "/" : "/en/"} aria-label={copy.backToPortfolio} title={copy.backToPortfolio}>
-          <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M14.5 5.5 8 12l6.5 6.5" />
-          </svg>
-        </a>
-        <a class="garage-brand" href={isRu ? "/garage/" : "/garage/en/"} aria-label="Garage home">
-          <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
-          <span>Garage</span>
-        </a>
-        <nav class="garage-nav site-header-nav" aria-label="Garage navigation">
-          <a class="site-nav-link" href="#features">{copy.navFeatures}</a>
-          <a class="site-nav-link" href="#privacy">{copy.navPrivacy}</a>
-          <a class="site-nav-link" href="#support">{copy.navSupport}</a>
-        </nav>
-      </div>
-      <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.language}</a>
-    </header>
+    <SiteHeader
+      appHeader
+      locale={locale}
+      alternateHref={alternateHref}
+      languageLabel={copy.language}
+      navAria="Garage navigation"
+      navClass="garage-nav"
+      navItems={[
+        { label: copy.navFeatures, href: "#features" },
+        { label: copy.navPrivacy, href: "#privacy" },
+        { label: copy.navSupport, href: "#support" },
+      ]}
+      backHref={isRu ? "/" : "/en/"}
+      backLabel={copy.backToPortfolio}
+      brandHref={isRu ? "/garage/" : "/garage/en/"}
+      brandAria="Garage home"
+      brandLabel="Garage"
+      brandIcon={garageIcon}
+    />
 
-    <div class="garage-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
-      <main id="main-content" transition:name="garage-main" transition:animate={siteContentTransition()}>
+    <AppPageContent transitionName="garage-main">
       <section class="garage-hero garage-shell">
         <div class="garage-hero-copy">
           <p class="garage-eyebrow">{copy.eyebrow}</p>
@@ -407,8 +407,7 @@ const schema = {
         </div>
         <a class="support-email" href="mailto:me@lisindmitriy.ru">{copy.emailLabel}<span>me@lisindmitriy.ru ↗</span></a>
       </section>
-      </main>
-    </div>
+    </AppPageContent>
 
     <footer class="garage-footer garage-shell">
       <span>© {new Date().getFullYear()} {copy.developer}</span>

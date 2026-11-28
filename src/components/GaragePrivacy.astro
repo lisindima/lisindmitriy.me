@@ -1,12 +1,13 @@
 ---
-import { Image, getImage } from "astro:assets";
-import { ClientRouter, fade } from "astro:transitions";
-import { siteContentTransition } from "../lib/siteTransitions";
+import { getImage } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import AppPageContent from "./AppPageContent.astro";
 import garageIcon from "../assets/garage-icon.webp";
 import garageHeroScene from "../assets/garage-hero-scene.webp";
 import "../styles/typography.css";
 import "../styles/garage.css";
 import "../styles/site-ui.css";
+import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 
 interface Props {
@@ -98,7 +99,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate="none">
+<html class="site-app-page" lang={locale} transition:name="site-root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -123,23 +124,20 @@ const schema = {
   </head>
   <body class="garage-site privacy-page">
     <a class="skip-link" href="#main-content">{skipToContent}</a>
-    <header class="garage-header privacy-header site-header-shell" transition:name="site-header" transition:animate={fade({ duration: "0.18s" })}>
-      <div class="site-header-start" transition:name="site-header-content" transition:animate={fade({ duration: "0.18s" })}>
-        <a class="site-back-button site-nav-link" href={homeHref} aria-label={copy.back} title={copy.back}>
-          <svg class="site-back-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M14.5 5.5 8 12l6.5 6.5" />
-          </svg>
-        </a>
-        <a class="garage-brand" href={homeHref}>
-          <Image src={garageIcon} alt="" widths={[68, 102, 136]} sizes="34px" format="webp" quality={100} loading="eager" decoding="async" />
-          <span>Garage</span>
-        </a>
-      </div>
-      <a class="site-language-switch site-header-end" href={alternateHref} hreflang={isRu ? "en" : "ru"}>{copy.lang}</a>
-    </header>
+    <SiteHeader
+      appHeader
+      locale={locale}
+      alternateHref={alternateHref}
+      shellClass="privacy-header"
+      languageLabel={copy.lang}
+      backHref={homeHref}
+      backLabel={copy.back}
+      brandHref={homeHref}
+      brandLabel="Garage"
+      brandIcon={garageIcon}
+    />
 
-    <div class="garage-transition-main" transition:name="site-main" transition:animate={siteContentTransition()}>
-      <main id="main-content" class="privacy-shell" transition:name="garage-main" transition:animate={siteContentTransition()}>
+    <AppPageContent transitionName="garage-main" mainClass="privacy-shell">
       <p class="garage-eyebrow">{copy.eyebrow}</p>
       <h1>{copy.title}</h1>
       <p class="privacy-updated">{copy.updated}</p>
@@ -158,8 +156,7 @@ const schema = {
           </section>
         ))}
       </div>
-      </main>
-    </div>
+    </AppPageContent>
 
     <footer class="garage-footer garage-shell">
       <span>© {new Date().getFullYear()} Dmitriy Lisin</span>

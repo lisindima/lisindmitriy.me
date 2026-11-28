@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { fade } from "astro:transitions";
 
 interface NavItem {
@@ -12,14 +14,17 @@ interface Props {
   locale: "ru" | "en";
   alternateHref: string;
   languageLabel: string;
-  navAria: string;
+  navAria?: string;
   navItems?: NavItem[];
   navClass?: string;
-  outerClass?: string;
+  appHeader?: boolean;
+  shellClass?: string;
   backHref?: string;
   backLabel?: string;
   brandLabel?: string;
   brandHref?: string;
+  brandIcon?: ImageMetadata;
+  brandAria?: string;
 }
 
 const {
@@ -29,17 +34,22 @@ const {
   navAria,
   navItems = [],
   navClass,
-  outerClass = "floating-header",
+  appHeader = false,
+  shellClass,
   backHref,
   backLabel,
   brandLabel,
   brandHref = "#",
+  brandIcon,
+  brandAria,
 } = Astro.props;
+const HeaderContainer = appHeader ? "div" : "header";
+const HeaderShell = appHeader ? "header" : "div";
 ---
 
-<header class={outerClass}>
-  <div
-    class="site-header-shell portfolio-header"
+<HeaderContainer class={appHeader ? "site-app-header-container" : "floating-header"}>
+  <HeaderShell
+    class:list={["site-header-shell", appHeader ? "site-app-header" : "portfolio-header", shellClass]}
     transition:name="site-header"
     transition:animate={fade({ duration: "0.18s" })}
   >
@@ -58,7 +68,12 @@ const {
           </a>
         )}
         {brandLabel && (
-          <a class="site-header-brand" href={brandHref}>{brandLabel}</a>
+          <a class:list={["site-header-brand", { "site-header-brand-with-icon": brandIcon }]} href={brandHref} aria-label={brandAria}>
+            {brandIcon && (
+              <Image src={brandIcon} alt="" widths={[68, 102, 136]} sizes="(max-width: 680px) 31px, 34px" format="webp" quality={100} loading="eager" decoding="async" />
+            )}
+            <span>{brandLabel}</span>
+          </a>
         )}
         {navItems.length > 0 && (
           <nav class:list={["site-header-nav", navClass]} aria-label={navAria}>
@@ -99,5 +114,5 @@ const {
     >
       {languageLabel}
     </a>
-  </div>
-</header>
+  </HeaderShell>
+</HeaderContainer>
