@@ -732,10 +732,21 @@ test("JetRhythm links from the portfolio and switches locale on both pages", asy
 
   await page.getByRole("link", { name: /Посмотреть интерфейс/ }).click();
   await expect(page).toHaveURL(/\/jetrhythm\/#interface$/);
+  const gallery = page.locator("#interface");
+  await expect(gallery.locator("figcaption")).toHaveText(["Сегодня", "Обзор дня", "План поездки"]);
+  const russianImages = await gallery.getByRole("img").evaluateAll((images) =>
+    images.map((image) => image.getAttribute("src")),
+  );
 
   await page.getByRole("link", { name: "EN", exact: true }).click();
   await expect(page).toHaveURL(/\/jetrhythm\/en\/$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(gallery.locator("figcaption")).toHaveText(["Today", "Day overview", "Trip plan"]);
+  for (const [index, image] of (await gallery.getByRole("img").all()).entries()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).not.toHaveAttribute("src", russianImages[index]!);
+    await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0);
+  }
 
   await page.getByRole("link", { name: "Privacy Policy", exact: true }).first().click();
   await expect(page).toHaveURL(/\/jetrhythm\/en\/privacy\/$/);
