@@ -151,7 +151,7 @@
 
 .jet-features {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   padding: 0;
   margin: 25px 0 0;
@@ -198,6 +198,11 @@
 .jet-privacy h2 + p, .jet-support h2 + p { max-width: 62ch; margin-top: 12px; }
 .jet-privacy > a, .jet-support > a { flex: none; }
 
+.jet-faq { margin-top: 24px; border-top: 1px solid var(--jet-line); }
+.jet-faq details { padding-block: 14px; border-bottom: 1px solid var(--jet-line); }
+.jet-faq summary { cursor: pointer; font-weight: 650; }
+.jet-faq details p { max-width: 68ch; margin-top: 8px; color: var(--jet-muted); }
+
 .jet a.jet-text-link { color: var(--jet-accent); font-weight: 750; text-underline-offset: .2em; }
 .jet a.jet-text-link:hover, .jet-footer a:hover { text-decoration: underline; }
 
@@ -215,6 +220,7 @@
 
 .jet-policy { max-width: 740px; padding-top: 28px; }
 .jet-policy h1 { font-size: clamp(2.1rem, 6vw, 4.25rem); letter-spacing: -.05em; text-wrap: initial; }
+.jet p.jet-policy-updated { margin-top: 12px; color: var(--jet-muted); font-size: .9rem; }
 .jet-policy section { margin-block: 35px; }
 .jet-policy h2 { font-size: 1.35rem; }
 .jet-policy section p { margin-top: 8px; }

@@ -34,6 +34,9 @@ const pathFor = (language: "ru" | "en") => `${routes[language]}${isPrivacy ? "pr
 const absolute = (path: string) => new URL(path, Astro.site).href;
 const email = "me@lisindmitriy.ru";
 const supportHref = `mailto:${email}?subject=JetRhythm`;
+const policyDate = "2026-11-28";
+const applePrivacy = "https://www.apple.com/legal/privacy/";
+const hostingPrivacy = "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection";
 const [favicon, social] = await Promise.all([
   getImage({ src: icon, width: 64, format: "png" }),
   getImage({ src: icon, width: 780, format: "webp", quality: 85 }),
@@ -42,10 +45,10 @@ const [favicon, social] = await Promise.all([
 const copy = isRu
   ? {
       title: "JetRhythm — план адаптации к новому часовому поясу",
-      description: "JetRhythm помогает спланировать сон и дневной свет до, во время и после перелёта. Для iPhone и iPad.",
+      description: "JetRhythm составляет план сна и дневного света по маршруту и данным из «Здоровья» Apple. Для iPhone и iPad с iOS или iPadOS 27 и новее.",
       tagline: "Перелёт меняет часовой пояс.",
       accent: "Войдите в новый ритм.",
-      platform: "Для iPhone и iPad",
+      platform: "Для iPhone и iPad · iOS и iPadOS 27+",
       lead: "Персональный план сна, дневного света и кофеина поможет подготовиться к перелёту и перестроить режим после прилёта.",
       status: "В разработке",
       previewLink: "Посмотреть интерфейс",
@@ -54,9 +57,10 @@ const copy = isRu
       skip: "Перейти к содержимому",
       featuresHeading: "От вылета до нового режима",
       features: [
-        { title: "Добавьте перелёт", text: "Выберите аэропорты и укажите местное время вылета и прилёта. Можно добавить пересадки или начать план уже после прибытия." },
-        { title: "Получите план на каждый день", text: "Узнайте, когда спать, искать дневной свет, приглушать освещение и пить кофе. Основной план рассчитывается прямо на устройстве и доступен офлайн." },
-        { title: "Подстройте план под себя", text: "Импортируйте данные сна из Apple Health и настройте будильники и напоминания под себя." },
+        { title: "Подключите «Здоровье» Apple", text: "Импортируйте хотя бы одну запись сна за последние 14 дней и подтвердите свой обычный режим сна. Эти данные нужны для расчёта плана." },
+        { title: "Добавьте рейсы", text: "Выберите аэропорты и укажите местные даты и время вылета и прилёта. Можно добавить пересадки или составить план после прибытия." },
+        { title: "Следуйте расписанию", text: "План подскажет, когда спать, вставать, выходить на дневной свет, приглушать освещение и делать перерыв в употреблении кофеина. Действия можно отмечать выполненными или пропускать." },
+        { title: "Держите план под рукой", text: "Смотрите ближайшее действие в виджете или на экране блокировки. Системные будильники и напоминания можно настроить отдельно." },
       ],
       screensTitle: "Что делать дальше",
       screensText: "Посмотрите ближайшее действие, откройте обзор дня нажатием на график или проверьте расписание всей поездки.",
@@ -68,25 +72,35 @@ const copy = isRu
       privacyTitle: "Расчёты остаются на устройстве",
       privacyText: "Для JetRhythm не нужен аккаунт. Маршрут, режим сна и данные Apple Health используются для расчёта плана на устройстве. Для прогноза по выбранному месту приложение может обращаться к Apple WeatherKit.",
       privacyLink: "Политика конфиденциальности",
-      privacyDescription: "Как JetRhythm планирует использовать данные о поездках и сне, Apple Health и WeatherKit.",
-      privacyIntro: "Проект политики для приложения в разработке. Здесь описано, как JetRhythm планирует обрабатывать данные в первой версии.",
+      privacyDescription: "Как JetRhythm обрабатывает данные поездок и Apple Health, использует WeatherKit и позволяет управлять данными.",
+      privacyIntro: "Эта политика описывает, как приложение JetRhythm и его страницы на lisindmitriy.ru обрабатывают данные. Разработчик JetRhythm — Дмитрий Лисин.",
+      updatedLabel: "Обновлено",
+      updatedDate: "28 ноября 2026 г.",
       privacySections: [
-        { title: "Поездки и режим сна", text: "Маршруты, профиль сна, ручные записи и план адаптации хранятся и обрабатываются на устройстве. Аккаунт, собственный сервер, реклама и сторонние трекеры не предусмотрены." },
-        { title: "Данные Apple Health", text: "С вашего разрешения JetRhythm сможет прочитать записи о сне и времени при дневном свете, если они доступны. Приложение использует эти данные на устройстве для уточнения плана и не передаёт их в WeatherKit. Доступом можно управлять в настройках Apple Health." },
-        { title: "Прогноз погоды", text: "Для получения прогноза JetRhythm может передавать Apple WeatherKit координаты выбранного места. Поиск аэропортов, расчёт плана и времени восхода и заката доступны без запроса погоды." },
-        { title: "Управление данными", text: "Вы сможете удалять поездки и очищать сведения, сохранённые JetRhythm на основе данных Apple Health. Исходные записи останутся в Apple Health. Будильники и уведомления запрашивают отдельные системные разрешения." },
+        { title: "Поездки и профиль сна", text: "JetRhythm хранит на устройстве маршруты, введённые данные рейсов, профиль сна, рассчитанное расписание, отметки действий и настройки. Приложение работает без аккаунта, сервера разработчика, рекламы и аналитических трекеров." },
+        { title: "Данные «Здоровья» Apple", text: "С вашего разрешения JetRhythm читает записи сна и, если они доступны, данные о времени при дневном свете за последние 14 дней. Для построения плана нужна хотя бы одна запись сна за этот период. Если поездка уже началась, JetRhythm также может прочитать данные за 14 дней до первого вылета, чтобы оценить ваш режим до поездки. Приложение обрабатывает записи на устройстве, не изменяет их в «Здоровье» и не передаёт их разработчику или в WeatherKit. Доступ можно отозвать в настройках «Здоровья»." },
+        { title: "Напоминания, будильники и виджеты", text: "JetRhythm планирует уведомления и системные будильники на устройстве с разрешения системы. Виджет и эфир активности на экране блокировки используют данные из рассчитанного плана, например вид действия и его время. Исходные записи из «Здоровья» им не передаются." },
+        { title: "Прогноз погоды", text: "При запросе прогноза JetRhythm передаёт Apple WeatherKit координаты выбранного аэропорта или места. В этот запрос не входят данные сна, название поездки или полный маршрут.", link: { href: applePrivacy, label: "Политика конфиденциальности Apple" } },
+        { title: "Хранение и удаление данных", text: "Поездки и рассчитанные планы сохраняются на устройстве, пока вы их не удалите. Чтобы удалить отдельную поездку, откройте её план и выберите «Удалить поездку» в меню. Чтобы удалить локальные данные приложения, удалите JetRhythm с устройства. Записи в «Здоровье» остаются в приложении «Здоровье»." },
+        { title: "Сайт и обращения в поддержку", text: "Страницы JetRhythm размещены на GitHub Pages. GitHub сохраняет IP-адреса посетителей для безопасности. Если вы напишете в поддержку, разработчик получит ваш адрес и содержимое письма для ответа на обращение. Для этого не нужно прикладывать записи сна.", link: { href: hostingPrivacy, label: "Как GitHub Pages обрабатывает данные посетителей" } },
       ],
       supportTitle: "Есть вопрос по JetRhythm?",
-      supportText: "Напишите напрямую разработчику. Сюда же можно отправить вопрос о данных и приватности.",
+      supportText: "Напишите разработчику, если нужна помощь с приложением или есть вопрос о данных и приватности.",
       emailLabel: "Написать письмо",
+      faq: [
+        { title: "Что делать, если JetRhythm не находит записи сна?", text: "Откройте «Здоровье» → «Сон» → «Добавить данные» и внесите запись за последние 14 дней. Если запись уже есть, проверьте, разрешён ли JetRhythm доступ к данным сна, и повторите импорт." },
+        { title: "Что работает без интернета?", text: "Поиск аэропортов, расчёт плана и время восхода и заката доступны офлайн. Для расчёта нужна запись сна, доступная на устройстве. Для прогноза Apple Weather нужно подключение к интернету." },
+        { title: "Когда приложение запрашивает разрешение на уведомления?", text: "После создания первой поездки JetRhythm запрашивает разрешения на напоминания и системные будильники. Их можно отключить в разделе «Будильники и напоминания»." },
+      ],
+      guidance: "JetRhythm помогает планировать режим в поездке. Рекомендации по режиму сна и освещению предназначены для общего самочувствия.",
       footer: "Дмитрий Лисин",
     }
   : {
       title: "JetRhythm — a jet lag plan for your next flight",
-      description: "JetRhythm helps you plan sleep and daylight before, during, and after flying across time zones. For iPhone and iPad.",
+      description: "JetRhythm builds a sleep and daylight schedule using your itinerary and Apple Health data. For iPhone and iPad with iOS or iPadOS 27 or later.",
       tagline: "New time zone.",
       accent: "Find your rhythm.",
-      platform: "For iPhone and iPad",
+      platform: "For iPhone and iPad · iOS and iPadOS 27+",
       lead: "Get a personalized plan for sleep, daylight, and caffeine, so you can prepare before takeoff and settle in after landing.",
       status: "In development",
       previewLink: "Preview the app",
@@ -95,9 +109,10 @@ const copy = isRu
       skip: "Skip to content",
       featuresHeading: "From takeoff to a new routine",
       features: [
-        { title: "Add your flight", text: "Choose your airports and enter local departure and arrival times. Add any connections, or start a plan after you land." },
-        { title: "Follow a daily plan", text: "See when to sleep, get daylight, dim the lights, and have caffeine. Your device builds the core plan, so it’s available offline." },
-        { title: "Adjust as you go", text: "Import sleep data from Apple Health and customize alarms and reminders." },
+        { title: "Connect Apple Health", text: "Import at least one sleep record from the past 14 days and confirm your usual sleep schedule. JetRhythm needs this information to build your plan." },
+        { title: "Add your flights", text: "Choose your airports and enter local departure and arrival dates and times. Add connecting flights or create a plan after you land." },
+        { title: "Follow the schedule", text: "See when to sleep, wake up, get daylight, dim the lights, and pause caffeine. Mark activities complete or skip them." },
+        { title: "Keep your plan in view", text: "See the next activity in a widget or in a Live Activity on your Lock Screen. Set system wake-up alarms and reminders separately." },
       ],
       screensTitle: "See what’s next",
       screensText: "See your next action, tap the chart for a day overview, or check the schedule for the whole trip.",
@@ -109,17 +124,27 @@ const copy = isRu
       privacyTitle: "Your plan is calculated on your device",
       privacyText: "JetRhythm requires no account. Your itinerary, sleep schedule, and Apple Health data are used on your device to build your plan. The app may use Apple WeatherKit for a forecast at a selected location.",
       privacyLink: "Privacy Policy",
-      privacyDescription: "How JetRhythm plans to handle trip and sleep data, Apple Health, and WeatherKit.",
-      privacyIntro: "This is a draft policy for an app in development. It describes how JetRhythm plans to handle data in its first release.",
+      privacyDescription: "How JetRhythm handles trip and Apple Health data, uses WeatherKit, and lets you manage your data.",
+      privacyIntro: "This policy describes how the JetRhythm app and its pages on lisindmitriy.ru handle data. JetRhythm is developed by Dmitriy Lisin.",
+      updatedLabel: "Last updated",
+      updatedDate: "November 28, 2026",
       privacySections: [
-        { title: "Trips and sleep schedule", text: "Your itinerary, sleep profile, manual entries, and adjustment plan are stored and processed on your device. The app is designed to work without an account, a developer-operated server, ads, or third-party trackers." },
-        { title: "Apple Health data", text: "With your permission, JetRhythm can read sleep and time in daylight records when available. It uses them on your device to refine the plan and does not send them to WeatherKit. You can manage access in Apple Health settings." },
-        { title: "Weather forecasts", text: "JetRhythm may send the coordinates of a selected location to Apple WeatherKit to request a forecast. Airport search, plan calculation, and sunrise and sunset times are available without a weather request." },
-        { title: "Data controls", text: "You’ll be able to delete trips and clear information JetRhythm saves from Apple Health. Original records remain in Apple Health. Alarms and notifications require separate system permissions." },
+        { title: "Trips and sleep profile", text: "JetRhythm stores your itinerary, flight details, sleep profile, calculated schedule, activity status, and preferences on your device. The app uses no account, developer-operated server, ads, or analytics trackers." },
+        { title: "Apple Health data", text: "With your permission, JetRhythm reads sleep records and available time-in-daylight data from the past 14 days. Building a plan requires at least one sleep record from that period. If your trip has already started, JetRhythm may also read data from the 14 days before your first departure to estimate your pre-trip sleep schedule. The app processes these records on your device, leaves the original Health records unchanged, and sends them neither to the developer nor to WeatherKit. You can revoke access in Apple Health settings." },
+        { title: "Reminders, alarms, and widgets", text: "JetRhythm schedules notifications and system wake-up alarms on your device with system permission. Widgets and Lock Screen Live Activities use information from your calculated plan, such as the activity and its time. They do not receive the underlying Apple Health records." },
+        { title: "Weather forecasts", text: "When requesting a forecast, JetRhythm sends the selected airport or place coordinates to Apple WeatherKit. The request excludes your sleep data, trip name, and full itinerary.", link: { href: applePrivacy, label: "Apple Privacy Policy" } },
+        { title: "Keeping and deleting data", text: "Trips and calculated plans stay on your device until you delete them. To delete an individual trip, open its plan and select Delete trip from the menu. To remove the app’s local data, delete JetRhythm from your device. Your Apple Health records remain in Health." },
+        { title: "Website and support", text: "The JetRhythm pages are hosted on GitHub Pages. GitHub logs visitor IP addresses for security. If you email support, the developer receives your email address and message to answer your request. You can contact support without including sleep records.", link: { href: hostingPrivacy, label: "How GitHub Pages handles visitor data" } },
       ],
       supportTitle: "Have a question about JetRhythm?",
-      supportText: "Email the developer directly for help or questions about your data.",
+      supportText: "Email the developer for help with the app or questions about your data and privacy.",
       emailLabel: "Email support",
+      faq: [
+        { title: "What if Health has no sleep records?", text: "In Health, open Sleep, select Add Data, and add a record from the past 14 days. If you already have a record, check JetRhythm’s permission to read sleep data and try importing it again." },
+        { title: "What works offline?", text: "Airport search, plan calculation, and local sunrise and sunset times work offline. Planning requires a sleep record available on your device. Apple Weather forecasts require an internet connection." },
+        { title: "When does JetRhythm request notification permission?", text: "After you create your first trip, JetRhythm requests permission for reminders and system wake-up alarms. You can turn them off in Alarms and reminders." },
+      ],
+      guidance: "JetRhythm helps you plan your routine while traveling. Its sleep and light suggestions are for general wellness.",
       footer: "Dmitriy Lisin",
     };
 
@@ -172,10 +197,12 @@ const anchors = ["features", "privacy", "support"];
           <a class="jet-text-link" href={home}>← JetRhythm</a>
           <h1>{copy.privacyLink}</h1>
           <p class="jet-lead">{copy.privacyIntro}</p>
-          {copy.privacySections.map(({ title, text }) => (
+          <p class="jet-policy-updated">{copy.updatedLabel} <time datetime={policyDate}>{copy.updatedDate}</time></p>
+          {copy.privacySections.map(({ title, text, link }) => (
             <section>
               <h2>{title}</h2>
               <p>{text}</p>
+              {link && <p><a class="jet-text-link" href={link.href}>{link.label}</a></p>}
             </section>
           ))}
           <a class="jet-text-link" href={supportHref}>{email}</a>
@@ -245,12 +272,23 @@ const anchors = ["features", "privacy", "support"];
             </div>
           </section>
 
-          <section class="jet-shell jet-section jet-support" id="support" aria-labelledby="jet-support">
-            <div>
-              <h2 id="jet-support">{copy.supportTitle}</h2>
-              <p>{copy.supportText}</p>
+          <section class="jet-shell jet-section" id="support" aria-labelledby="jet-support">
+            <div class="jet-support">
+              <div>
+                <h2 id="jet-support">{copy.supportTitle}</h2>
+                <p>{copy.supportText}</p>
+              </div>
+              <a class="jet-button" href={supportHref}>{copy.emailLabel} <span aria-hidden="true">↗</span></a>
             </div>
-            <a class="jet-button" href={supportHref}>{copy.emailLabel} <span aria-hidden="true">↗</span></a>
+            <div class="jet-faq">
+              {copy.faq.map(({ title, text }) => (
+                <details>
+                  <summary>{title}</summary>
+                  <p>{text}</p>
+                </details>
+              ))}
+            </div>
+            <p class="jet-section-intro">{copy.guidance}</p>
           </section>
         </>
       )}

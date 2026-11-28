@@ -729,6 +729,10 @@ test("JetRhythm links from the portfolio and switches locale on both pages", asy
   await page.goto("/");
   await page.locator(".project-card-jetrhythm").getByRole("link", { name: /Сайт/ }).click();
   await expect(page).toHaveURL(/\/jetrhythm\/$/);
+  await expect(page.locator("#features")).toContainText("за последние 14 дней");
+  const sleepSupport = page.locator("#support details").first();
+  await sleepSupport.locator("summary").click();
+  await expect(sleepSupport.locator("p")).toBeVisible();
 
   await page.getByRole("link", { name: /Посмотреть интерфейс/ }).click();
   await expect(page).toHaveURL(/\/jetrhythm\/#interface$/);
@@ -750,8 +754,13 @@ test("JetRhythm links from the portfolio and switches locale on both pages", asy
 
   await page.getByRole("link", { name: "Privacy Policy", exact: true }).first().click();
   await expect(page).toHaveURL(/\/jetrhythm\/en\/privacy\/$/);
+  await expect(page.locator(".jet-policy time")).toHaveAttribute("datetime", /\d{4}-\d{2}-\d{2}/);
+  await expect(page.getByRole("heading", { name: "Keeping and deleting data" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Apple Privacy Policy" })).toHaveAttribute("href", "https://www.apple.com/legal/privacy/");
 
   await page.getByRole("link", { name: "RU", exact: true }).click();
   await expect(page).toHaveURL(/\/jetrhythm\/privacy\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Политика конфиденциальности");
+  await expect(page.getByRole("heading", { name: "Хранение и удаление данных" })).toBeVisible();
+  await expect(page.locator(".jet-policy")).toContainText("за последние 14 дней");
 });
