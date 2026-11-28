@@ -5,8 +5,12 @@ import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
 import { siteContentTransition } from "../lib/siteTransitions";
 import icon from "../assets/jetrhythm/icon.webp";
-import planPreview from "../assets/jetrhythm/today-plan.webp";
-import tripsPreview from "../assets/jetrhythm/today-trips.webp";
+import todayRu from "../assets/jetrhythm/ru/today.webp";
+import overviewRu from "../assets/jetrhythm/ru/day-overview.webp";
+import planRu from "../assets/jetrhythm/ru/trip-plan.webp";
+import todayEn from "../assets/jetrhythm/en/today.webp";
+import overviewEn from "../assets/jetrhythm/en/day-overview.webp";
+import planEn from "../assets/jetrhythm/en/trip-plan.webp";
 import "../styles/typography.css";
 import "../styles/jetrhythm.css";
 import "../styles/site-ui.css";
@@ -52,13 +56,14 @@ const copy = isRu
       features: [
         { title: "Добавьте перелёт", text: "Выберите аэропорты и укажите местное время вылета и прилёта. Можно добавить пересадки или начать план уже после прибытия." },
         { title: "Получите план на каждый день", text: "Узнайте, когда спать, искать дневной свет, приглушать освещение и пить кофе. Основной план рассчитывается прямо на устройстве и доступен офлайн." },
-        { title: "Подстройте план под себя", text: "Включите будильники и напоминания по желанию. Уточняйте фактический сон вручную или подключите Apple Health, чтобы скорректировать оставшийся план." },
+        { title: "Подстройте план под себя", text: "Импортируйте данные сна из Apple Health и настройте будильники и напоминания под себя." },
       ],
       screensTitle: "Что делать дальше",
-      screensText: "На экране «Сегодня» видно ближайшее действие, а в плане — расписание в местном времени. Ниже — концепты интерфейса.",
+      screensText: "Посмотрите ближайшее действие, откройте обзор дня нажатием на график или проверьте расписание всей поездки.",
       screens: [
-        "Ближайшее действие и план сна и света на несколько дней",
-        "Экран «Сегодня» и список поездок в тёмной теме",
+        { src: todayRu, title: "Сегодня", alt: "Маршрут BOS → SFO, график дня и время ближайшего действия" },
+        { src: overviewRu, title: "Обзор дня", alt: "Длительность сна, дневного света и приглушённого освещения по плану с расписанием на день" },
+        { src: planRu, title: "План поездки", alt: "Список действий по дням с временем начала и окончания в местном часовом поясе" },
       ],
       privacyTitle: "Расчёты остаются на устройстве",
       privacyText: "Для JetRhythm не нужен аккаунт. Маршрут, режим сна и данные Apple Health используются для расчёта плана на устройстве. Для прогноза по выбранному месту приложение может обращаться к Apple WeatherKit.",
@@ -92,13 +97,14 @@ const copy = isRu
       features: [
         { title: "Add your flight", text: "Choose your airports and enter local departure and arrival times. Add any connections, or start a plan after you land." },
         { title: "Follow a daily plan", text: "See when to sleep, get daylight, dim the lights, and have caffeine. Your device builds the core plan, so it’s available offline." },
-        { title: "Adjust as you go", text: "Use optional alarms and reminders. Log your sleep manually or connect Apple Health to adjust the rest of your plan." },
+        { title: "Adjust as you go", text: "Import sleep data from Apple Health and customize alarms and reminders." },
       ],
       screensTitle: "See what’s next",
-      screensText: "Today shows your next action. Plan lays out each day in local time. These are interface concepts.",
+      screensText: "See your next action, tap the chart for a day overview, or check the schedule for the whole trip.",
       screens: [
-        "The next action alongside a multi-day sleep and daylight plan",
-        "Today and the trip list in dark mode",
+        { src: todayEn, title: "Today", alt: "BOS to SFO route, a daily chart, and the time of the next activity" },
+        { src: overviewEn, title: "Day overview", alt: "Planned sleep, daylight, and low-light durations above the daily schedule" },
+        { src: planEn, title: "Trip plan", alt: "Activities grouped by day with start and end times in the local time zone" },
       ],
       privacyTitle: "Your plan is calculated on your device",
       privacyText: "JetRhythm requires no account. Your itinerary, sleep schedule, and Apple Health data are used on your device to build your plan. The app may use Apple WeatherKit for a forecast at a selected location.",
@@ -120,7 +126,6 @@ const copy = isRu
 const title = isPrivacy ? `JetRhythm — ${copy.privacyLink}` : copy.title;
 const description = isPrivacy ? copy.privacyDescription : copy.description;
 const anchors = ["features", "privacy", "support"];
-const previews = [planPreview, tripsPreview];
 ---
 
 <!doctype html>
@@ -210,12 +215,20 @@ const previews = [planPreview, tripsPreview];
             <h2 id="jet-interface">{copy.screensTitle}</h2>
             <p class="jet-section-intro">{copy.screensText}</p>
             <div class="jet-gallery">
-              {previews.map((src, index) => (
+              {copy.screens.map(({ src, title, alt }) => (
                 <figure>
                   <div class="jet-preview">
-                    <Image src={src} alt={copy.screens[index]} widths={[400, 600, 900, 1100]} sizes="(max-width: 620px) calc(100vw - 76px), (max-width: 1150px) 42vw, 460px" format="webp" quality={86} loading="lazy" />
+                    <Image
+                      src={src}
+                      alt={alt}
+                      widths={[320, 480, 660, 900]}
+                      sizes="(max-width: 400px) calc(100vw - 62px), (max-width: 760px) 330px, (max-width: 1150px) 29vw, 325px"
+                      format="webp"
+                      quality={90}
+                      loading="lazy"
+                    />
                   </div>
-                  <figcaption>{copy.screens[index]}</figcaption>
+                  <figcaption>{title}</figcaption>
                 </figure>
               ))}
             </div>
