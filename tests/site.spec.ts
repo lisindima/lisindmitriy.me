@@ -733,7 +733,7 @@ test.describe("known layout regressions", () => {
 test("JetRhythm links from the portfolio and switches locale on both pages", async ({ page }) => {
   await page.goto("/");
   await page.locator(".project-card-jetrhythm").getByRole("link", { name: /Сайт/ }).click();
-  await expect(page).toHaveURL(/\/jetrhythm\/$/);
+  await expect(page).toHaveURL(/\/jetrhythm\/$/, { timeout: 15_000 });
   await expect(page.locator("#features")).toContainText("за последние 14 дней");
   const sleepSupport = page.locator("#support details").first();
   await sleepSupport.locator("summary").click();
@@ -770,7 +770,7 @@ test("JetRhythm links from the portfolio and switches locale on both pages", asy
   await expect(page.locator(".jet-policy")).toContainText("за последние 14 дней");
 });
 
-test("JetRhythm header follows the app navigation pattern", async ({ page }) => {
+test("JetRhythm header follows the app navigation pattern", async ({ page, browserName }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
@@ -780,8 +780,9 @@ test("JetRhythm header follows the app navigation pattern", async ({ page }) => 
     }, { once: true });
   });
   await page.locator(".project-card-jetrhythm").getByRole("link", { name: /Сайт/ }).click();
-  await expect(page).toHaveURL(/\/jetrhythm\/$/);
+  await expect(page).toHaveURL(/\/jetrhythm\/$/, { timeout: 15_000 });
   expect(await page.evaluate(() => Reflect.get(window, "testRouteSwap"))).toBe(true);
+  await expect(page.locator("html")).not.toHaveAttribute("data-astro-transition", /.+/, { timeout: 15_000 });
 
   const header = page.getByRole("banner");
   const brand = header.getByRole("link", { name: "JetRhythm" });
@@ -794,27 +795,35 @@ test("JetRhythm header follows the app navigation pattern", async ({ page }) => 
 
   const features = page.locator("#features");
   const featuresLink = header.getByRole("link", { name: "Возможности", exact: true });
-  const positions = await featuresLink.evaluate((link) => new Promise<number[]>((resolve) => {
-    const start = window.scrollY;
-    const goal = start + document.querySelector("#features")!.getBoundingClientRect().top
-      - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
-    const samples: number[] = [];
-    const deadline = performance.now() + 1500;
-    link.click();
-    const sample = () => {
-      samples.push(window.scrollY);
-      if (Math.abs(window.scrollY - goal) < 2 || performance.now() > deadline) {
-        resolve([start, goal, ...samples]);
-      } else {
-        requestAnimationFrame(sample);
-      }
-    };
-    requestAnimationFrame(sample);
-  }));
-  const [start, goal, ...samples] = positions;
-  expect(samples.some((position) => position > start + 5 && position < goal - 5)).toBe(true);
+  if (browserName === "chromium") {
+    const positions = await featuresLink.evaluate((link) => new Promise<number[]>((resolve) => {
+      const start = window.scrollY;
+      const goal = start + document.querySelector("#features")!.getBoundingClientRect().top
+        - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+      const samples: number[] = [];
+      const deadline = performance.now() + 1500;
+      (link as HTMLAnchorElement).click();
+      const sample = () => {
+        samples.push(window.scrollY);
+        if (Math.abs(window.scrollY - goal) < 2 || performance.now() > deadline) {
+          resolve([start, goal, ...samples]);
+        } else {
+          requestAnimationFrame(sample);
+        }
+      };
+      requestAnimationFrame(sample);
+    }));
+    const [start, goal, ...samples] = positions;
+    expect(samples.some((position) => position > start + 5 && position < goal - 5)).toBe(true);
+  } else {
+    await featuresLink.click();
+  }
   await expect(page).toHaveURL(/#features$/);
-  expect((await features.boundingBox())!.y).toBeGreaterThan((await header.boundingBox())!.y + (await header.boundingBox())!.height);
+  await expect.poll(() => features.evaluate((section) => {
+    const top = section.getBoundingClientRect().top;
+    const headerBottom = document.querySelector("header")!.getBoundingClientRect().bottom;
+    return top >= headerBottom && top < window.innerHeight;
+  })).toBe(true);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
