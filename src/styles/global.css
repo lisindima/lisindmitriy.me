@@ -51,7 +51,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 112px;
 }
 
@@ -896,10 +895,6 @@ h1 {
 
   .hero-rotator > span:first-child {
     display: block;
-  }
-
-  html {
-    scroll-behavior: auto;
   }
 
   *,

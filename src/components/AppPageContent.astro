@@ -1,0 +1,16 @@
+---
+import { siteContentTransition } from "../lib/siteTransitions";
+
+interface Props {
+  transitionName: string;
+  mainClass?: string;
+}
+
+const { transitionName, mainClass } = Astro.props;
+---
+
+<div class="site-app-content" transition:name="site-main" transition:animate={siteContentTransition()}>
+  <main id="main-content" class={mainClass} transition:name={transitionName} transition:animate={siteContentTransition()}>
+    <slot />
+  </main>
+</div>

@@ -3,7 +3,7 @@ import { Image, getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import SiteHeader from "./SiteHeader.astro";
 import SeoHead from "./SeoHead.astro";
-import { siteContentTransition } from "../lib/siteTransitions";
+import AppPageContent from "./AppPageContent.astro";
 import icon from "../assets/jetrhythm/icon.webp";
 import todayRu from "../assets/jetrhythm/ru/today.webp";
 import overviewRu from "../assets/jetrhythm/ru/day-overview.webp";
@@ -154,7 +154,7 @@ const anchors = ["features", "privacy", "support"];
 ---
 
 <!doctype html>
-<html lang={locale} transition:name="site-root" transition:animate="none">
+<html class="site-app-page" lang={locale} transition:name="site-root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -184,14 +184,15 @@ const anchors = ["features", "privacy", "support"];
       languageLabel={otherLocale.toUpperCase()}
       navAria={isRu ? "Навигация JetRhythm" : "JetRhythm navigation"}
       navItems={copy.sections.map((label, index) => ({ label, href: `${isPrivacy ? home : ""}#${anchors[index]}` }))}
-      outerClass="jet-header"
+      appHeader
       backHref={isRu ? "/" : "/en/"}
       backLabel={copy.back}
       brandLabel="JetRhythm"
+      brandIcon={icon}
       brandHref={home}
     />
 
-    <main id="main-content" transition:name="site-main" transition:animate={siteContentTransition()}>
+    <AppPageContent transitionName="jet-main" mainClass="jet-main">
       {isPrivacy ? (
         <article class="jet-shell jet-policy">
           <a class="jet-text-link" href={home}>← JetRhythm</a>
@@ -292,7 +293,7 @@ const anchors = ["features", "privacy", "support"];
           </section>
         </>
       )}
-    </main>
+    </AppPageContent>
 
     <footer class="jet-shell jet-footer">
       <span>JetRhythm</span>
